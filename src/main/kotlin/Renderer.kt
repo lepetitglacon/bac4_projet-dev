@@ -32,7 +32,7 @@ object Renderer : JPanel() {
     }
 
     fun initGame() {
-        this.entities.addAll(entities)
+        hero.weapons.add(Sword())
 
         SwingUtilities.invokeLater {
 
@@ -84,9 +84,11 @@ object Renderer : JPanel() {
 
         moveHero()
 
-        handleWaveChanging()
-
         handleHeroDeath()
+
+        hero.attack()
+
+        handleWaveChanging()
 
 
         repaint()
@@ -102,6 +104,8 @@ object Renderer : JPanel() {
 
         // Draw the hero
         hero.draw(g)
+
+        hero.weapons.forEach { it.draw(g) }
 
         // Check if the hero is in collision with an enemy
         entities.removeAll {

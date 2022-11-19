@@ -14,6 +14,8 @@ abstract class Entity {
     var mana = 100
     var attack = 10
 
+    val weapons = mutableListOf<Weapon>()
+
     var position = Vector2()
     var velocity = Vector2()
     var rayon = Vector2(ENTITY_RAYON.toDouble()).distance(Vector2())
@@ -37,7 +39,9 @@ abstract class Entity {
         return collides && e.attack > hp
     }
 
-    abstract fun attack()
+    fun attack() {
+        weapons.forEach { it.attack() }
+    }
 
     abstract fun draw(g: Graphics2D)
 

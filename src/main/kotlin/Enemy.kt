@@ -17,8 +17,4 @@ class Enemy() : Entity() {
         g.color = Color.black
     }
 
-    override fun attack() {
-        TODO("Not yet implemented")
-    }
-
 }

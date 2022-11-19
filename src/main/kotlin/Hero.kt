@@ -35,8 +35,4 @@ class Hero() : Entity() {
         position.x += (vector.x * speed).toInt()
         position.y += (vector.y * speed).toInt()
     }
-
-    override fun attack() {
-        TODO("Not yet implemented")
-    }
 }
