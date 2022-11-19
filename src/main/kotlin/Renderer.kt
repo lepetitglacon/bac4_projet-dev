@@ -6,7 +6,6 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
-import kotlin.random.Random
 
 object Renderer : JPanel() {
     const val FRAMES_PER_SEC = 60
@@ -24,6 +23,8 @@ object Renderer : JPanel() {
     val hero = Hero()
     var wave = 1
     val gui = Gui
+
+    var deaths = 0
 
     init {
         preferredSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -83,9 +84,9 @@ object Renderer : JPanel() {
 
         moveHero()
 
-        if (entities.size <= 0) {
-            createEnnemies()
-        }
+        handleWaveChanging()
+
+        handleHeroDeath()
 
 
         repaint()
@@ -104,15 +105,24 @@ object Renderer : JPanel() {
 
         // Check if the hero is in collision with an enemy
         entities.removeAll {
-            val collides = hero.collides(it)
-            if (collides) {
-                hero.speed += .5
-            }
-            collides
+            it.mustDie(hero)
         }
 
         // Draw GUI on top
         gui.draw(g)
+    }
+
+    private fun handleHeroDeath() {
+        if (hero.hp <= 0) {
+            deaths++
+            hero.hp = 100
+        }
+    }
+
+    private fun handleWaveChanging() {
+        if (entities.size <= 0) {
+            createEnnemies()
+        }
     }
 
     private fun moveHero() {

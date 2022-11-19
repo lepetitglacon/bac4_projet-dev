@@ -5,7 +5,8 @@ import java.awt.Graphics2D
 
 class Enemy() : Entity() {
 
-    fun draw(g: Graphics2D) {
+    override fun draw(g: Graphics2D) {
+        drawHealthbar(g)
         g.color = color
         g.fillOval(
             (position.x - Renderer.hero.position.x + WINDOW_WIDTH / 2 - size / 2).toInt(),

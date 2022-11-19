@@ -12,7 +12,7 @@ class Hero() : Entity() {
         color = Color.ORANGE
     }
 
-    fun draw(g: Graphics2D) {
+    override fun draw(g: Graphics2D) {
         val startX = WINDOW_WIDTH / 2 - size / 2
         val startY = WINDOW_HEIGHT / 2 - size / 2
         val centerX = startX + size / 2
@@ -25,6 +25,8 @@ class Hero() : Entity() {
         g.fillOval(startX, startY, size, size)
         g.color = Color.GREEN
         g.drawLine(centerX, centerY, endX.toInt(), endY.toInt())
+
+        drawHealthbar(g)
     }
 
     fun move(vector: Vector2) {

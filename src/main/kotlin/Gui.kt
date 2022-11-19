@@ -66,6 +66,8 @@ object Gui {
         infos.add("DEBUG")
         infos.add("Hero position x:${Renderer.hero.position.x} y:${Renderer.hero.position.y}")
         infos.add("Hero speed :${Renderer.hero.speed}")
+        infos.add("Hero hp :${Renderer.hero.hp}")
+        infos.add("Hero deaths :${Renderer.deaths}")
 //        infos.add("Hero direction:${Renderer.hero.direction.name}")
 //        infos.add("Manche ${Renderer.wave}")
 //        infos.add("Balles tirées (toujours actives) ${Renderer.bullets.size}")
