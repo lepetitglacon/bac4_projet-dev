@@ -6,24 +6,25 @@ import java.awt.Graphics2D
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Hero(var posX: Int, var posY: Int, var size: Int, var position: Vector2 = Vector2(0.0,0.0), var velocity: Vector2 = Vector2(0.0,0.0), var angle: Double = 0.0) {
-    var speed = 10.0 // Max distance per tick
+class Hero() : Entity() {
 
-    fun draw(g: Graphics2D) {
-        val centerX = WINDOW_WIDTH / 2
-        val centerY = WINDOW_HEIGHT / 2
-        // Draw the hero always in the center of the screen
-        g.color = Color.blue
-        g.fillOval( centerX - 15, centerY - 15, 30, 30)
-        g.color = Color.white
-        g.fillOval( centerX - 10, centerY - 10, 20, 20)
-        g.color = Color.red
-        g.fillOval( centerX - 5, centerY - 5, 10, 10)
+    init {
+        color = Color.ORANGE
     }
 
-    fun isColliding(e: Enemy): Boolean {
-        val distance = Math.sqrt(Math.pow((posX - e.posX).toDouble(), 2.0) + Math.pow((posY - e.posY).toDouble(), 2.0))
-        return distance < (size / 2 + e.size / 2)
+    fun draw(g: Graphics2D) {
+        val startX = WINDOW_WIDTH / 2 - size / 2
+        val startY = WINDOW_HEIGHT / 2 - size / 2
+        val centerX = startX + size / 2
+        val centerY = startY + size / 2
+        val normalized = Vector2.normalize(Renderer.userInputVector)
+        val endX = centerX + normalized.x * (size/2)
+        val endY = centerY + normalized.y * (size/2)
+
+        g.color = color
+        g.fillOval(startX, startY, size, size)
+        g.color = Color.GREEN
+        g.drawLine(centerX, centerY, endX.toInt(), endY.toInt())
     }
 
     fun move(vector: Vector2) {
@@ -31,7 +32,9 @@ class Hero(var posX: Int, var posY: Int, var size: Int, var position: Vector2 = 
         vector.normalize()
         position.x += (vector.x * speed).toInt()
         position.y += (vector.y * speed).toInt()
-        posX += (vector.x * speed).toInt()
-        posY += (vector.y * speed).toInt()
+    }
+
+    override fun attack() {
+        TODO("Not yet implemented")
     }
 }

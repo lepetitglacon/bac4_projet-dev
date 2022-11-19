@@ -21,7 +21,8 @@ object Renderer : JPanel() {
     var userInputRight = false
 
     val entities = mutableListOf<Enemy>()
-    val hero = Hero(0, 0, 30)
+    val hero = Hero()
+    var wave = 1
     val gui = Gui
 
     init {
@@ -30,7 +31,6 @@ object Renderer : JPanel() {
     }
 
     fun initGame() {
-        createEnnemies()
         this.entities.addAll(entities)
 
         SwingUtilities.invokeLater {
@@ -38,8 +38,8 @@ object Renderer : JPanel() {
             val f = JFrame()
             with (f) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-                title = "Survival"
-                isResizable = false
+                title = "Bac+4 survival game - Esteban GAGNEUR"
+                isResizable = true
                 add(this@Renderer, BorderLayout.CENTER)
                 pack()
                 setLocationRelativeTo(null)
@@ -75,14 +75,17 @@ object Renderer : JPanel() {
     }
 
     private fun createEnnemies() {
-        for (i in 0..100) {
-            entities.add(Enemy(Random.nextInt(0, WINDOW_WIDTH), Random.nextInt(0, WINDOW_HEIGHT), 20, Color.blue),)
-        }
+        EntityFactory.createEnemiesForWave(wave)
+        wave++
     }
 
     private fun stepGame() {
 
         moveHero()
+
+        if (entities.size <= 0) {
+            createEnnemies()
+        }
 
 
         repaint()
@@ -94,14 +97,14 @@ object Renderer : JPanel() {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
         // Draw the ennemies
-        entities.forEach { it.draw(hero.posX, hero.posY, g) }
+        entities.forEach { it.draw(g) }
 
         // Draw the hero
         hero.draw(g)
 
         // Check if the hero is in collision with an enemy
         entities.removeAll {
-            val collides = hero.isColliding(it)
+            val collides = hero.collides(it)
             if (collides) {
                 hero.speed += .5
             }
