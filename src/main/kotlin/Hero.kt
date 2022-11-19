@@ -1,10 +1,13 @@
+import Renderer.FRAME_PER_MSEC
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import java.awt.Color
 import java.awt.Graphics2D
+import kotlin.math.cos
+import kotlin.math.sin
 
-class Hero(var posX: Int, var posY: Int, var size: Int) {
-    val speed = 10 // Max distance per tick
+class Hero(var posX: Int, var posY: Int, var size: Int, var position: Vector2 = Vector2(0.0,0.0), var velocity: Vector2 = Vector2(0.0,0.0), var angle: Double = 0.0) {
+    var speed = 10.0 // Max distance per tick
 
     fun draw(g: Graphics2D) {
         val centerX = WINDOW_WIDTH / 2
@@ -19,46 +22,16 @@ class Hero(var posX: Int, var posY: Int, var size: Int) {
     }
 
     fun isColliding(e: Enemy): Boolean {
-        // Computes the distance between the hero and the enemy
         val distance = Math.sqrt(Math.pow((posX - e.posX).toDouble(), 2.0) + Math.pow((posY - e.posY).toDouble(), 2.0))
-        // If the distance is less than the sum of the radius, the hero is colliding with the enemy
         return distance < (size / 2 + e.size / 2)
     }
 
-    fun moveUp() {
-        posY -= speed
-    }
-    fun moveDown() {
-        posY += speed
-    }
-    fun moveLeft() {
-        posX -= speed
-    }
-    fun moveRight() {
-        posX += speed
-    }
-    fun moveUpLeft() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX -= speedX.toInt()
-        posY -= speedY.toInt()
-    }
-    fun moveUpRight() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX += speedX.toInt()
-        posY -= speedY.toInt()
-    }
-    fun moveDownLeft() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX -= speedX.toInt()
-        posY += speedY.toInt()
-    }
-    fun moveDownRight() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX += speedX.toInt()
-        posY += speedY.toInt()
+    fun move(vector: Vector2) {
+        // update position by speed
+        vector.normalize()
+        position.x += (vector.x * speed).toInt()
+        position.y += (vector.y * speed).toInt()
+        posX += (vector.x * speed).toInt()
+        posY += (vector.y * speed).toInt()
     }
 }

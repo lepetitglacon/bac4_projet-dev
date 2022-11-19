@@ -6,19 +6,23 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
+import kotlin.random.Random
 
 object Renderer : JPanel() {
     const val FRAMES_PER_SEC = 60
-    const val FRAME_IN_MSEC = 1000 / FRAMES_PER_SEC
+    const val FRAME_PER_MSEC = 1000 / FRAMES_PER_SEC
     const val WINDOW_WIDTH = 800
     const val WINDOW_HEIGHT = 600
 
-    var upPressed = false
-    var downPressed = false
-    var leftPressed = false
-    var rightPressed = false
+    var userInputVector: Vector2 = Vector2()
+    var userInputUp = false
+    var userInputDown = false
+    var userInputLeft = false
+    var userInputRight = false
+
     val entities = mutableListOf<Enemy>()
     val hero = Hero(0, 0, 30)
+    val gui = Gui
 
     init {
         preferredSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -30,6 +34,7 @@ object Renderer : JPanel() {
         this.entities.addAll(entities)
 
         SwingUtilities.invokeLater {
+
             val f = JFrame()
             with (f) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
@@ -41,49 +46,45 @@ object Renderer : JPanel() {
                 isVisible = true
             }
 
-            val stepTimer = Timer(FRAME_IN_MSEC) { e: ActionEvent? -> stepGame() }
-            stepTimer.start()
-
             // Set up key event handler
             f.addKeyListener(object : KeyAdapter() {
+
                 override fun keyPressed(e: KeyEvent) {
                     when (e.keyCode) {
-                        KeyEvent.VK_UP -> upPressed = true
-                        KeyEvent.VK_DOWN -> downPressed = true
-                        KeyEvent.VK_LEFT -> leftPressed = true
-                        KeyEvent.VK_RIGHT -> rightPressed = true
+                        KeyEvent.VK_Z -> userInputUp = true
+                        KeyEvent.VK_S -> userInputDown = true
+                        KeyEvent.VK_Q -> userInputLeft = true
+                        KeyEvent.VK_D -> userInputRight = true
                     }
                 }
 
                 override fun keyReleased(e: KeyEvent) {
                     when (e.keyCode) {
-                        KeyEvent.VK_UP -> upPressed = false
-                        KeyEvent.VK_DOWN -> downPressed = false
-                        KeyEvent.VK_LEFT -> leftPressed = false
-                        KeyEvent.VK_RIGHT -> rightPressed = false
+                        KeyEvent.VK_Z -> userInputUp = false
+                        KeyEvent.VK_S -> userInputDown = false
+                        KeyEvent.VK_Q -> userInputLeft = false
+                        KeyEvent.VK_D -> userInputRight = false
                     }
                 }
             })
+
+            val stepTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepGame() }
+            stepTimer.start()
+
         }
     }
 
     private fun createEnnemies() {
-        val entities = listOf(
-            Enemy(100, 100, 20, Color.blue),
-            Enemy(200, 200, 20, Color.green),
-            Enemy(300, 300, 20, Color.yellow),
-            Enemy(400, 400, 20, Color.orange),
-            Enemy(500, 500, 20, Color.pink),
-            Enemy(600, 600, 20, Color.cyan),
-            Enemy(700, 700, 20, Color.magenta),
-            Enemy(800, 800, 20, Color.gray),
-            Enemy(900, 900, 20, Color.darkGray),
-            Enemy(1000, 1000, 20, Color.lightGray)
-        )
-        this.entities.addAll(entities)
+        for (i in 0..100) {
+            entities.add(Enemy(Random.nextInt(0, WINDOW_WIDTH), Random.nextInt(0, WINDOW_HEIGHT), 20, Color.blue),)
+        }
     }
 
     private fun stepGame() {
+
+        moveHero()
+
+
         repaint()
     }
 
@@ -94,40 +95,62 @@ object Renderer : JPanel() {
 
         // Draw the ennemies
         entities.forEach { it.draw(hero.posX, hero.posY, g) }
+
         // Draw the hero
         hero.draw(g)
 
-        // Move the Hero
-        if(upPressed && leftPressed) {
-            hero.moveUpLeft()
-        }
-        else if(upPressed && rightPressed) {
-            hero.moveUpRight()
-        }
-        else if(downPressed && leftPressed) {
-            hero.moveDownLeft()
-        }
-        else if(downPressed && rightPressed) {
-            hero.moveDownRight()
-        }
-        else if(upPressed) {
-            hero.moveUp()
-        }
-        else if(downPressed) {
-            hero.moveDown()
-        }
-        else if(leftPressed) {
-            hero.moveLeft()
-        }
-        else if(rightPressed) {
-            hero.moveRight()
-        }
-        else {
-            // Invalid moves
+        // Check if the hero is in collision with an enemy
+        entities.removeAll {
+            val collides = hero.isColliding(it)
+            if (collides) {
+                hero.speed += .5
+            }
+            collides
         }
 
-        // Check if the hero is in collision with an enemy
-        entities.removeAll { hero.isColliding(it) }
+        // Draw GUI on top
+        gui.draw(g)
+    }
+
+    private fun moveHero() {
+        if (userInputUp && userInputLeft) {
+            userInputVector.x = -1.0
+            userInputVector.y = -1.0
+        }
+        else if(userInputUp && userInputRight) {
+            userInputVector.x = 1.0
+            userInputVector.y = -1.0
+        }
+        else if(userInputDown && userInputLeft) {
+            userInputVector.x = -1.0
+            userInputVector.y = 1.0
+        }
+        else if(userInputDown && userInputRight) {
+            userInputVector.x = 1.0
+            userInputVector.y = 1.0
+        }
+        else if(userInputUp) {
+            userInputVector.x = 0.0
+            userInputVector.y = -1.0
+        }
+        else if(userInputDown) {
+            userInputVector.x = 0.0
+            userInputVector.y = 1.0
+        }
+        else if(userInputLeft) {
+            userInputVector.x = -1.0
+            userInputVector.y = 0.0
+        }
+        else if(userInputRight) {
+            userInputVector.x = 1.0
+            userInputVector.y = 0.0
+        }
+        else {
+            userInputVector.x = 0.0
+            userInputVector.y = 0.0
+        }
+
+        hero.move(userInputVector)
     }
 
 }
