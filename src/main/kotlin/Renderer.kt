@@ -2,12 +2,10 @@ import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import java.time.LocalTime
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
-import kotlin.time.Duration
 
 object Renderer : JPanel() {
     // Frame and engine variables
@@ -16,6 +14,8 @@ object Renderer : JPanel() {
     const val WINDOW_WIDTH = 800
     const val WINDOW_HEIGHT = 600
     var timeElapsed = FRAME_PER_MSEC
+    var gameTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepGame() }
+    var engineTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepEngine() }
 
     // player input
     var userInputVector: Vector2 = Vector2()
@@ -66,6 +66,16 @@ object Renderer : JPanel() {
                         KeyEvent.VK_SPACE -> {
                             hero.weapons.add(EntityFactory.createBullet())
                         }
+                        KeyEvent.VK_ESCAPE -> {
+                            if (this@Renderer.gameTimer.isRunning) {
+                                this@Renderer.gameTimer.stop()
+                                engineTimer.start()
+                            } else {
+                                this@Renderer.gameTimer.start()
+                                engineTimer.stop()
+                            }
+
+                        }
                     }
                 }
 
@@ -79,8 +89,7 @@ object Renderer : JPanel() {
                 }
             })
 
-            val stepTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepGame() }
-            stepTimer.start()
+            this.gameTimer.start()
 
         }
     }
@@ -90,15 +99,19 @@ object Renderer : JPanel() {
         wave++
     }
 
+    private fun stepEngine() {
+        repaint()
+    }
+
     private fun stepGame() {
 
         moveHero()
 
+        moveEnnemy()
 
         hero.attack()
 
         checkCollisions()
-
 
         handleHeroDeath()
 
@@ -146,6 +159,10 @@ object Renderer : JPanel() {
         if (entities.size <= 0) {
             createEnnemies()
         }
+    }
+
+    private fun moveEnnemy() {
+        entities.forEach { it.move() }
     }
 
     private fun moveHero() {

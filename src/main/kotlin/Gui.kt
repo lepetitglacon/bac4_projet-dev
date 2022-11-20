@@ -1,8 +1,6 @@
 import java.awt.Color
-import java.awt.Dimension
 import java.awt.Graphics2D
 import java.awt.Point
-import kotlin.math.cos
 
 object Gui {
     val GUI_DISPLAY_START_PANEL = Vector2(0.0, 580.0)
@@ -18,6 +16,14 @@ object Gui {
         drawDebug(g)
         drawPanel(g)
         drawUserInput(g)
+
+        if (!Renderer.gameTimer.isRunning) {
+            drawPause(g)
+        }
+    }
+
+    fun drawEngineMenu(g: Graphics2D) {
+
     }
 
     private fun drawUserInput(g: Graphics2D) {
@@ -77,5 +83,10 @@ object Gui {
 //        infos.add("Hero direction:${Renderer.hero.direction.name}")
 //        infos.add("Manche ${Renderer.wave}")
 //        infos.add("Balles tirées (toujours actives) ${Renderer.bullets.size}")
+    }
+
+    private fun drawPause(g: Graphics2D) {
+        g.color = Color.BLACK
+        g.drawString("GAME PAUSED (escape to continue)", Renderer.WINDOW_WIDTH / 2, Renderer.WINDOW_HEIGHT / 2)
     }
 }

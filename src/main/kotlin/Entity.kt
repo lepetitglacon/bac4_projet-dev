@@ -21,7 +21,7 @@ abstract class Entity {
     var angle = 0
     var rayon = Vector2(ENTITY_RAYON.toDouble()).distance(Vector2())
     var size = ENTITY_RAYON
-    var speed = 10.0
+    var speed = 2.5
     var color: Color = Color.LIGHT_GRAY
     var state: EntityState = EntityState.IDLE
 

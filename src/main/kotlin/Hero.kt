@@ -10,6 +10,7 @@ class Hero() : Entity() {
 
     init {
         color = Color.ORANGE
+        speed = 5.0
     }
 
     override fun draw(g: Graphics2D) {

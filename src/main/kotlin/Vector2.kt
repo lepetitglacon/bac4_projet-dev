@@ -46,7 +46,7 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
         }
 
         fun minus(vector1: Vector2, vector2: Vector2): Vector2 {
-            return Vector2(vector1.x - vector2.x, vector1.y - vector2.y)
+            return Vector2(vector2.x - vector1.x, vector2.y - vector1.y)
         }
 
         fun times(vector1: Vector2, vector2: Vector2): Vector2 {
