@@ -38,4 +38,14 @@ object EntityFactory {
             Renderer.entities.add(createRandomEnemy())
         }
     }
+
+    fun createBullet(): Bullet {
+        val bullet = Bullet()
+        bullet.velocity = Renderer.hero.velocity
+        return bullet
+    }
+
+    private fun getRandomInt(min:Int, max:Int) {
+        return
+    }
 }

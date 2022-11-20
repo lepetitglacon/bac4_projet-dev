@@ -1,37 +1,42 @@
+import Renderer.WINDOW_HEIGHT
+import Renderer.WINDOW_WIDTH
 import java.awt.Graphics2D
 import java.time.LocalTime
 
 abstract class Weapon {
 
     var position = Vector2()
-    var attack = 10
-    var range = 5
+    var velocity = Vector2()
+    var damage = 10
+    var range = Renderer.hero.size + 25
+    var speed: Int = 25
+    var attackSpeed: Long = 100_000_000 // 100 ms
     var cooldown: Long = 5
     var lastCooldown: LocalTime = LocalTime.now()
 
-    fun attack() {
-        if (canFire()) fire()
-    }
-
     abstract fun collides(e: Entity): Boolean
-
+    abstract fun attack()
     abstract fun draw(g: Graphics2D)
+    abstract fun checkCollision()
+    abstract fun updatePosition(vector: Vector2)
+    abstract fun fire()
 
     fun canFire(): Boolean {
-        val cooldownTime = lastCooldown.plusSeconds(cooldown)
-        return cooldownTime < LocalTime.now()
+        return lastCooldown.plusSeconds(cooldown) < LocalTime.now()
     }
 
-    fun fire() {
-
-        Renderer.entities.forEach {
-            val collides = collides(it)
-            if (collides) {
-                it.hp -= attack
-            }
-        }
-
+    fun handleCooldown() {
         lastCooldown = LocalTime.now()
-        println("fire")
+    }
+
+    fun getDrawingX(): Int {
+        return (position.x - range / 2 - Renderer.hero.position.x + WINDOW_WIDTH / 2).toInt()
+    }
+    fun getDrawingY(): Int {
+        return (position.y - range / 2 - Renderer.hero.position.y + WINDOW_HEIGHT / 2).toInt()
+    }
+
+    fun isAttacking(): Boolean {
+        return lastCooldown.plusNanos(attackSpeed) > LocalTime.now()
     }
 }

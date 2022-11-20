@@ -2,28 +2,35 @@ import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
+import java.time.LocalTime
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
+import kotlin.time.Duration
 
 object Renderer : JPanel() {
+    // Frame and engine variables
     const val FRAMES_PER_SEC = 60
     const val FRAME_PER_MSEC = 1000 / FRAMES_PER_SEC
     const val WINDOW_WIDTH = 800
     const val WINDOW_HEIGHT = 600
+    var timeElapsed = FRAME_PER_MSEC
 
+    // player input
     var userInputVector: Vector2 = Vector2()
     var userInputUp = false
     var userInputDown = false
     var userInputLeft = false
     var userInputRight = false
 
-    val entities = mutableListOf<Enemy>()
+    //
     val hero = Hero()
-    var wave = 1
+    val entities = mutableListOf<Enemy>()
     val gui = Gui
 
+    // game variables
+    var wave = 1
     var deaths = 0
 
     init {
@@ -56,6 +63,9 @@ object Renderer : JPanel() {
                         KeyEvent.VK_S -> userInputDown = true
                         KeyEvent.VK_Q -> userInputLeft = true
                         KeyEvent.VK_D -> userInputRight = true
+                        KeyEvent.VK_SPACE -> {
+                            hero.weapons.add(EntityFactory.createBullet())
+                        }
                     }
                 }
 
@@ -84,13 +94,15 @@ object Renderer : JPanel() {
 
         moveHero()
 
-        handleHeroDeath()
 
         hero.attack()
 
+        checkCollisions()
+
+
+        handleHeroDeath()
+
         handleWaveChanging()
-
-
         repaint()
     }
 
@@ -102,18 +114,25 @@ object Renderer : JPanel() {
         // Draw the ennemies
         entities.forEach { it.draw(g) }
 
+        // Draw weapons
+        hero.weapons.forEach { it.draw(g) }
+
         // Draw the hero
         hero.draw(g)
 
-        hero.weapons.forEach { it.draw(g) }
+        // Draw GUI on top
+        gui.draw(g)
+    }
 
+    private fun checkCollisions() {
         // Check if the hero is in collision with an enemy
         entities.removeAll {
             it.mustDie(hero)
         }
 
-        // Draw GUI on top
-        gui.draw(g)
+        hero.weapons.forEach {
+            it.checkCollision()
+        }
     }
 
     private fun handleHeroDeath() {
@@ -169,5 +188,4 @@ object Renderer : JPanel() {
 
         hero.move(userInputVector)
     }
-
 }

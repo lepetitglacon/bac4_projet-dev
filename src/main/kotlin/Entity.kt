@@ -18,6 +18,7 @@ abstract class Entity {
 
     var position = Vector2()
     var velocity = Vector2()
+    var angle = 0
     var rayon = Vector2(ENTITY_RAYON.toDouble()).distance(Vector2())
     var size = ENTITY_RAYON
     var speed = 10.0

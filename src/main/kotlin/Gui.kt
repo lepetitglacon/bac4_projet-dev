@@ -64,8 +64,14 @@ object Gui {
 
     private fun loadStrings() {
         infos.add("DEBUG")
-        infos.add("Hero position x:${Renderer.hero.position.x} y:${Renderer.hero.position.y}")
+        infos.add("Hero position:")
+        infos.add("x:${Renderer.hero.position.x}")
+        infos.add("y:${Renderer.hero.position.y}")
+        infos.add("Hero velocity:")
+        infos.add("x:${Renderer.hero.velocity.x}")
+        infos.add("y:${Renderer.hero.velocity.y}")
         infos.add("Hero speed :${Renderer.hero.speed}")
+        infos.add("Hero angle :${Renderer.hero.angle}")
         infos.add("Hero hp :${Renderer.hero.hp}")
         infos.add("Hero deaths :${Renderer.deaths}")
 //        infos.add("Hero direction:${Renderer.hero.direction.name}")

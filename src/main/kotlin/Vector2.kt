@@ -53,13 +53,21 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
             return Vector2(vector1.x - vector2.x, vector1.y - vector2.y)
         }
 
+        /**
+         * Return a normalized vector from vector
+         */
         fun normalize(vector: Vector2): Vector2 {
-            val len = vector.lenght()
+            val vec = Vector2(vector.x, vector.y)
+            val len = vec.lenght()
             if (len == 0.0) return Vector2()
 
-            vector.x /= len
-            vector.y /= len
-            return vector
+            vec.x /= len
+            vec.y /= len
+            return vec
+        }
+
+        fun dotProduct(v1: Vector2, v2: Vector2): Double {
+            return v1.x * v2.x + v1.y * v2.y
         }
     }
 

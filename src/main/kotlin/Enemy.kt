@@ -5,6 +5,10 @@ import java.awt.Graphics2D
 
 class Enemy() : Entity() {
 
+    init {
+        attack = 1
+    }
+
     override fun draw(g: Graphics2D) {
         drawHealthbar(g)
         g.color = color
