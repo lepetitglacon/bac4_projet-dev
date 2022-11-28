@@ -16,18 +16,17 @@ class Enemy() : Entity() {
 
         // handle collision between enemies themselves
         Renderer.entities.forEach {
-            if (it != this) {
-                if (it.collides(this)) {
-                    it.repulse(this)
+            if (it != this && it.collides(this)) {
+                it.repulse(this)
 
-                    // cyber psycho movement
+                // cyber psycho movement
 //                val distance = it.position.distance(this.position)
 //                it.position.x += distance/2
 //                it.position.y += distance/2
 //                position.x -= distance/2
 //                position.y -= distance/2
-                }
             }
+
         }
     }
 

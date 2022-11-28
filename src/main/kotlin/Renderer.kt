@@ -1,3 +1,6 @@
+import factories.EntityFactory
+import factories.WeaponFactory
+import weapons.Sword
 import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.KeyAdapter
@@ -42,7 +45,7 @@ object Renderer : JPanel() {
     }
 
     fun initEngine() {
-        hero.weapons.add(Sword())
+        hero.weapons.add(WeaponFactory.createSword())
 
         // frame
         SwingUtilities.invokeLater {
@@ -172,6 +175,7 @@ object Renderer : JPanel() {
                 engineTimer.start()
             }
         }
+
     }
 
     private fun handleWaveChanging() {

@@ -1,19 +1,19 @@
+package factories
+
+import Enemy
+import Hero
+import PropertyReader
+import Renderer
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
+import Vector2
 import java.awt.Color
 import kotlin.random.Random
-import kotlin.random.nextInt
-
-const val ENTITY_RAYON = 25
-const val ENTITY_SPEED = 10
-const val ENNEMY_PER_WAVE = 6
-
-enum class EntityState {
-    IDLE
-}
-
 
 object EntityFactory {
+    private val ENEMY_PER_WAVE = PropertyReader.getInt("game", "enemyPerWave")
+    private val ENTITY_DIAMETER = PropertyReader.getInt("entity", "diameter")
+
     fun createHero(): Hero {
         return Hero()
     }
@@ -33,7 +33,7 @@ object EntityFactory {
             enemy.position.x = x
             enemy.position.y = Random.nextDouble(heroYMin, heroYMax)
         }
-        enemy.position = Vector2(enemy.position.x + ENTITY_RAYON / 2, enemy.position.y + ENTITY_RAYON / 2)
+        enemy.position = Vector2(enemy.position.x + ENTITY_DIAMETER / 2, enemy.position.y + ENTITY_DIAMETER / 2)
         enemy.color = Color.BLACK
         return enemy
     }
@@ -42,19 +42,9 @@ object EntityFactory {
      * Add new ennemies to Renderer entity array
      */
     fun createEnemiesForWave(wave: Int) {
-        val number = ENNEMY_PER_WAVE * wave
+        val number = ENEMY_PER_WAVE * wave
         for (i in 0..number) {
             Renderer.entities.add(createRandomEnemy())
         }
-    }
-
-    fun createBullet(): Bullet {
-        val bullet = Bullet()
-        bullet.velocity = Renderer.hero.velocity
-        return bullet
-    }
-
-    private fun getRandomInt(min: Int, max: Int) {
-        return
     }
 }

@@ -1,18 +1,27 @@
+package weapons
+
+import Entity
+import Renderer
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
+import Vector2
+import interfaces.FireableInterface
+import interfaces.PositionInterface
 import java.awt.Graphics2D
 import java.time.LocalTime
 
 abstract class Weapon {
-
-    var position = Vector2()
-    var velocity = Vector2()
     var damage = 10
-    var range = Renderer.hero.size + 25
-    var speed: Int = 25
+    open var size = Renderer.hero.size + 25
     var attackSpeed: Long = 100_000_000 // 100 ms
+
+    /**
+     * Nombre de seconde de cooldown
+     */
     var cooldown: Long = 5
     var lastCooldown: LocalTime = LocalTime.now()
+
+    var needRemoval = false
 
     abstract fun collides(e: Entity): Boolean
     abstract fun attack()
@@ -29,13 +38,7 @@ abstract class Weapon {
         lastCooldown = LocalTime.now()
     }
 
-    fun getDrawingX(): Int {
-        return (position.x - range / 2 - Renderer.hero.position.x + WINDOW_WIDTH / 2).toInt()
-    }
 
-    fun getDrawingY(): Int {
-        return (position.y - range / 2 - Renderer.hero.position.y + WINDOW_HEIGHT / 2).toInt()
-    }
 
     fun isAttacking(): Boolean {
         return lastCooldown.plusNanos(attackSpeed) > LocalTime.now()

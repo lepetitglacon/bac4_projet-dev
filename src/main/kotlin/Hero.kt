@@ -1,17 +1,26 @@
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.timeElapsed
+import weapons.Weapon
 import java.awt.Color
 import java.awt.Graphics2D
 import kotlin.math.*
 
-class Hero() : Entity() {
-    val bullets = mutableListOf<Bullet>()
-
-    init {
-        color = Color.ORANGE
-        speed = 5.0
-    }
+class Hero(
+    override var color: Color,
+    override var damages: Int,
+    override var width: Int,
+    override var height: Int,
+    override var size: Int,
+    override var maxHp: Int,
+    override var hp: Int,
+    override var regeneration: Int,
+    override var position: Vector2,
+    override var velocity: Vector2,
+    override var angle: Int,
+    override var speed: Int,
+    override val weapons: MutableList<Weapon>
+) : Entity() {
 
     override fun draw(g: Graphics2D) {
         val startX = WINDOW_WIDTH / 2 - size / 2
@@ -30,7 +39,19 @@ class Hero() : Entity() {
         drawHealthbar(g)
     }
 
-    fun move(vector: Vector2) {
+    override fun goTo() {
+        TODO("Not yet implemented")
+    }
+
+    override fun move() {
+        TODO("Not yet implemented")
+    }
+
+    override fun collides(entity: Entity) {
+        TODO("Not yet implemented")
+    }
+
+    override fun move(vector: Vector2) {
         // update position by speed
         vector.normalize()
         velocity.x += (vector.x * speed).toInt()
@@ -38,7 +59,6 @@ class Hero() : Entity() {
 
         position.x += velocity.x.toInt()
         position.y += velocity.y.toInt()
-        angle = angle()
 
         if (velocity.x != 0.0) {
             velocity.x = (velocity.x * 0.5).toInt().toDouble()
@@ -47,10 +67,5 @@ class Hero() : Entity() {
             velocity.y = (velocity.y * 0.5).toInt().toDouble()
         }
 
-    }
-
-    private fun angle(): Int {
-        val normalized = Vector2.normalize(velocity)
-        return (cos(normalized.x) + sin(normalized.y) * 180 / PI).toInt()
     }
 }
