@@ -24,6 +24,7 @@ object Renderer : JPanel() {
     var userInputDown = false
     var userInputLeft = false
     var userInputRight = false
+    var userInputSpace = false
 
     //
     val hero = Hero()
@@ -33,17 +34,18 @@ object Renderer : JPanel() {
     // game variables
     var wave = 1
     var deaths = 0
+    var playerDead = false
 
     init {
         preferredSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
         background = Color.white
     }
 
-    fun initGame() {
+    fun initEngine() {
         hero.weapons.add(Sword())
 
+        // frame
         SwingUtilities.invokeLater {
-
             val f = JFrame()
             with(f) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
@@ -57,7 +59,6 @@ object Renderer : JPanel() {
 
             // Set up key event handler
             f.addKeyListener(object : KeyAdapter() {
-
                 override fun keyPressed(e: KeyEvent) {
                     when (e.keyCode) {
                         KeyEvent.VK_Z -> userInputUp = true
@@ -65,7 +66,7 @@ object Renderer : JPanel() {
                         KeyEvent.VK_Q -> userInputLeft = true
                         KeyEvent.VK_D -> userInputRight = true
                         KeyEvent.VK_SPACE -> {
-                            hero.weapons.add(EntityFactory.createBullet())
+                            userInputSpace = true
                         }
                         KeyEvent.VK_ESCAPE -> {
                             if (this@Renderer.gameTimer.isRunning) {
@@ -79,19 +80,18 @@ object Renderer : JPanel() {
                         }
                     }
                 }
-
                 override fun keyReleased(e: KeyEvent) {
                     when (e.keyCode) {
                         KeyEvent.VK_Z -> userInputUp = false
                         KeyEvent.VK_S -> userInputDown = false
                         KeyEvent.VK_Q -> userInputLeft = false
                         KeyEvent.VK_D -> userInputRight = false
+                        KeyEvent.VK_SPACE -> userInputSpace = false
                     }
                 }
             })
 
             this.gameTimer.start()
-
         }
     }
 
@@ -101,6 +101,7 @@ object Renderer : JPanel() {
     }
 
     private fun stepEngine() {
+        handleHeroDeath()
         repaint()
     }
 
@@ -152,9 +153,24 @@ object Renderer : JPanel() {
     }
 
     private fun handleHeroDeath() {
-        if (hero.hp <= 0) {
-            deaths++
-            hero.hp = 100
+        if (playerDead) {
+
+            // restart the game
+            if (userInputSpace) {
+                playerDead = false
+                engineTimer.stop()
+                gameTimer.start()
+                hero.hp = 100
+            }
+        } else {
+
+            // on hero death
+            if (hero.hp <= 0) {
+                deaths++
+                playerDead = true
+                gameTimer.stop()
+                engineTimer.start()
+            }
         }
     }
 
