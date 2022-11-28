@@ -18,7 +18,12 @@ object Gui {
         drawUserInput(g)
 
         if (!Renderer.gameTimer.isRunning) {
-            drawPause(g)
+            if (Renderer.playerDead) {
+                drawGameOver(g)
+            } else {
+                drawPause(g)
+            }
+
         }
     }
 
@@ -89,5 +94,10 @@ object Gui {
     private fun drawPause(g: Graphics2D) {
         g.color = Color.BLACK
         g.drawString("GAME PAUSED (escape to continue)", Renderer.WINDOW_WIDTH / 2, Renderer.WINDOW_HEIGHT / 2)
+    }
+
+    private fun drawGameOver(g: Graphics2D) {
+        g.color = Color.BLACK
+        g.drawString("GAME OVER (space to restart)", Renderer.WINDOW_WIDTH / 2, Renderer.WINDOW_HEIGHT / 2)
     }
 }
