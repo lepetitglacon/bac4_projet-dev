@@ -156,7 +156,7 @@ object Renderer : JPanel() {
     }
 
     private fun handleWaveChanging() {
-        if (entities.size <= 0) {
+        if (entities.size <= wave * 6 / 2) {
             createEnnemies()
         }
     }

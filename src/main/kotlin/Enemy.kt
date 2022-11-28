@@ -4,31 +4,21 @@ import java.awt.Color
 import java.awt.Graphics2D
 
 class Enemy() : Entity() {
-    var directionToHero = Vector2()
-
 
     init {
         attack = 1
     }
 
     fun move() {
-        val newPos = Vector2()
-        val posMinusHero = Vector2()
 
-        posMinusHero.x = Renderer.hero.position.x - position.x
-        posMinusHero.y = Renderer.hero.position.y - position.y
+        // go to hero
+        position.translateTo(Renderer.hero.position, speed.toInt())
 
-        newPos.x = position.x + posMinusHero.x / posMinusHero.lenght() * speed
-        newPos.y = position.y + posMinusHero.y / posMinusHero.lenght() * speed
-
-        position = newPos
-
+        // handle collision between enemies themselves
         Renderer.entities.forEach {
             if (it != this) {
                 if (it.collides(this)) {
-                    println("collides")
                     it.repulse(this)
-
 
                     // cyber psycho movement
 //                val distance = it.position.distance(this.position)
@@ -36,10 +26,8 @@ class Enemy() : Entity() {
 //                it.position.y += distance/2
 //                position.x -= distance/2
 //                position.y -= distance/2
-
                 }
             }
-
         }
     }
 

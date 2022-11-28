@@ -39,12 +39,12 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
     fun translateTo(vector: Vector2, speed: Int) {
         val newPos = Vector2()
         val posMinusHero = Vector2()
-
-        posMinusHero.x = x - vector.x
-        posMinusHero.y = y - vector.y
-
-        newPos.x = vector.x + posMinusHero.x / posMinusHero.lenght() * speed
-        newPos.y = vector.y + posMinusHero.y / posMinusHero.lenght() * speed
+        posMinusHero.x = vector.x - x
+        posMinusHero.y = vector.y - y
+        newPos.x = x + posMinusHero.x / posMinusHero.lenght() * speed
+        newPos.y = y + posMinusHero.y / posMinusHero.lenght() * speed
+        x = newPos.x
+        y = newPos.y
     }
 
 
