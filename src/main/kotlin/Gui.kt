@@ -70,6 +70,7 @@ object Gui {
 
     private fun loadStrings() {
         infos.add("DEBUG")
+        infos.add("ticks: ${Renderer.ticks}")
         infos.add("Hero position:")
         infos.add("x:${Renderer.hero.position.x}")
         infos.add("y:${Renderer.hero.position.y}")
@@ -80,8 +81,8 @@ object Gui {
         infos.add("Hero angle :${Renderer.hero.angle}")
         infos.add("Hero hp :${Renderer.hero.hp}")
         infos.add("Hero deaths :${Renderer.deaths}")
+        infos.add("Manche ${Renderer.wave}")
 //        infos.add("Hero direction:${Renderer.hero.direction.name}")
-//        infos.add("Manche ${Renderer.wave}")
 //        infos.add("Balles tirées (toujours actives) ${Renderer.bullets.size}")
     }
 

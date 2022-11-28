@@ -16,6 +16,7 @@ object Renderer : JPanel() {
     var timeElapsed = FRAME_PER_MSEC
     var gameTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepGame() }
     var engineTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepEngine() }
+    var ticks = 0
 
     // player input
     var userInputVector: Vector2 = Vector2()
@@ -116,6 +117,8 @@ object Renderer : JPanel() {
         handleHeroDeath()
 
         handleWaveChanging()
+
+        ticks++
         repaint()
     }
 
