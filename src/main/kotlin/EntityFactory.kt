@@ -2,6 +2,7 @@ import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import java.awt.Color
 import kotlin.random.Random
+import kotlin.random.nextInt
 
 const val ENTITY_RAYON = 25
 const val ENTITY_SPEED = 10
@@ -19,13 +20,21 @@ object EntityFactory {
 
     fun createRandomEnemy(): Enemy {
         val enemy = Enemy()
-        enemy.position.x = Random.nextDouble(0.0, WINDOW_WIDTH.toDouble())
-        enemy.position.y = Random.nextDouble(0.0, WINDOW_HEIGHT.toDouble())
-
+        val heroXMin = Renderer.hero.position.x - WINDOW_WIDTH/2
+        val heroXMax = Renderer.hero.position.x + WINDOW_WIDTH/2
+        val heroYMin = Renderer.hero.position.y - WINDOW_HEIGHT/2
+        val heroYMax = Renderer.hero.position.y + WINDOW_HEIGHT/2
+        if (Random.nextBoolean()) {
+            enemy.position.x = Random.nextDouble(heroXMin, heroXMax)
+            val y = if (Random.nextBoolean()) heroYMin else heroYMax
+            enemy.position.y = y
+        } else {
+            val x = if (Random.nextBoolean()) heroXMin else heroXMax
+            enemy.position.x = x
+            enemy.position.y = Random.nextDouble(heroYMin, heroYMax)
+        }
         enemy.position = Vector2(enemy.position.x + ENTITY_RAYON / 2, enemy.position.y + ENTITY_RAYON / 2)
-
         enemy.color = Color.BLACK
-
         return enemy
     }
 
