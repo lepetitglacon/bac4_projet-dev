@@ -47,7 +47,9 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
         y = newPos.y
     }
 
-
+    fun clone(): Vector2 {
+        return Vector2(x, y)
+    }
 
     override fun toString(): String {
         return "$x $y lenght=${lenght()}"
