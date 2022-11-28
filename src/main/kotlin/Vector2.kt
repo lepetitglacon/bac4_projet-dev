@@ -1,4 +1,5 @@
 import java.awt.Graphics2D
+import kotlin.math.hypot
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -35,6 +36,19 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
         y *= speed.y
     }
 
+    fun translateTo(vector: Vector2, speed: Int) {
+        val newPos = Vector2()
+        val posMinusHero = Vector2()
+
+        posMinusHero.x = x - vector.x
+        posMinusHero.y = y - vector.y
+
+        newPos.x = vector.x + posMinusHero.x / posMinusHero.lenght() * speed
+        newPos.y = vector.y + posMinusHero.y / posMinusHero.lenght() * speed
+    }
+
+
+
     override fun toString(): String {
         return "$x $y lenght=${lenght()}"
     }
@@ -42,7 +56,7 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
     companion object {
 
         fun add(vector1: Vector2, vector2: Vector2): Vector2 {
-            return Vector2(vector1.x+vector2.x, vector1.y+vector2.y)
+            return Vector2(vector1.x + vector2.x, vector1.y + vector2.y)
         }
 
         fun minus(vector1: Vector2, vector2: Vector2): Vector2 {

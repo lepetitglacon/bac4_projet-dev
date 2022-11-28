@@ -1,7 +1,7 @@
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Sword(): Weapon() {
+class Sword() : Weapon() {
 
     init {
         position = Renderer.hero.position
@@ -14,13 +14,13 @@ class Sword(): Weapon() {
     }
 
     override fun collides(e: Entity): Boolean {
-        return isAttacking() && position.distance(e.position) - e.size/2 < range
+        return isAttacking() && position.distance(e.position) - e.size / 2 < range
     }
 
     override fun draw(g: Graphics2D) {
         if (isAttacking()) {
             g.color = Color.MAGENTA
-            g.fillArc(getDrawingX()-range/2, getDrawingY()-range/2, range*2, range*2, 0, 360)
+            g.fillArc(getDrawingX() - range / 2, getDrawingY() - range / 2, range * 2, range * 2, 0, 360)
         }
     }
 
@@ -43,7 +43,7 @@ class Sword(): Weapon() {
     }
 }
 
-class Bullet(): Weapon() {
+class Bullet() : Weapon() {
 
     init {
         position = Renderer.hero.position
@@ -57,7 +57,7 @@ class Bullet(): Weapon() {
     }
 
     override fun collides(e: Entity): Boolean {
-        return position.distance(e.position) - e.size/2 < range
+        return position.distance(e.position) - e.size / 2 < range
     }
 
     override fun draw(g: Graphics2D) {

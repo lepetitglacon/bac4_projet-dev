@@ -29,6 +29,15 @@ abstract class Entity {
         return position.distance(e.position) < size
     }
 
+    fun repulse(entity: Entity) {
+        val distance = position.distance(entity.position)
+        val overlap = (distance - size) / 2
+        position.x -= overlap * (position.x - entity.position.x) / distance
+        position.y -= overlap * (position.y - entity.position.y) / distance
+        entity.position.x += overlap * (position.x - entity.position.x) / distance
+        entity.position.y += overlap * (position.y - entity.position.y) / distance
+    }
+
     fun mustDie(e: Entity): Boolean {
         val collides = collides(e)
 
@@ -55,12 +64,13 @@ abstract class Entity {
             (hp < 50) -> g.color = Color.YELLOW
             else -> g.color = Color.GREEN
         }
-        g.fillRect(getDrawingX()+1, getDrawingY() - 9, (size * hp / 100) - 2, 3)
+        g.fillRect(getDrawingX() + 1, getDrawingY() - 9, (size * hp / 100) - 2, 3)
     }
 
     fun getDrawingX(): Int {
         return (position.x - size / 2 - Renderer.hero.position.x + WINDOW_WIDTH / 2).toInt()
     }
+
     fun getDrawingY(): Int {
         return (position.y - size / 2 - Renderer.hero.position.y + WINDOW_HEIGHT / 2).toInt()
     }

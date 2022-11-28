@@ -44,7 +44,7 @@ object Renderer : JPanel() {
         SwingUtilities.invokeLater {
 
             val f = JFrame()
-            with (f) {
+            with(f) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
                 title = "Bac+4 survival game - Esteban GAGNEUR"
                 isResizable = true
@@ -169,36 +169,28 @@ object Renderer : JPanel() {
         if (userInputUp && userInputLeft) {
             userInputVector.x = -1.0
             userInputVector.y = -1.0
-        }
-        else if(userInputUp && userInputRight) {
+        } else if (userInputUp && userInputRight) {
             userInputVector.x = 1.0
             userInputVector.y = -1.0
-        }
-        else if(userInputDown && userInputLeft) {
+        } else if (userInputDown && userInputLeft) {
             userInputVector.x = -1.0
             userInputVector.y = 1.0
-        }
-        else if(userInputDown && userInputRight) {
+        } else if (userInputDown && userInputRight) {
             userInputVector.x = 1.0
             userInputVector.y = 1.0
-        }
-        else if(userInputUp) {
+        } else if (userInputUp) {
             userInputVector.x = 0.0
             userInputVector.y = -1.0
-        }
-        else if(userInputDown) {
+        } else if (userInputDown) {
             userInputVector.x = 0.0
             userInputVector.y = 1.0
-        }
-        else if(userInputLeft) {
+        } else if (userInputLeft) {
             userInputVector.x = -1.0
             userInputVector.y = 0.0
-        }
-        else if(userInputRight) {
+        } else if (userInputRight) {
             userInputVector.x = 1.0
             userInputVector.y = 0.0
-        }
-        else {
+        } else {
             userInputVector.x = 0.0
             userInputVector.y = 0.0
         }

@@ -31,11 +31,11 @@ object Gui {
         val startY = GUI_DISPLAY_START_DEBUG.y
         val width = 25
         val height = 25
-        val centerX = (startX + width/ 2)
-        val centerY = (startY + height/ 2)
+        val centerX = (startX + width / 2)
+        val centerY = (startY + height / 2)
         val normalized = Vector2.normalize(Renderer.userInputVector)
-        val endX = centerX + normalized.x * (width/2)
-        val endY = centerY + normalized.y * (height/2)
+        val endX = centerX + normalized.x * (width / 2)
+        val endY = centerY + normalized.y * (height / 2)
 
         g.color = Color.RED
         g.fillRect(startX, startY, width, height)
@@ -55,7 +55,7 @@ object Gui {
 
         // infos
         infos.forEachIndexed { i, it ->
-            g.drawString(it, MARGIN_X, MARGIN_Y * (i+1))
+            g.drawString(it, MARGIN_X, MARGIN_Y * (i + 1))
         }
         g.color = Color.BLACK
         infos.clear()

@@ -32,6 +32,7 @@ abstract class Weapon {
     fun getDrawingX(): Int {
         return (position.x - range / 2 - Renderer.hero.position.x + WINDOW_WIDTH / 2).toInt()
     }
+
     fun getDrawingY(): Int {
         return (position.y - range / 2 - Renderer.hero.position.y + WINDOW_HEIGHT / 2).toInt()
     }

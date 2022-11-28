@@ -22,7 +22,7 @@ object EntityFactory {
         enemy.position.x = Random.nextDouble(0.0, WINDOW_WIDTH.toDouble())
         enemy.position.y = Random.nextDouble(0.0, WINDOW_HEIGHT.toDouble())
 
-        enemy.position = Vector2(enemy.position.x + ENTITY_RAYON/2, enemy.position.y + ENTITY_RAYON/2)
+        enemy.position = Vector2(enemy.position.x + ENTITY_RAYON / 2, enemy.position.y + ENTITY_RAYON / 2)
 
         enemy.color = Color.BLACK
 
@@ -45,7 +45,7 @@ object EntityFactory {
         return bullet
     }
 
-    private fun getRandomInt(min:Int, max:Int) {
+    private fun getRandomInt(min: Int, max: Int) {
         return
     }
 }
