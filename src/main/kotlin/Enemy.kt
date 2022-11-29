@@ -1,5 +1,4 @@
-import Renderer.WINDOW_HEIGHT
-import Renderer.WINDOW_WIDTH
+import engine.Renderer
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -12,7 +11,7 @@ class Enemy() : Entity() {
     fun move() {
 
         // go to hero
-        position.translateTo(Renderer.hero.position, speed.toInt())
+        position.translateTo(Renderer.game.hero.position, speed.toInt())
 
         // handle collision between enemies themselves
         Renderer.entities.forEach {

@@ -1,10 +1,12 @@
+import engine.Renderer
+import engine.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 
 class Sword() : Weapon() {
 
     init {
-        position = Renderer.hero.position
+        position = Renderer.game.hero.position
     }
 
     override fun attack() {
@@ -44,16 +46,21 @@ class Sword() : Weapon() {
 }
 
 class Bullet() : Weapon() {
-
+    val size: Int
     init {
-        position = Renderer.hero.position
         attackSpeed = 50
-        range = 10
+        size = 10
+        damage = 25
     }
 
     override fun attack() {
-
         updatePosition(Vector2())
+        Renderer.entities.forEach {
+            if (collides(it)) {
+                it.hp -= damage
+                needRemoval = true
+            }
+        }
     }
 
     override fun collides(e: Entity): Boolean {
@@ -61,10 +68,10 @@ class Bullet() : Weapon() {
     }
 
     override fun draw(g: Graphics2D) {
-        g.color = Color.YELLOW
-//        g.fillOval(getDrawingX(), getDrawingY(), range, range)
-        g.fillOval(150, 150, range, range)
-        g.drawString("${position.x} ${position.y}", getDrawingX(), getDrawingY() - 10)
+        g.color = Color.RED
+        g.fillOval(getDrawingX() + size/2, getDrawingY() + size/2, size, size)
+//        g.fillOval(150, 150, range, range)
+        g.drawString("${position.x.toInt()} ${position.y.toInt()}", getDrawingX(), getDrawingY() - 10)
         g.color = Color.BLACK
     }
 
@@ -73,21 +80,23 @@ class Bullet() : Weapon() {
             val collides = collides(it)
             if (collides) {
                 it.hp -= damage
+                needRemoval = true
             }
             collides && damage > it.hp
         }
     }
 
     override fun updatePosition(vector: Vector2) {
-        vector.normalize()
-        velocity.x += (vector.x * speed).toInt()
-        velocity.y += (vector.y * speed).toInt()
-
-        position.x += velocity.x
-        position.y += velocity.y
+        var closest = Renderer.entities.first()
+        Renderer.entities.forEach {
+            if (position.distance(it.position) < position.distance(closest.position)) {
+                closest = it
+            }
+        }
+        position.translateTo(closest.position, speed)
     }
 
     override fun fire() {
-
+        TODO("Not yet implemented")
     }
 }

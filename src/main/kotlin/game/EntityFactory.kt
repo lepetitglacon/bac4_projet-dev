@@ -1,8 +1,9 @@
-import Renderer.WINDOW_HEIGHT
-import Renderer.WINDOW_WIDTH
+import engine.Renderer
+import engine.Renderer.WINDOW_HEIGHT
+import engine.Renderer.WINDOW_WIDTH
+import engine.Vector2
 import java.awt.Color
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 const val ENTITY_RAYON = 25
 const val ENTITY_SPEED = 10
@@ -20,10 +21,10 @@ object EntityFactory {
 
     fun createRandomEnemy(): Enemy {
         val enemy = Enemy()
-        val heroXMin = Renderer.hero.position.x - WINDOW_WIDTH/2
-        val heroXMax = Renderer.hero.position.x + WINDOW_WIDTH/2
-        val heroYMin = Renderer.hero.position.y - WINDOW_HEIGHT/2
-        val heroYMax = Renderer.hero.position.y + WINDOW_HEIGHT/2
+        val heroXMin = Renderer.game.hero.position.x - WINDOW_WIDTH/2
+        val heroXMax = Renderer.game.hero.position.x + WINDOW_WIDTH/2
+        val heroYMin = Renderer.game.hero.position.y - WINDOW_HEIGHT/2
+        val heroYMax = Renderer.game.hero.position.y + WINDOW_HEIGHT/2
         if (Random.nextBoolean()) {
             enemy.position.x = Random.nextDouble(heroXMin, heroXMax)
             val y = if (Random.nextBoolean()) heroYMin else heroYMax
@@ -39,7 +40,7 @@ object EntityFactory {
     }
 
     /**
-     * Add new ennemies to Renderer entity array
+     * Add new ennemies to engine.Renderer entity array
      */
     fun createEnemiesForWave(wave: Int) {
         val number = ENNEMY_PER_WAVE * wave
@@ -50,7 +51,7 @@ object EntityFactory {
 
     fun createBullet(): Bullet {
         val bullet = Bullet()
-        bullet.velocity = Renderer.hero.velocity
+        bullet.position = Renderer.game.hero.position.clone()
         return bullet
     }
 

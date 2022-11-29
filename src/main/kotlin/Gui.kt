@@ -1,3 +1,5 @@
+import engine.Renderer
+import engine.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.Point
@@ -17,8 +19,8 @@ object Gui {
         drawPanel(g)
         drawUserInput(g)
 
-        if (!Renderer.gameTimer.isRunning) {
-            if (Renderer.playerDead) {
+        if (!Renderer.game.timer.isRunning) {
+            if (Renderer.game.hero.dead) {
                 drawGameOver(g)
             } else {
                 drawPause(g)
@@ -38,7 +40,7 @@ object Gui {
         val height = 25
         val centerX = (startX + width / 2)
         val centerY = (startY + height / 2)
-        val normalized = Vector2.normalize(Renderer.userInputVector)
+        val normalized = Renderer.inputHandler.userInputVector.clone().normalize()
         val endX = centerX + normalized.x * (width / 2)
         val endY = centerY + normalized.y * (height / 2)
 
@@ -77,18 +79,18 @@ object Gui {
         infos.add("DEBUG")
         infos.add("ticks: ${Renderer.ticks}")
         infos.add("Hero position:")
-        infos.add("x:${Renderer.hero.position.x}")
-        infos.add("y:${Renderer.hero.position.y}")
+        infos.add("x:${Renderer.game.hero.position.x}")
+        infos.add("y:${Renderer.game.hero.position.y}")
         infos.add("Hero velocity:")
-        infos.add("x:${Renderer.hero.velocity.x}")
-        infos.add("y:${Renderer.hero.velocity.y}")
-        infos.add("Hero speed :${Renderer.hero.speed}")
-        infos.add("Hero angle :${Renderer.hero.angle}")
-        infos.add("Hero hp :${Renderer.hero.hp}")
-        infos.add("Hero deaths :${Renderer.deaths}")
-        infos.add("Manche ${Renderer.wave}")
-//        infos.add("Hero direction:${Renderer.hero.direction.name}")
-//        infos.add("Balles tirées (toujours actives) ${Renderer.bullets.size}")
+        infos.add("x:${Renderer.game.hero.velocity.x}")
+        infos.add("y:${Renderer.game.hero.velocity.y}")
+        infos.add("Hero speed :${Renderer.game.hero.speed}")
+        infos.add("Hero angle :${Renderer.game.hero.angle}")
+        infos.add("Hero hp :${Renderer.game.hero.hp}")
+        infos.add("Hero deaths :${Renderer.game.hero.deaths}")
+        infos.add("Manche ${Renderer.game.wave}")
+//        infos.add("Hero direction:${engine.Renderer.game.hero.direction.name}")
+//        infos.add("Balles tirées (toujours actives) ${engine.Renderer.bullets.size}")
     }
 
     private fun drawPause(g: Graphics2D) {

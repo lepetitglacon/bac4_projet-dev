@@ -1,12 +1,15 @@
-import Renderer.WINDOW_HEIGHT
-import Renderer.WINDOW_WIDTH
-import Renderer.timeElapsed
+import engine.Renderer
+import engine.Renderer.WINDOW_HEIGHT
+import engine.Renderer.WINDOW_WIDTH
+import engine.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 import kotlin.math.*
 
 class Hero() : Entity() {
-    val bullets = mutableListOf<Bullet>()
+    val gun = Gun()
+    var deaths = 0
+    var dead = false
 
     init {
         color = Color.ORANGE
@@ -18,7 +21,7 @@ class Hero() : Entity() {
         val startY = WINDOW_HEIGHT / 2 - size / 2
         val centerX = startX + size / 2
         val centerY = startY + size / 2
-        val normalized = Vector2.normalize(Renderer.userInputVector)
+        val normalized = Renderer.inputHandler.userInputVector.clone().normalize()
         val endX = centerX + velocity.x * 2
         val endY = centerY + velocity.y * 2
 
@@ -50,7 +53,12 @@ class Hero() : Entity() {
     }
 
     private fun angle(): Int {
-        val normalized = Vector2.normalize(velocity)
+        val normalized = velocity.clone().normalize()
         return (cos(normalized.x) + sin(normalized.y) * 180 / PI).toInt()
+    }
+
+    override fun attack() {
+        weapons.forEach { it.attack() }
+        gun.attack()
     }
 }

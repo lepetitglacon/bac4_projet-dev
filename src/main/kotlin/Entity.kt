@@ -1,5 +1,7 @@
-import Renderer.WINDOW_HEIGHT
-import Renderer.WINDOW_WIDTH
+import engine.Renderer
+import engine.Renderer.WINDOW_HEIGHT
+import engine.Renderer.WINDOW_WIDTH
+import engine.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -38,19 +40,14 @@ abstract class Entity {
         entity.position.y += overlap * (position.y - entity.position.y) / distance
     }
 
-    fun mustDie(e: Entity): Boolean {
-        val collides = collides(e)
-
-        if (collides) {
-            hp -= e.attack
-            e.hp -= attack
-        }
-
-        return collides && e.attack > hp
+    fun mustDie(): Boolean {
+        return hp <= 0
     }
 
-    fun attack() {
-        weapons.forEach { it.attack() }
+    open fun attack() {
+        weapons.forEach {
+            it.attack()
+        }
     }
 
     abstract fun draw(g: Graphics2D)
@@ -68,11 +65,11 @@ abstract class Entity {
     }
 
     fun getDrawingX(): Int {
-        return (position.x - size / 2 - Renderer.hero.position.x + WINDOW_WIDTH / 2).toInt()
+        return (position.x - size / 2 - Renderer.game.hero.position.x + WINDOW_WIDTH / 2).toInt()
     }
 
     fun getDrawingY(): Int {
-        return (position.y - size / 2 - Renderer.hero.position.y + WINDOW_HEIGHT / 2).toInt()
+        return (position.y - size / 2 - Renderer.game.hero.position.y + WINDOW_HEIGHT / 2).toInt()
     }
 
 }
