@@ -38,7 +38,7 @@ object Gui {
         val height = 25
         val centerX = (startX + width / 2)
         val centerY = (startY + height / 2)
-        val normalized = Vector2.normalize(Renderer.userInputVector)
+        val normalized = (Renderer.userInputVector)
         val endX = centerX + normalized.x * (width / 2)
         val endY = centerY + normalized.y * (height / 2)
 

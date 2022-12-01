@@ -1,5 +1,4 @@
-import Renderer.WINDOW_HEIGHT
-import Renderer.WINDOW_WIDTH
+import engine.entity.sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -38,6 +37,8 @@ class Enemy() : Entity() {
         g.color = color
         g.fillOval(getDrawingX(), getDrawingY(), size, size)
         g.color = Color.black
+
+        g.drawImage(Sprite.getPokemonSprite(0, 0), null, getDrawingX()-Sprite.TILE_SIZE/2, getDrawingY()-Sprite.TILE_SIZE/2)
 
         // line to hero
 //        val centerX = getDrawingX() + size / 2

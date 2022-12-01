@@ -1,11 +1,13 @@
+import engine.logger.Formatter
+import engine.entity.sprite.Sprite
 import java.awt.*
 import java.awt.event.ActionEvent
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-import javax.swing.JFrame
+import java.util.logging.ConsoleHandler
+import java.util.logging.Logger
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
+
 
 object Renderer : JPanel() {
     // Frame and engine variables
@@ -17,6 +19,7 @@ object Renderer : JPanel() {
     var gameTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepGame() }
     var engineTimer = Timer(FRAME_PER_MSEC) { e: ActionEvent? -> stepEngine() }
     var ticks = 0
+    val logger = Logger.getLogger(Renderer::class.java.name)
 
     // player input
     var userInputVector: Vector2 = Vector2()
@@ -44,82 +47,37 @@ object Renderer : JPanel() {
     fun initEngine() {
         hero.weapons.add(Sword())
 
+        logger.useParentHandlers = false
+        val handler = ConsoleHandler()
+        val formatter: Formatter = Formatter()
+        handler.formatter = formatter
+        logger.addHandler(handler)
+
+
         // frame
         SwingUtilities.invokeLater {
-            val f = JFrame()
-            with(f) {
-                defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-                title = "Bac+4 survival game - Esteban GAGNEUR"
-                isResizable = true
-                add(this@Renderer, BorderLayout.CENTER)
-                pack()
-                setLocationRelativeTo(null)
-                isVisible = true
-            }
-
-            // Set up key event handler
-            f.addKeyListener(object : KeyAdapter() {
-                override fun keyPressed(e: KeyEvent) {
-                    when (e.keyCode) {
-                        KeyEvent.VK_Z -> userInputUp = true
-                        KeyEvent.VK_S -> userInputDown = true
-                        KeyEvent.VK_Q -> userInputLeft = true
-                        KeyEvent.VK_D -> userInputRight = true
-                        KeyEvent.VK_SPACE -> {
-                            userInputSpace = true
-                        }
-                        KeyEvent.VK_ESCAPE -> {
-                            if (this@Renderer.gameTimer.isRunning) {
-                                this@Renderer.gameTimer.stop()
-                                engineTimer.start()
-                            } else {
-                                this@Renderer.gameTimer.start()
-                                engineTimer.stop()
-                            }
-
-                        }
-                    }
-                }
-                override fun keyReleased(e: KeyEvent) {
-                    when (e.keyCode) {
-                        KeyEvent.VK_Z -> userInputUp = false
-                        KeyEvent.VK_S -> userInputDown = false
-                        KeyEvent.VK_Q -> userInputLeft = false
-                        KeyEvent.VK_D -> userInputRight = false
-                        KeyEvent.VK_SPACE -> userInputSpace = false
-                    }
-                }
-            })
-
             this.gameTimer.start()
+            logger.info("Engine running")
         }
     }
 
-    private fun createEnnemies() {
-        EntityFactory.createEnemiesForWave(wave)
-        wave++
-    }
-
-    private fun stepEngine() {
-        handleHeroDeath()
-        repaint()
-    }
-
     private fun stepGame() {
+        // engine
+        ticks++
 
+        // move entities
         moveHero()
-
         moveEnnemy()
 
-        hero.attack()
-
-        checkCollisions()
-
+        // actions
         handleHeroDeath()
-
         handleWaveChanging()
 
-        ticks++
+        // collisions
+        hero.attack()
+        checkCollisions()
+
+
         repaint()
     }
 
@@ -133,6 +91,8 @@ object Renderer : JPanel() {
 
         // Draw weapons
         hero.weapons.forEach { it.draw(g) }
+
+        g.drawImage(Sprite.getHeroSprite(Sprite.TILE_SIZE, Sprite.TILE_SIZE), null, WINDOW_WIDTH/2-Sprite.TILE_SIZE/2, WINDOW_HEIGHT/2-Sprite.TILE_SIZE/2)
 
         // Draw the hero
         hero.draw(g)
@@ -174,16 +134,6 @@ object Renderer : JPanel() {
         }
     }
 
-    private fun handleWaveChanging() {
-        if (entities.size <= wave * 6 / 2) {
-            createEnnemies()
-        }
-    }
-
-    private fun moveEnnemy() {
-        entities.forEach { it.move() }
-    }
-
     private fun moveHero() {
         if (userInputUp && userInputLeft) {
             userInputVector.x = -1.0
@@ -215,5 +165,25 @@ object Renderer : JPanel() {
         }
 
         hero.move(userInputVector)
+    }
+
+    private fun handleWaveChanging() {
+        if (entities.size <= wave * 6 / 2) {
+            createEnnemies()
+        }
+    }
+
+    private fun moveEnnemy() {
+        entities.forEach { it.move() }
+    }
+
+    private fun createEnnemies() {
+        EntityFactory.createEnemiesForWave(wave)
+        wave++
+    }
+
+    private fun stepEngine() {
+        handleHeroDeath()
+        repaint()
     }
 }

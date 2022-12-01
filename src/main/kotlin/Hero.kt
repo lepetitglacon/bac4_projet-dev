@@ -18,7 +18,7 @@ class Hero() : Entity() {
         val startY = WINDOW_HEIGHT / 2 - size / 2
         val centerX = startX + size / 2
         val centerY = startY + size / 2
-        val normalized = Vector2.normalize(Renderer.userInputVector)
+        val normalized = (Renderer.userInputVector)
         val endX = centerX + velocity.x * 2
         val endY = centerY + velocity.y * 2
 
@@ -50,7 +50,7 @@ class Hero() : Entity() {
     }
 
     private fun angle(): Int {
-        val normalized = Vector2.normalize(velocity)
+        val normalized = (velocity)
         return (cos(normalized.x) + sin(normalized.y) * 180 / PI).toInt()
     }
 }
