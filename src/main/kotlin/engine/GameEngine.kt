@@ -1,15 +1,18 @@
 package engine
 
-import engine.maths.Vector2
 import engine.entity.factory.EntityFactory
 import engine.input.InputManager
 import engine.logger.Logger
+import engine.maths.Vector2
 import engine.window.Window
 import java.awt.Graphics
 import java.awt.Graphics2D
+import java.awt.event.ComponentAdapter
+import java.awt.event.ComponentEvent
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
+
 
 object GameEngine : JPanel() {
     private const val FRAME_PER_SECOND = 60
@@ -23,11 +26,18 @@ object GameEngine : JPanel() {
     val game = Game()
     val input = InputManager()
     val timer: Timer = Timer(FRAME_PER_MILLISECOND) { run() }
+    val state: EnginState = EnginState.MAIN_MENU
 
     init {
         // init window
         SwingUtilities.invokeLater {
             window.init()
+            window.addComponentListener(object : ComponentAdapter() {
+                override fun componentResized(e: ComponentEvent) {
+                    window.WIDTH = e.component.width
+                    window.HEIGHT = e.component.height
+                }
+            })
         }
 
         // init du jeu
@@ -42,10 +52,19 @@ object GameEngine : JPanel() {
     }
 
     fun run() {
-//        Logger.info("Engine running...")
         input.getKeyboardMovement()
+
         game.moveEntities()
         game.checkCollisions()
+//        when (state) {
+//            EnginState.MAIN_MENU -> {
+//            }
+//            EnginState.PLAYING -> {
+//                game.moveEntities()
+//                game.checkCollisions()
+//            }
+//        }
+
         repaint()
     }
 

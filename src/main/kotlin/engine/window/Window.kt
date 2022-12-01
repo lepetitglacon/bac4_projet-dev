@@ -7,8 +7,8 @@ import java.awt.Dimension
 import javax.swing.JFrame
 
 class Window : JFrame() {
-    val WIDTH: Int = 480
-    val HEIGHT: Int = 720
+    var WIDTH: Int = 480
+    var HEIGHT: Int = 720
     val center: Vector2 = Vector2((WIDTH/2).toDouble(), (HEIGHT/2).toDouble())
 
     fun init() {

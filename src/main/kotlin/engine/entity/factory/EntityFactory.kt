@@ -34,7 +34,6 @@ object EntityFactory {
     fun createEnemyFromPosition(v: Vector2): Enemy {
         val enemy = Enemy()
         enemy.centerPosition = v
-        enemy.drawingPosition = DrawablePosition.RELATIVE
         return enemy
     }
 
@@ -49,7 +48,6 @@ object EntityFactory {
                 tiles.add(tile)
             }
         }
-
         return tiles
     }
 }

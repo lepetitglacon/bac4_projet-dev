@@ -38,7 +38,7 @@ class Enemy() : Entity() {
         g.fillOval(getDrawingX(), getDrawingY(), size, size)
         g.color = Color.black
 
-        g.drawImage(Sprite.getPokemonSprite(0, 0), null, getDrawingX()-Sprite.TILE_SIZE/2, getDrawingY()-Sprite.TILE_SIZE/2)
+        g.drawImage(Sprite.getPokemonSprite(), null, getDrawingX()-Sprite.TILE_SIZE/2, getDrawingY()-Sprite.TILE_SIZE/2)
 
         // line to hero
 //        val centerX = getDrawingX() + size / 2

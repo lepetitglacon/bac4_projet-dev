@@ -23,18 +23,18 @@ object Sprite {
         return sprite
     }
 
-    fun getHeroSprite(xGrid: Int, yGrid: Int): BufferedImage {
+    fun getHeroSprite(): BufferedImage {
         if (heroSpriteSheet == null) {
             heroSpriteSheet = loadSprite("player")
         }
         return heroSpriteSheet!!.getSubimage(0,0, TILE_SIZE, TILE_SIZE)
     }
 
-    fun getPokemonSprite(xGrid: Int, yGrid: Int): BufferedImage {
+    fun getPokemonSprite(): BufferedImage {
         if (spiderSpriteSheet == null) {
             spiderSpriteSheet = loadSprite("pokemons")
         }
-        return spiderSpriteSheet!!.getSubimage(TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE)
+        return spiderSpriteSheet!!.getSubimage(0, 0, TILE_SIZE, TILE_SIZE)
     }
 
     fun getTilemap(mapTilePosition: MapTilePosition): BufferedImage {
