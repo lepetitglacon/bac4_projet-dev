@@ -2,9 +2,11 @@ package engine
 
 import engine.entity.Entity
 import engine.entity.enums.DrawablePosition
+import engine.entity.gui.BarGui
 import engine.entity.gui.StringGui
 import engine.entity.map.Map
 import engine.entity.mob.Hero
+import engine.maths.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -47,8 +49,6 @@ class Game {
     fun drawMainMenu(g: Graphics2D) {
         g.color = Color.DARK_GRAY
         g.fillRect(0, 0, GameEngine.window.WIDTH, GameEngine.window.HEIGHT)
-//        g.color = Color.WHITE
-//        g.drawString("Appuyez sur entrer pour jouer", GameEngine.window.WIDTH / 2, GameEngine.window.HEIGHT/2)
         val string = StringGui("Appuyez sur [ENTRER] pour jouer", DrawablePosition.CENTERED, null, Color.WHITE, Color.BLACK)
         string.draw(g)
     }
@@ -61,6 +61,25 @@ class Game {
             staticEntities.forEach { it.draw(g) }
             movableEntity.forEach { it.draw(g) }
             hero.draw(g)
+
+            val healthBar = BarGui()
+            healthBar.width = GameEngine.window.WIDTH/2
+            healthBar.height = 32
+            healthBar.startPosition = Vector2(GameEngine.window.center.x, (GameEngine.window.HEIGHT - healthBar.height - 50).toDouble())
+            healthBar.filled = hero.hp
+            healthBar.maxFilled = 1400
+            healthBar.draw(g)
+
+            val xpBar = BarGui()
+            xpBar.width = GameEngine.window.WIDTH/2
+            xpBar.height = 8
+            xpBar.startPosition = Vector2(GameEngine.window.center.x, (GameEngine.window.HEIGHT - healthBar.height - xpBar.height - 55).toDouble())
+            xpBar.filled = 650
+            xpBar.maxFilled = 1400
+            xpBar.color = Color(33, 160, 232)
+            xpBar.completingColor = Color(3, 52, 80)
+            xpBar.draw(g)
+
         } else {
             drawMainMenu(g)
         }

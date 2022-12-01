@@ -4,5 +4,8 @@ enum class DrawablePosition {
     ABSOLUTE,
     RELATIVE,
     RELATIVE_TO_HERO,
-    CENTERED
+    CENTERED,
+    ABSOLUTE_CENTERED,
+    X_CENTERED,
+    Y_CENTERED
 }

@@ -59,6 +59,13 @@ interface Drawable {
             DrawablePosition.ABSOLUTE -> {
                 return startPosition.toInt()
             }
+            DrawablePosition.ABSOLUTE_CENTERED -> {
+                return Vector2Int(
+                    (startPosition.x - width/2).toInt(),
+                    startPosition.y.toInt()
+                )
+            }
+            else -> {return Vector2Int()}
         }
     }
 }

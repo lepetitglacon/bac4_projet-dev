@@ -26,7 +26,7 @@ object GameEngine : JPanel() {
     val game = Game()
     val input = InputManager()
     val timer: Timer = Timer(FRAME_PER_MILLISECOND) { run() }
-    var state: EnginState = EnginState.MAIN_MENU
+    var state: EnginState = EnginState.PLAYING
 
     init {
         // init window

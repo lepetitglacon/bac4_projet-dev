@@ -48,7 +48,6 @@ class InputManager {
             }
         })
 
-
         // mouse events
         GameEngine.window.addMouseListener(object : MouseAdapter() {
             override fun mouseClicked(e: MouseEvent) {

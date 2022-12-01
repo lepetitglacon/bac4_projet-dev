@@ -4,11 +4,14 @@ import engine.GameEngine
 import engine.entity.enums.DrawablePosition
 import engine.entity.Entity
 import engine.entity.MovableEntity
+import engine.entity.interfaces.Levelable
 import engine.entity.sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Hero : MovableEntity() {
+class Hero : MovableEntity(), Levelable {
+    override var xp: Int = 0
+    override var xpToNextLevel: Int = 100
 
     init {
         width = 32
@@ -30,6 +33,14 @@ class Hero : MovableEntity() {
 
     override fun move() {
         moveFromKeyboard()
+    }
+
+    override fun nextLevel() {
+        if (xp >= xpToNextLevel) {
+//           TODO Events.fire("heroNextLevel")
+            xpToNextLevel *= 2
+            xp = 0
+        }
     }
 
 
