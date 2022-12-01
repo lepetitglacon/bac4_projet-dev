@@ -1,11 +1,9 @@
 package engine.window
 
-import Vector2
+import engine.maths.Vector2
 import engine.GameEngine
 import java.awt.BorderLayout
 import java.awt.Dimension
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
 import javax.swing.JFrame
 
 class Window : JFrame() {

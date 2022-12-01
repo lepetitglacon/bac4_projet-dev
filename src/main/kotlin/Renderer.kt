@@ -1,5 +1,6 @@
 import engine.logger.Formatter
 import engine.entity.sprite.Sprite
+import engine.maths.Vector2
 import java.awt.*
 import java.awt.event.ActionEvent
 import java.util.logging.ConsoleHandler
@@ -92,7 +93,7 @@ object Renderer : JPanel() {
         // Draw weapons
         hero.weapons.forEach { it.draw(g) }
 
-        g.drawImage(Sprite.getHeroSprite(Sprite.TILE_SIZE, Sprite.TILE_SIZE), null, WINDOW_WIDTH/2-Sprite.TILE_SIZE/2, WINDOW_HEIGHT/2-Sprite.TILE_SIZE/2)
+
 
         // Draw the hero
         hero.draw(g)

@@ -1,8 +1,8 @@
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
+import engine.maths.Vector2
 import java.awt.Color
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 const val ENTITY_RAYON = 25
 const val ENTITY_SPEED = 10

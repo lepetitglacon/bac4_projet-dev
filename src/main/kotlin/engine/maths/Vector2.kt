@@ -1,3 +1,5 @@
+package engine.maths
+
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -25,7 +27,6 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
         return x.toInt() == other.x.toInt() && y.toInt() == other.y.toInt()
     }
 
-
     fun translateTo(v: Vector2, speed: Int) {
         val newPos = Vector2()
         val posMinusHero = Vector2()
@@ -38,5 +39,7 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
     }
 
     fun clone() = Vector2(x, y)
-    override fun toString() = "$x $y lenght=${length()}"
+    fun toInt(): Vector2Int = Vector2Int(x.toInt(), y.toInt())
+    override fun toString() = "$x $y"
+    override fun hashCode(): Int = 31 * x.hashCode() + y.hashCode()
 }

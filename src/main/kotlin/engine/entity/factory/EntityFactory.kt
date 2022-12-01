@@ -1,10 +1,14 @@
 package engine.entity.factory
 
-import Vector2
+import engine.maths.Vector2
 import engine.GameEngine
-import engine.entity.DrawablePosition
+import engine.entity.enums.DrawablePosition
+import engine.entity.enums.MapTilePosition
+import engine.entity.map.Tile
 import engine.entity.mob.Enemy
-import java.awt.Color
+import engine.entity.sprite.Sprite
+import engine.maths.Vector2Int
+import java.awt.image.BufferedImage
 import kotlin.random.Random
 
 object EntityFactory {
@@ -32,5 +36,19 @@ object EntityFactory {
         enemy.centerPosition = v
         enemy.drawingPosition = DrawablePosition.RELATIVE
         return enemy
+    }
+
+    fun createMap(): HashSet<Tile> {
+        val tiles = hashSetOf<Tile>()
+        for (i in 0..64) {
+            for (j in 0..64) {
+                val x = i * Sprite.TILE_SIZE
+                val y = j * Sprite.TILE_SIZE
+                val tile = Tile(Vector2(x.toDouble(), y.toDouble()))
+                tiles.add(tile)
+            }
+        }
+
+        return tiles
     }
 }

@@ -1,6 +1,6 @@
 package engine
 
-import Vector2
+import engine.maths.Vector2
 import engine.entity.factory.EntityFactory
 import engine.input.InputManager
 import engine.logger.Logger
@@ -30,9 +30,11 @@ object GameEngine : JPanel() {
             window.init()
         }
 
+        // init du jeu
+        game.init()
+
         // launch timer
         timer.start()
-
         Logger.info("Engine running")
 
 
@@ -40,7 +42,8 @@ object GameEngine : JPanel() {
     }
 
     fun run() {
-        Logger.info("Engine running...")
+//        Logger.info("Engine running...")
+        input.getKeyboardMovement()
         game.moveEntities()
         game.checkCollisions()
         repaint()

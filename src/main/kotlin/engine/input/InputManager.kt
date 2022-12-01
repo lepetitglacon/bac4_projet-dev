@@ -1,6 +1,6 @@
 package engine.input
 
-import Vector2
+import engine.maths.Vector2
 import engine.GameEngine
 import engine.logger.Logger
 import java.awt.event.*
@@ -45,7 +45,7 @@ class InputManager {
         })
     }
 
-    private fun getKeyboardMovement() {
+    fun getKeyboardMovement() {
         if (userInputUp && userInputLeft) {
             userInputVector.x = -1.0
             userInputVector.y = -1.0

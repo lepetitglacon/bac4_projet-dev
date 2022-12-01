@@ -1,6 +1,6 @@
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
-import Renderer.timeElapsed
+import engine.maths.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 import kotlin.math.*
@@ -32,20 +32,7 @@ class Hero() : Entity() {
 
     fun move(vector: Vector2) {
         // update position by speed
-        vector.normalize()
-        velocity.x += (vector.x * speed).toInt()
-        velocity.y += (vector.y * speed).toInt()
 
-        position.x += velocity.x.toInt()
-        position.y += velocity.y.toInt()
-        angle = angle()
-
-        if (velocity.x != 0.0) {
-            velocity.x = (velocity.x * 0.5).toInt().toDouble()
-        }
-        if (velocity.y != 0.0) {
-            velocity.y = (velocity.y * 0.5).toInt().toDouble()
-        }
 
     }
 
