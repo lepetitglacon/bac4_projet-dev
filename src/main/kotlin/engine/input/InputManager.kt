@@ -3,7 +3,10 @@ package engine.input
 import engine.maths.Vector2
 import engine.GameEngine
 import engine.logger.Logger
+import engine.maths.Vector2Int
+import java.awt.MouseInfo
 import java.awt.event.*
+import javax.swing.SwingUtilities
 
 class InputManager {
     var userInputVector: Vector2 = Vector2()
@@ -15,6 +18,8 @@ class InputManager {
     var userInputEnter = false
     var userInputEscape = false
 
+    var mousePointer: Vector2Int = Vector2Int()
+
     init {
         // key events
         GameEngine.window.addKeyListener(object : KeyAdapter() {
@@ -25,6 +30,7 @@ class InputManager {
                     KeyEvent.VK_Q -> userInputLeft = true
                     KeyEvent.VK_D -> userInputRight = true
                     KeyEvent.VK_SPACE -> userInputSpace = true
+                    //KeyEvent.VK_ESCAPE -> TODO("escape")
                     KeyEvent.VK_ENTER -> userInputEnter = true
                     KeyEvent.VK_ESCAPE -> userInputEscape = true
                 }
@@ -42,12 +48,19 @@ class InputManager {
             }
         })
 
+
         // mouse events
         GameEngine.window.addMouseListener(object : MouseAdapter() {
             override fun mouseClicked(e: MouseEvent) {
                 Logger.info("mouse click at x:${e.x} y:${e.y}")
             }
         })
+    }
+
+    fun getMouseLocation() {
+        val p = MouseInfo.getPointerInfo().location
+        SwingUtilities.convertPointFromScreen(p, GameEngine)
+        mousePointer = Vector2Int((p.x + GameEngine.game.hero.startPosition.x).toInt(), (p.y + GameEngine.game.hero.startPosition.y).toInt())
     }
 
     fun getKeyboardMovement() {

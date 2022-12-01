@@ -16,6 +16,7 @@ class Hero : MovableEntity() {
         drawingPosition = DrawablePosition.CENTERED
         drawingRelative = null
         sprite = Sprite.getHeroSprite()
+        speed = 3
     }
 
     override fun draw(g: Graphics2D) {

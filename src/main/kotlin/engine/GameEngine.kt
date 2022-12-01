@@ -48,10 +48,15 @@ object GameEngine : JPanel() {
     }
 
     fun run() {
+        input.getMouseLocation()
         input.getKeyboardMovement()
+
         game.handleStateChange()
-        game.moveEntities()
-        game.checkCollisions()
+        if (state == EnginState.PLAYING) {
+            game.moveEntities()
+            game.checkCollisions()
+        }
+
         repaint()
     }
 

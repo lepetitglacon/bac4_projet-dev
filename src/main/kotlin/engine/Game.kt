@@ -22,7 +22,7 @@ class Game {
 
         when (GameEngine.state) {
             EnginState.MAIN_MENU -> {
-                if (GameEngine.input.userInputEnter) {
+                if (GameEngine.input.userInputEnter || GameEngine.input.userInputEscape) {
                     GameEngine.state = EnginState.PLAYING
                 }
             }
@@ -31,6 +31,7 @@ class Game {
                     GameEngine.state = EnginState.MAIN_MENU
                 }
             }
+            else -> {}
         }
     }
 
