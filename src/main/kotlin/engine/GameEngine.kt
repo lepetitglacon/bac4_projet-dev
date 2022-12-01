@@ -26,7 +26,7 @@ object GameEngine : JPanel() {
     val game = Game()
     val input = InputManager()
     val timer: Timer = Timer(FRAME_PER_MILLISECOND) { run() }
-    val state: EnginState = EnginState.MAIN_MENU
+    var state: EnginState = EnginState.MAIN_MENU
 
     init {
         // init window
@@ -39,39 +39,25 @@ object GameEngine : JPanel() {
                 }
             })
         }
-
         // init du jeu
         game.init()
-
         // launch timer
         timer.start()
         Logger.info("Engine running")
-
-
         game.movableEntity.add(EntityFactory.createEnemyFromPosition(Vector2(35.0, 35.0)))
     }
 
     fun run() {
         input.getKeyboardMovement()
-
+        game.handleStateChange()
         game.moveEntities()
         game.checkCollisions()
-//        when (state) {
-//            EnginState.MAIN_MENU -> {
-//            }
-//            EnginState.PLAYING -> {
-//                game.moveEntities()
-//                game.checkCollisions()
-//            }
-//        }
-
         repaint()
     }
 
     override fun paint(gg: Graphics?) {
         super.paint(gg)
         val g = gg as Graphics2D
-
         if (debugShowCenter) {
             g.drawLine(
                 window.WIDTH / 2, 0,
@@ -82,7 +68,6 @@ object GameEngine : JPanel() {
                 window.WIDTH, window.HEIGHT/2
             )
         }
-
         game.draw(g)
     }
 }

@@ -12,6 +12,8 @@ class InputManager {
     var userInputLeft = false
     var userInputRight = false
     var userInputSpace = false
+    var userInputEnter = false
+    var userInputEscape = false
 
     init {
         // key events
@@ -23,7 +25,8 @@ class InputManager {
                     KeyEvent.VK_Q -> userInputLeft = true
                     KeyEvent.VK_D -> userInputRight = true
                     KeyEvent.VK_SPACE -> userInputSpace = true
-                    //KeyEvent.VK_ESCAPE -> TODO("escape")
+                    KeyEvent.VK_ENTER -> userInputEnter = true
+                    KeyEvent.VK_ESCAPE -> userInputEscape = true
                 }
             }
             override fun keyReleased(e: KeyEvent) {
@@ -33,6 +36,8 @@ class InputManager {
                     KeyEvent.VK_Q -> userInputLeft = false
                     KeyEvent.VK_D -> userInputRight = false
                     KeyEvent.VK_SPACE -> userInputSpace = false
+                    KeyEvent.VK_ENTER -> userInputEnter = false
+                    KeyEvent.VK_ESCAPE -> userInputEscape = false
                 }
             }
         })
