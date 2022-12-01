@@ -45,6 +45,7 @@ object EntityFactory {
                 val x = i * Sprite.TILE_SIZE
                 val y = j * Sprite.TILE_SIZE
                 val tile = Tile(Vector2(x.toDouble(), y.toDouble()))
+                if (Random.nextBoolean()) tile.sprite = Sprite.getTilemap(MapTilePosition.LEFT)
                 tiles.add(tile)
             }
         }
