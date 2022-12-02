@@ -11,7 +11,7 @@ class Enemy() : Entity() {
     fun move() {
 
         // go to hero
-        position.translateTo(Renderer.hero.position, speed.toInt())
+        position.translateTo(Renderer.hero.position, speed)
 
         // handle collision between enemies themselves
         Renderer.entities.forEach {

@@ -1,34 +1,40 @@
 package engine.entity.mob
 
 import engine.GameEngine
-import engine.entity.Entity
-import engine.entity.MovableEntity
+import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Enemy : MovableEntity() {
+class Enemy : CollidableEntity() {
 
     init {
         width = 32
         height = 32
-        drawingRelative = GameEngine.game.hero
-        drawingPosition = DrawablePosition.RELATIVE_TO_HERO
-        sprite = Sprite.getPokemonSprite()
+        drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
+//        sprite = Sprite.getPokemonSprite()
+        speed = 2.0
     }
 
     override fun draw(g: Graphics2D) {
-        if (GameEngine.debug) {
+       if (GameEngine.debug) {
             drawDebugPosition(g)
             g.color = Color.RED
             g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
+           g.color = Color.BLUE
+           g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
         }
-        g.drawImage(sprite, null, getDrawingPosition().x - width/2, getDrawingPosition().y - height)
+        g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
+
+        g.color = Color.black
+        g.drawOval(drawingPosition.x.toInt(), drawingPosition.y.toInt(), width, height)
+        g.drawString("$position", getDrawingPosition().x, getDrawingPosition().y - 30)
     }
 
     override fun move() {
-
+        setDrawingPositionFromPosition()
+        moveTo(GameEngine.game.hero.position)
     }
 
 }

@@ -7,33 +7,36 @@ import engine.entity.enums.MapTilePosition
 import engine.entity.map.Tile
 import engine.entity.mob.Enemy
 import engine.entity.sprite.Sprite
-import engine.maths.Vector2Int
-import java.awt.image.BufferedImage
 import kotlin.random.Random
 
 object EntityFactory {
     fun createRandomEnemy(): Enemy {
         val enemy = Enemy()
-        val heroXMin = GameEngine.game.hero.centerPosition.x - GameEngine.window.WIDTH/2
-        val heroXMax = GameEngine.game.hero.centerPosition.x + GameEngine.window.WIDTH/2
-        val heroYMin = GameEngine.game.hero.centerPosition.y - GameEngine.window.HEIGHT/2
-        val heroYMax = GameEngine.game.hero.centerPosition.y + GameEngine.window.HEIGHT/2
+
+        // get coordinates
+        val heroXMin = GameEngine.game.hero.position.x - GameEngine.window.WIDTH/2
+        val heroXMax = GameEngine.game.hero.position.x + GameEngine.window.WIDTH/2
+        val heroYMin = GameEngine.game.hero.position.y - GameEngine.window.HEIGHT/2
+        val heroYMax = GameEngine.game.hero.position.y + GameEngine.window.HEIGHT/2
         if (Random.nextBoolean()) {
-            enemy.centerPosition.x = Random.nextDouble(heroXMin, heroXMax)
+            enemy.position.x = Random.nextDouble(heroXMin, heroXMax)
             val y = if (Random.nextBoolean()) heroYMin else heroYMax
-            enemy.centerPosition.y = y
+            enemy.position.y = y
         } else {
             val x = if (Random.nextBoolean()) heroXMin else heroXMax
-            enemy.centerPosition.x = x
-            enemy.centerPosition.y = Random.nextDouble(heroYMin, heroYMax)
+            enemy.position.x = x
+            enemy.position.y = Random.nextDouble(heroYMin, heroYMax)
         }
-        enemy.centerPosition = Vector2(enemy.centerPosition.x + 50 / 2, enemy.centerPosition.y + 50 / 2)
+        enemy.position = Vector2(enemy.position.x + 50 / 2, enemy.position.y + 50 / 2)
+
+        // conf
+        enemy.drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
         return enemy
     }
 
     fun createEnemyFromPosition(v: Vector2): Enemy {
         val enemy = Enemy()
-        enemy.centerPosition = v
+        enemy.position = v
         return enemy
     }
 

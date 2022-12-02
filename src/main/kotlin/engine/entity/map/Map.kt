@@ -12,6 +12,7 @@ class Map() {
 
     fun draw(g: Graphics2D) {
         tiles.forEach {
+            it.move()
             it.draw(g)
         }
     }

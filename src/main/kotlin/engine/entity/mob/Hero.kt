@@ -2,10 +2,10 @@ package engine.entity.mob
 
 import engine.GameEngine
 import engine.entity.enums.DrawablePosition
-import engine.entity.Entity
 import engine.entity.MovableEntity
 import engine.entity.interfaces.Levelable
 import engine.entity.sprite.Sprite
+import engine.maths.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -16,10 +16,10 @@ class Hero : MovableEntity(), Levelable {
     init {
         width = 32
         height = 32
-        drawingPosition = DrawablePosition.CENTERED
-        drawingRelative = null
-        sprite = Sprite.getHeroSprite()
-        speed = 3
+        drawingPositionType = DrawablePosition.CENTERED
+        drawingPositionTypeRelative = null
+//        sprite = Sprite.getHeroSprite()
+        speed = 2.5
     }
 
     override fun draw(g: Graphics2D) {
@@ -32,6 +32,7 @@ class Hero : MovableEntity(), Levelable {
     }
 
     override fun move() {
+        setDrawingPositionFromPosition()
         moveFromKeyboard()
     }
 

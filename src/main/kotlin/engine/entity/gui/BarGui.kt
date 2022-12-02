@@ -12,9 +12,10 @@ class BarGui() : MovableEntity() {
     var maxFilled: Int = 100
     var color: Color = Color(44, 248, 11)
     var completingColor: Color = Color(122, 48, 7)
+    var backgroundColor: Color = Color(217,217,217, 230)
 
     init {
-        drawingPosition = DrawablePosition.ABSOLUTE_CENTERED
+        drawingPositionType = DrawablePosition.ABSOLUTE_CENTERED
     }
 
     fun getFilledWidth(): Int {
@@ -27,7 +28,7 @@ class BarGui() : MovableEntity() {
     }
 
     override fun draw(g: Graphics2D) {
-        g.color = Color(217,217,217, 230)
+        g.color = backgroundColor
         g.fillRect(getDrawingPosition().x, getDrawingPosition().y, width, height)
 
         g.color = color

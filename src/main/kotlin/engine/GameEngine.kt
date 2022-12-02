@@ -44,7 +44,6 @@ object GameEngine : JPanel() {
         // launch timer
         timer.start()
         Logger.info("Engine running")
-        game.movableEntity.add(EntityFactory.createEnemyFromPosition(Vector2(35.0, 35.0)))
     }
 
     fun run() {
@@ -53,6 +52,7 @@ object GameEngine : JPanel() {
 
         game.handleStateChange()
         if (state == EnginState.PLAYING) {
+            game.createEnemies()
             game.moveEntities()
             game.checkCollisions()
         }

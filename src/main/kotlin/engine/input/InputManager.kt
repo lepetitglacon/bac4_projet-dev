@@ -59,7 +59,7 @@ class InputManager {
     fun getMouseLocation() {
         val p = MouseInfo.getPointerInfo().location
         SwingUtilities.convertPointFromScreen(p, GameEngine)
-        mousePointer = Vector2Int((p.x + GameEngine.game.hero.startPosition.x).toInt(), (p.y + GameEngine.game.hero.startPosition.y).toInt())
+        mousePointer = Vector2Int((p.x + GameEngine.game.hero.drawingPosition.x).toInt(), (p.y + GameEngine.game.hero.drawingPosition.y).toInt())
     }
 
     fun getKeyboardMovement() {

@@ -10,15 +10,17 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
     fun normalize(): Vector2 { if (length() == 0.0) return Vector2(); x /= length(); y /= length(); return this}
     fun dotProduct(v1: Vector2, v2: Vector2): Vector2 { v1.x * v2.x + v1.y * v2.y; return this}
 
-    operator fun plus(v: Vector2): Vector2 { x += v.x; y += v.y; return this}
-    operator fun plus(int: Int): Vector2 { x += int; y += int; return this}
-    operator fun minus(v: Vector2): Vector2 { this + !v; return this}
-    operator fun minus(int: Int): Vector2 { x -= int; y -= int; return this}
-    operator fun div(v: Vector2): Vector2 { x /= v.x; y /= v.y; return this}
-    operator fun div(int: Int): Vector2 { x /= int; y /= int; return this}
-    operator fun times(v: Vector2): Vector2 { x *= v.x; y *= v.y; return this}
-    operator fun times(int: Int): Vector2 { x *= int; y *= int; return this}
-    operator fun not(): Vector2 { x = -x; y = -y; return this}
+    operator fun plus(v: Vector2): Vector2 { return Vector2(x + v.x, y + v.y) }
+    operator fun plus(int: Int): Vector2 { return Vector2(x + int, y + int)}
+    operator fun minus(v: Vector2): Vector2 { return Vector2(-v.x, -v.y)}
+    operator fun minus(int: Int): Vector2 { return Vector2(x - int, y - int)}
+    operator fun div(v: Vector2): Vector2 { return Vector2(x / v.x, y / v.y)}
+    operator fun div(int: Int): Vector2 { return Vector2(x / int, y / int)}
+    operator fun div(int: Double): Vector2 { return Vector2(x / int, y / int)}
+    operator fun times(v: Vector2): Vector2 { return Vector2(x * v.x, y * v.y)}
+    operator fun times(int: Int): Vector2 { return Vector2(x * int, y * int)}
+    operator fun times(double: Double): Vector2 { return Vector2(x * double, y * double)}
+    operator fun not(): Vector2 { return Vector2(-x, -y)}
     operator fun unaryPlus() = plus(1)
     operator fun unaryMinus() = minus(1)
 
@@ -27,7 +29,7 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
         return x.toInt() == other.x.toInt() && y.toInt() == other.y.toInt()
     }
 
-    fun translateTo(v: Vector2, speed: Int) {
+    fun translateTo(v: Vector2, speed: Double) {
         val newPos = Vector2()
         val posMinusHero = Vector2()
         posMinusHero.x = v.x - x

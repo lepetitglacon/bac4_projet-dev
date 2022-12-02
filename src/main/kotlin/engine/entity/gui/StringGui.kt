@@ -9,8 +9,8 @@ import kotlin.String
 
 class StringGui(
     val string: String,
-    override var drawingPosition: DrawablePosition,
-    override var drawingRelative: Entity?,
+    override var drawingPositionType: DrawablePosition,
+    override var drawingPositionTypeRelative: Entity?,
     val color: Color?,
     val bgColor: Color?
 ) : MovableEntity() {
@@ -20,8 +20,8 @@ class StringGui(
     }
 
     override fun draw(g: Graphics2D) {
-        if (bgColor !== null) g.color = bgColor
-        g.fillRect(getDrawingPosition().x, getDrawingPosition().y, width, height)
+//        if (bgColor !== null) g.color = bgColor
+//        g.fillRect(getDrawingPosition().x, getDrawingPosition().y, width, height)
 
         if (color !== null) g.color = color
         g.drawString(string, getDrawingPosition().x, getDrawingPosition().y)

@@ -11,10 +11,10 @@ import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
 interface Drawable {
-    var startPosition: Vector2
-    var centerPosition: Vector2
-    var drawingPosition: DrawablePosition
-    var drawingRelative: Entity?
+    var position: Vector2
+    var drawingPosition: Vector2
+    var drawingPositionType: DrawablePosition
+    var drawingPositionTypeRelative: Entity?
     var width: Int
     var height: Int
     var sprite: BufferedImage?
@@ -26,28 +26,33 @@ interface Drawable {
 //    fun drawHealthBar()
 
     fun drawDebugPosition(g: Graphics2D) {
-        g.color = Color.black
-        g.drawString("${getDrawingPosition()}", getDrawingPosition().x, getDrawingPosition().y - 15)
-        g.color = Color.black
-        g.drawString("${startPosition}", getDrawingPosition().x, getDrawingPosition().y)
+        g.color = Color.white
+//        g.drawString("${getDrawingPosition()}", getDrawingPosition().x, getDrawingPosition().y - 30)
+        g.drawString("dra ${drawingPosition.toInt()}", getDrawingPosition().x, getDrawingPosition().y - 15)
+        g.drawString("pos ${position.toInt()}", getDrawingPosition().x, getDrawingPosition().y)
+        g.color = Color.red
+        g.drawOval(getDrawingPosition().x, getDrawingPosition().y, 2,2)
     }
 
-    fun getDrawingPosition(): Vector2Int {
-        when (drawingPosition) {
+    fun getDrawingPosition(overridePosition: DrawablePosition? = null): Vector2Int {
+        var dp = drawingPositionType
+        if (overridePosition !== null) dp = overridePosition
+
+        when (dp) {
             DrawablePosition.RELATIVE -> {
-                if (drawingRelative == null) {
+                if (drawingPositionTypeRelative == null) {
                     Logger.error("Can't get drawing position of Relative if relative is not assigned")
-                    return startPosition.toInt()
+                    return position.toInt()
                 }
                 return Vector2Int(
-                    (startPosition.x + drawingRelative!!.getDrawingPosition().x + drawingRelative!!.width/2).toInt(),
-                    (startPosition.y + drawingRelative!!.getDrawingPosition().y + drawingRelative!!.height/2).toInt()
+                    (position.x + drawingPositionTypeRelative!!.getDrawingPosition().x + drawingPositionTypeRelative!!.width/2).toInt(),
+                    (position.y + drawingPositionTypeRelative!!.getDrawingPosition().y + drawingPositionTypeRelative!!.height/2).toInt()
                 )
             }
             DrawablePosition.RELATIVE_TO_HERO -> {
                 return Vector2Int(
-                    (startPosition.x - width / 2 - GameEngine.game.hero.startPosition.x + GameEngine.window.WIDTH / 2).toInt(),
-                    (startPosition.y - width / 2 - GameEngine.game.hero.startPosition.y + GameEngine.window.HEIGHT / 2).toInt()
+                    (drawingPosition.x - GameEngine.game.hero.position.x + GameEngine.window.WIDTH / 2).toInt(),
+                    (drawingPosition.y - GameEngine.game.hero.position.y + GameEngine.window.HEIGHT / 2).toInt()
                 )
             }
             DrawablePosition.CENTERED -> {
@@ -57,12 +62,12 @@ interface Drawable {
                 )
             }
             DrawablePosition.ABSOLUTE -> {
-                return startPosition.toInt()
+                return position.toInt()
             }
             DrawablePosition.ABSOLUTE_CENTERED -> {
                 return Vector2Int(
-                    (startPosition.x - width/2).toInt(),
-                    startPosition.y.toInt()
+                    (position.x - width/2).toInt(),
+                    position.y.toInt()
                 )
             }
             else -> {return Vector2Int()}
