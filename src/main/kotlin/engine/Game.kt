@@ -45,9 +45,10 @@ class Game {
     }
 
     fun createEnemies() {
-        if (collidableEntities.size < wave*ENEMIES_PER_WAVE)
-        for (i in 0..wave*ENEMIES_PER_WAVE) {
-            collidableEntities.add(EntityFactory.createRandomEnemy())
+        if (collidableEntities.size < wave*ENEMIES_PER_WAVE) {
+            for (i in 0..wave*ENEMIES_PER_WAVE) {
+                collidableEntities.add(EntityFactory.createRandomEnemy())
+            }
         }
     }
 

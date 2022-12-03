@@ -22,8 +22,8 @@ class Enemy : CollidableEntity() {
             drawDebugPosition(g)
             g.color = Color.RED
             g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
-           g.color = Color.BLUE
-           g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
+            g.color = Color.BLUE
+            g.fillOval(getDrawingPosition().x + width/2, getDrawingPosition().y + height/2, 3, 3)
         }
         g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
 

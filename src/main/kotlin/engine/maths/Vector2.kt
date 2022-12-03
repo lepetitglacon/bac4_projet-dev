@@ -12,7 +12,7 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
 
     operator fun plus(v: Vector2): Vector2 { return Vector2(x + v.x, y + v.y) }
     operator fun plus(int: Int): Vector2 { return Vector2(x + int, y + int)}
-    operator fun minus(v: Vector2): Vector2 { return Vector2(-v.x, -v.y)}
+    operator fun minus(v: Vector2): Vector2 { return Vector2(x + -v.x, y + -v.y)}
     operator fun minus(int: Int): Vector2 { return Vector2(x - int, y - int)}
     operator fun div(v: Vector2): Vector2 { return Vector2(x / v.x, y / v.y)}
     operator fun div(int: Int): Vector2 { return Vector2(x / int, y / int)}

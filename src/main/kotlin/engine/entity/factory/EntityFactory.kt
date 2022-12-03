@@ -18,6 +18,7 @@ object EntityFactory {
         val heroXMax = GameEngine.game.hero.position.x + GameEngine.window.WIDTH/2
         val heroYMin = GameEngine.game.hero.position.y - GameEngine.window.HEIGHT/2
         val heroYMax = GameEngine.game.hero.position.y + GameEngine.window.HEIGHT/2
+
         if (Random.nextBoolean()) {
             enemy.position.x = Random.nextDouble(heroXMin, heroXMax)
             val y = if (Random.nextBoolean()) heroYMin else heroYMax
@@ -31,6 +32,7 @@ object EntityFactory {
 
         // conf
         enemy.drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
+        enemy.speed = Random.nextDouble(1.0, 3.0)
         return enemy
     }
 

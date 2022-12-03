@@ -2,6 +2,7 @@ package engine.input
 
 import engine.maths.Vector2
 import engine.GameEngine
+import engine.entity.factory.EntityFactory
 import engine.logger.Logger
 import engine.maths.Vector2Int
 import java.awt.MouseInfo
@@ -29,7 +30,12 @@ class InputManager {
                     KeyEvent.VK_S -> userInputDown = true
                     KeyEvent.VK_Q -> userInputLeft = true
                     KeyEvent.VK_D -> userInputRight = true
-                    KeyEvent.VK_SPACE -> userInputSpace = true
+                    KeyEvent.VK_SPACE -> {
+                        GameEngine.game.collidableEntities.clear()
+                        for (i in 0..2) {
+                            GameEngine.game.collidableEntities.add(EntityFactory.createRandomEnemy())
+                        }
+                    }
                     //KeyEvent.VK_ESCAPE -> TODO("escape")
                     KeyEvent.VK_ENTER -> userInputEnter = true
                     KeyEvent.VK_ESCAPE -> userInputEscape = true

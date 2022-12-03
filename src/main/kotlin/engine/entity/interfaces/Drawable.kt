@@ -37,7 +37,6 @@ interface Drawable {
     fun getDrawingPosition(overridePosition: DrawablePosition? = null): Vector2Int {
         var dp = drawingPositionType
         if (overridePosition !== null) dp = overridePosition
-
         when (dp) {
             DrawablePosition.RELATIVE -> {
                 if (drawingPositionTypeRelative == null) {
@@ -51,8 +50,8 @@ interface Drawable {
             }
             DrawablePosition.RELATIVE_TO_HERO -> {
                 return Vector2Int(
-                    (drawingPosition.x - GameEngine.game.hero.position.x + GameEngine.window.WIDTH / 2).toInt(),
-                    (drawingPosition.y - GameEngine.game.hero.position.y + GameEngine.window.HEIGHT / 2).toInt()
+                    (drawingPosition.x - width/2 - GameEngine.game.hero.drawingPosition.x + GameEngine.window.WIDTH / 2).toInt(),
+                    (drawingPosition.y - height/2 - GameEngine.game.hero.drawingPosition.y + GameEngine.window.HEIGHT / 2).toInt()
                 )
             }
             DrawablePosition.CENTERED -> {
