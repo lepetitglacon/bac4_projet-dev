@@ -49,12 +49,13 @@ object GameEngine : JPanel() {
     fun run() {
         input.getMouseLocation()
         input.getKeyboardMovement()
-
         game.handleStateChange()
+
         if (state == EnginState.PLAYING) {
             game.createEnemies()
             game.moveEntities()
             game.checkCollisions()
+            game.handleDeaths()
         }
 
         repaint()

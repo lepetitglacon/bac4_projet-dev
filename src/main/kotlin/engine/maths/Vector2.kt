@@ -7,7 +7,11 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
 
     fun length() = sqrt((x.pow(2.0) + y.pow(2.0)))
     fun distance(v: Vector2) = minus(v).length()
+
+    /** Normalize this vector */
     fun normalize(): Vector2 { if (length() == 0.0) return Vector2(); x /= length(); y /= length(); return this}
+    /** Return the normalized vector (don't modify OG one) */
+    fun normalized(): Vector2 { if (length() == 0.0) return Vector2(); return Vector2(x / length(), y / length())}
     fun dotProduct(v1: Vector2, v2: Vector2): Vector2 { v1.x * v2.x + v1.y * v2.y; return this}
 
     operator fun plus(v: Vector2): Vector2 { return Vector2(x + v.x, y + v.y) }
@@ -38,6 +42,16 @@ class Vector2(var x: Double = 0.0, var y: Double = 0.0) {
         newPos.y = y + posMinusHero.y / posMinusHero.length() * speed
         x = newPos.x
         y = newPos.y
+    }
+
+    fun translatedTo(v: Vector2, speed: Double): Vector2 {
+        val newPos = Vector2()
+        val posMinusHero = Vector2()
+        posMinusHero.x = v.x - x
+        posMinusHero.y = v.y - y
+        newPos.x = x + posMinusHero.x / posMinusHero.length() * speed
+        newPos.y = y + posMinusHero.y / posMinusHero.length() * speed
+        return Vector2(x + newPos.x, y + newPos.y)
     }
 
     fun clone() = Vector2(x, y)

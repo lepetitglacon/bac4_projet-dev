@@ -3,17 +3,19 @@ package engine.entity.mob
 import engine.GameEngine
 import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
+import engine.entity.interfaces.Attacker
 import engine.entity.sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Enemy : CollidableEntity() {
+class Enemy : CollidableEntity(), Attacker {
+    override var damages: Int = 5
 
     init {
         width = 32
         height = 32
         drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
-//        sprite = Sprite.getPokemonSprite()
+        sprite = Sprite.getPokemonSprite()
         speed = 2.0
     }
 

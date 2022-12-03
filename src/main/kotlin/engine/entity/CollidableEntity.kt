@@ -18,9 +18,14 @@ abstract class CollidableEntity : MovableEntity() {
     }
 
     fun collides(collidableEntity: CollidableEntity): Boolean  = position.distance(collidableEntity.position) < width
+    fun willCollideWith(e: CollidableEntity): Boolean  = (position + GameEngine.input.userInputVector.normalized() * speed).distance(e.position.clone().translatedTo(GameEngine.game.hero.position, e.speed)) < width
 
     fun checkCollisionBetweenEnemies() {
         GameEngine.game.collidableEntities.forEach {
+//            if (it != this && willCollideWith(it)) {
+//                println("WILL COLLIDE $this $it")
+//            }
+
             if (it != this && collides(it)) {
                 repulse(it)
             }

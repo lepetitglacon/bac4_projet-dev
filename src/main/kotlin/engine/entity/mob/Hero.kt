@@ -1,6 +1,7 @@
 package engine.entity.mob
 
 import engine.GameEngine
+import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.MovableEntity
 import engine.entity.interfaces.Levelable
@@ -9,7 +10,7 @@ import engine.maths.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Hero : MovableEntity(), Levelable {
+class Hero : CollidableEntity(), Levelable {
     override var xp: Int = 0
     override var xpToNextLevel: Int = 100
 
@@ -18,7 +19,7 @@ class Hero : MovableEntity(), Levelable {
         height = 32
         drawingPositionType = DrawablePosition.CENTERED
         drawingPositionTypeRelative = null
-//        sprite = Sprite.getHeroSprite()
+        sprite = Sprite.getHeroSprite()
         speed = 2.5
     }
 
@@ -44,5 +45,12 @@ class Hero : MovableEntity(), Levelable {
         }
     }
 
-
+    fun checkCollisionWithEnemies() {
+        GameEngine.game.collidableEntities.forEach {
+            it as Enemy
+            if (collides(it)) {
+                it.attack(this)
+            }
+        }
+    }
 }
