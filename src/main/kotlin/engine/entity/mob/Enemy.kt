@@ -34,6 +34,7 @@ class Enemy : CollidableEntity(), Attacker {
 
         // sprite
         g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
+        drawHpBar(g)
     }
 
     override fun move() {

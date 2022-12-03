@@ -5,6 +5,7 @@ import engine.entity.Entity
 import engine.entity.MovableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.factory.EntityFactory
+import engine.entity.factory.WeaponFactory
 import engine.entity.gui.Gui
 import engine.entity.gui.StringGui
 import engine.entity.map.Map
@@ -25,6 +26,8 @@ class Game {
     var wave: Int = 1
 
     fun init() {
+        hero.weapons.add(WeaponFactory.createStink())
+
         map.init()
         gui.init()
     }
@@ -69,6 +72,8 @@ class Game {
     fun moveEntities() {
         movableEntities.forEach { it.move() }
         collidableEntities.forEach { it.move() }
+
+        hero.weapons.forEach { it.move() }
         hero.move()
     }
 
@@ -76,15 +81,19 @@ class Game {
 //        Logger.log("check collisions")
 
         collidableEntities.forEach {
-            it.checkCollisionBetweenEnemies()
+            it.checkCollisionBetweenEnemiesToRepulseThem()
         }
+
+        hero.weapons.forEach { it.checkCollisionWithEnemies() }
 
         hero.checkCollisionWithEnemies()
 
     }
 
     fun handleDeaths() {
-        entities().removeIf { it.hp <= 0  }
+        staticEntities.removeIf { it.hp <= 0  }
+        movableEntities.removeIf { it.hp <= 0  }
+        collidableEntities.removeIf { it.hp <= 0  }
 
         if (hero.hp <= 0) {
             if (GameEngine.debug) {
@@ -125,6 +134,9 @@ class Game {
                 collidableEntities.forEach { it.draw(g) }
                 movableEntities.forEach { it.draw(g) }
                 staticEntities.forEach { it.draw(g) }
+
+
+                hero.weapons.forEach { it.draw(g) }
                 hero.draw(g)
 
                 // last layer

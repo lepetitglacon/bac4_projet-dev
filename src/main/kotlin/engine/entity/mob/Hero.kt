@@ -4,13 +4,16 @@ import engine.GameEngine
 import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.interfaces.Levelable
+import engine.entity.interfaces.Weaponized
 import engine.entity.sprite.SpriteFactory
+import engine.entity.weapon.Projectile
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Hero : CollidableEntity(), Levelable {
+class Hero : CollidableEntity(), Levelable, Weaponized {
     override var xp: Int = 0
     override var xpToNextLevel: Int = 100
+    override val weapons: MutableList<Projectile> = mutableListOf()
 
     init {
         width = 32
@@ -47,8 +50,12 @@ class Hero : CollidableEntity(), Levelable {
         GameEngine.game.collidableEntities.forEach {
             it as Enemy
             if (collides(it)) {
-                it.attack(this)
+                it.applyDamage(this)
             }
         }
+    }
+
+    override fun fireAll() {
+        TODO("Not yet implemented")
     }
 }
