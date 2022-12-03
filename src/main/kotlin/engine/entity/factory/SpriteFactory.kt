@@ -1,10 +1,15 @@
-package engine.entity.sprite
+package engine.entity.factory
 
+import Weapon
 import engine.entity.enums.MapTilePosition
+import engine.entity.weapon.Projectile
 import engine.logger.Logger
 import java.awt.image.BufferedImage
+import java.io.File
 import java.io.IOException
+import java.net.URL
 import javax.imageio.ImageIO
+import javax.imageio.ImageIO.*
 
 
 object SpriteFactory {
@@ -16,11 +21,17 @@ object SpriteFactory {
     fun loadSprite(file: String): BufferedImage? {
         var sprite: BufferedImage? = null
         try {
-            sprite = ImageIO.read(javaClass.getResource("images/$file.png"))
+            val url = "assets/$file.png"
+            println(url)
+            sprite = ImageIO.read(File(url))
         } catch (e: IOException) {
             Logger.info(e.message ?: "no message")
         }
         return sprite
+    }
+
+    fun getWeaponSprite(w: String): BufferedImage? {
+        return loadSprite("weapons/${w}")
     }
 
     fun getHeroSprite(): BufferedImage {

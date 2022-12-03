@@ -4,12 +4,12 @@ import engine.GameEngine
 import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.interfaces.Attacker
-import engine.entity.sprite.SpriteFactory
+import engine.entity.factory.SpriteFactory
 import java.awt.Color
 import java.awt.Graphics2D
 
 class Enemy : CollidableEntity(), Attacker {
-    override var damages: Int = 5
+    override var damages: Int = 1
 
     init {
         width = 32

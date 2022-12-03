@@ -2,6 +2,7 @@ package engine.entity.weapon
 
 import engine.GameEngine
 import engine.entity.enums.DrawablePosition
+import engine.entity.factory.SpriteFactory
 import java.awt.Color
 import java.awt.Graphics2D
 import java.time.Instant
@@ -17,6 +18,7 @@ class Stink : Projectile() {
         position = GameEngine.game.hero.position
         drawingPositionTypeRelative = GameEngine.game.hero
         drawingPositionType = DrawablePosition.CENTERED
+        sprite = SpriteFactory.getWeaponSprite("Stink")
     }
 
     override fun move() {
@@ -32,7 +34,7 @@ class Stink : Projectile() {
             g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
         }
 
-        g.drawImage(sprite, null, getDrawingPosition().x - width/2, getDrawingPosition().y - height)
+        g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
     }
 
 

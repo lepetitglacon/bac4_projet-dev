@@ -6,7 +6,6 @@ import engine.entity.enums.DrawablePosition
 import engine.entity.enums.MapTilePosition
 import engine.entity.map.Tile
 import engine.entity.mob.Enemy
-import engine.entity.sprite.SpriteFactory
 import kotlin.random.Random
 
 object EntityFactory {
@@ -32,7 +31,8 @@ object EntityFactory {
 
         // conf
         enemy.drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
-        enemy.speed = Random.nextDouble(1.0, 3.0)
+        enemy.speed = Random.nextDouble(0.5, 1.5)
+        enemy.damages = 1
         return enemy
     }
 

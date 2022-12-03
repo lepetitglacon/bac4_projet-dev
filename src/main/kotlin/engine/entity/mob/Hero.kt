@@ -5,7 +5,7 @@ import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.interfaces.Levelable
 import engine.entity.interfaces.Weaponized
-import engine.entity.sprite.SpriteFactory
+import engine.entity.factory.SpriteFactory
 import engine.entity.weapon.Projectile
 import java.awt.Color
 import java.awt.Graphics2D
