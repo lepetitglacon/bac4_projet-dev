@@ -1,5 +1,6 @@
 package engine.input
 
+import engine.Game
 import engine.maths.Vector2
 import engine.GameEngine
 import engine.entity.factory.EntityFactory
@@ -30,6 +31,8 @@ class InputManager {
                     KeyEvent.VK_S -> userInputDown = true
                     KeyEvent.VK_Q -> userInputLeft = true
                     KeyEvent.VK_D -> userInputRight = true
+                    KeyEvent.VK_R -> userInputRight = true
+                    KeyEvent.VK_X -> GameEngine.debug = !GameEngine.debug
                     KeyEvent.VK_SPACE -> {
                         GameEngine.game.collidableEntities.clear()
                         for (i in 0..2) {

@@ -16,7 +16,7 @@ object GameEngine : JPanel() {
     private const val FRAME_PER_SECOND = 60
     private const val FRAME_PER_MILLISECOND = FRAME_PER_SECOND / 1000
 
-    var debug = false
+    var debug = true
     var debugShowCenter = true
     var ticks = 0
 
@@ -34,6 +34,7 @@ object GameEngine : JPanel() {
                 override fun componentResized(e: ComponentEvent) {
                     window.WIDTH = e.component.width
                     window.HEIGHT = e.component.height
+                    GameEngine.game.map.updateSize()
                 }
             })
         }

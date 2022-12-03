@@ -14,7 +14,7 @@ abstract class CollidableEntity : MovableEntity() {
         entity.position.y += overlap * (position.y - entity.position.y) / distance
     }
 
-    fun collides(collidableEntity: CollidableEntity): Boolean  = position.distance(collidableEntity.position) < width
+    fun collides(collidableEntity: CollidableEntity): Boolean  = position.distance(collidableEntity.position) < (width + collidableEntity.width) / 2
     fun willCollideWith(e: CollidableEntity): Boolean  = (position + GameEngine.input.userInputVector.normalized() * speed).distance(e.position.clone().translatedTo(GameEngine.game.hero.position, e.speed)) < width
 
     fun checkCollisionBetweenEnemiesToRepulseThem() {
