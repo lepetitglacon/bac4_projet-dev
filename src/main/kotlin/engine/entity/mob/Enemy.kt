@@ -20,18 +20,20 @@ class Enemy : CollidableEntity(), Attacker {
     }
 
     override fun draw(g: Graphics2D) {
-       if (GameEngine.debug) {
+        if (GameEngine.debug) {
             drawDebugPosition(g)
             g.color = Color.RED
             g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
             g.color = Color.BLUE
             g.fillOval(getDrawingPosition().x + width/2, getDrawingPosition().y + height/2, 3, 3)
-        }
-        g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
 
-        g.color = Color.black
-        g.drawOval(drawingPosition.x.toInt(), drawingPosition.y.toInt(), width, height)
-        g.drawString("$position", getDrawingPosition().x, getDrawingPosition().y - 30)
+            g.color = Color.black
+            g.drawOval(drawingPosition.x.toInt(), drawingPosition.y.toInt(), width, height)
+            g.drawString("$position", getDrawingPosition().x, getDrawingPosition().y - 30)
+        }
+
+        // sprite
+        g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
     }
 
     override fun move() {
