@@ -3,10 +3,8 @@ package engine.entity.mob
 import engine.GameEngine
 import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
-import engine.entity.MovableEntity
 import engine.entity.interfaces.Levelable
-import engine.entity.sprite.Sprite
-import engine.maths.Vector2
+import engine.entity.sprite.SpriteFactory
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -19,7 +17,7 @@ class Hero : CollidableEntity(), Levelable {
         height = 32
         drawingPositionType = DrawablePosition.CENTERED
         drawingPositionTypeRelative = null
-        sprite = Sprite.getHeroSprite()
+        sprite = SpriteFactory.getHeroSprite()
         speed = 2.5
     }
 

@@ -44,6 +44,16 @@ interface Drawable {
                     return position.toInt()
                 }
                 return Vector2Int(
+                    (position.x + drawingPositionTypeRelative!!.getDrawingPosition().x).toInt(),
+                    (position.y + drawingPositionTypeRelative!!.getDrawingPosition().y).toInt()
+                )
+            }
+            DrawablePosition.RELATIVE_CENTERED -> {
+                if (drawingPositionTypeRelative == null) {
+                    Logger.error("Can't get drawing position of Relative if relative is not assigned")
+                    return position.toInt()
+                }
+                return Vector2Int(
                     (position.x + drawingPositionTypeRelative!!.getDrawingPosition().x + drawingPositionTypeRelative!!.width/2).toInt(),
                     (position.y + drawingPositionTypeRelative!!.getDrawingPosition().y + drawingPositionTypeRelative!!.height/2).toInt()
                 )

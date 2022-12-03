@@ -1,5 +1,4 @@
 import engine.logger.Formatter
-import engine.entity.sprite.Sprite
 import engine.maths.Vector2
 import java.awt.*
 import java.awt.event.ActionEvent

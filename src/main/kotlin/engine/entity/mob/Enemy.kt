@@ -4,7 +4,7 @@ import engine.GameEngine
 import engine.entity.CollidableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.interfaces.Attacker
-import engine.entity.sprite.Sprite
+import engine.entity.sprite.SpriteFactory
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -15,7 +15,7 @@ class Enemy : CollidableEntity(), Attacker {
         width = 32
         height = 32
         drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
-        sprite = Sprite.getPokemonSprite()
+        sprite = SpriteFactory.getPokemonSprite()
         speed = 2.0
     }
 

@@ -1,9 +1,7 @@
 package engine
 
-import engine.entity.factory.EntityFactory
 import engine.input.InputManager
 import engine.logger.Logger
-import engine.maths.Vector2
 import engine.window.Window
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -18,7 +16,7 @@ object GameEngine : JPanel() {
     private const val FRAME_PER_SECOND = 60
     private const val FRAME_PER_MILLISECOND = FRAME_PER_SECOND / 1000
 
-    var debug = true
+    var debug = false
     var debugShowCenter = true
     var ticks = 0
 
@@ -26,7 +24,7 @@ object GameEngine : JPanel() {
     val game = Game()
     val input = InputManager()
     val timer: Timer = Timer(FRAME_PER_MILLISECOND) { run() }
-    var state: EnginState = EnginState.PLAYING
+    var state: EngineState = EngineState.PLAYING
 
     init {
         // init window
@@ -49,9 +47,9 @@ object GameEngine : JPanel() {
     fun run() {
         input.getMouseLocation()
         input.getKeyboardMovement()
-        game.handleStateChange()
+        game.handleStateChangeByUserInput()
 
-        if (state == EnginState.PLAYING) {
+        if (state == EngineState.PLAYING) {
             game.createEnemies()
             game.moveEntities()
             game.checkCollisions()

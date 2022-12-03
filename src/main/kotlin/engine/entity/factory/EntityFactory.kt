@@ -6,7 +6,7 @@ import engine.entity.enums.DrawablePosition
 import engine.entity.enums.MapTilePosition
 import engine.entity.map.Tile
 import engine.entity.mob.Enemy
-import engine.entity.sprite.Sprite
+import engine.entity.sprite.SpriteFactory
 import kotlin.random.Random
 
 object EntityFactory {
@@ -46,10 +46,10 @@ object EntityFactory {
         val tiles = hashSetOf<Tile>()
         for (i in 0..64) {
             for (j in 0..64) {
-                val x = i * Sprite.TILE_SIZE
-                val y = j * Sprite.TILE_SIZE
+                val x = i * SpriteFactory.TILE_SIZE
+                val y = j * SpriteFactory.TILE_SIZE
                 val tile = Tile(Vector2(x.toDouble(), y.toDouble()))
-                if (Random.nextBoolean()) tile.sprite = Sprite.getTilemap(MapTilePosition.LEFT)
+                if (Random.nextBoolean()) tile.sprite = SpriteFactory.getTilemap(MapTilePosition.LEFT)
                 tiles.add(tile)
             }
         }

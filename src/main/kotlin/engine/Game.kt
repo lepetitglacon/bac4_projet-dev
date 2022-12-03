@@ -5,7 +5,6 @@ import engine.entity.Entity
 import engine.entity.MovableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.factory.EntityFactory
-import engine.entity.gui.BarGui
 import engine.entity.gui.Gui
 import engine.entity.gui.StringGui
 import engine.entity.map.Map
@@ -38,17 +37,21 @@ class Game {
         return e
     }
 
-    fun handleStateChange() {
-
+    fun handleStateChangeByUserInput() {
         when (GameEngine.state) {
-            EnginState.MAIN_MENU -> {
+            EngineState.MAIN_MENU -> {
                 if (GameEngine.input.userInputEnter || GameEngine.input.userInputEscape) {
-                    GameEngine.state = EnginState.PLAYING
+                    GameEngine.state = EngineState.PLAYING
                 }
             }
-            EnginState.PLAYING -> {
+            EngineState.PLAYING -> {
                 if (GameEngine.input.userInputEscape) {
-                    GameEngine.state = EnginState.MAIN_MENU
+                    GameEngine.state = EngineState.MAIN_MENU
+                }
+            }
+            EngineState.GAME_OVER -> {
+                if (GameEngine.input.userInputEnter) {
+                    GameEngine.state = EngineState.MAIN_MENU
                 }
             }
             else -> {}
@@ -84,31 +87,58 @@ class Game {
         entities().removeIf { it.hp <= 0  }
 
         if (hero.hp <= 0) {
-            hero.hp = hero.maxHp
+            if (GameEngine.debug) {
+                hero.hp = hero.maxHp
+            } else {
+                GameEngine.state = EngineState.GAME_OVER
+            }
+
         }
     }
 
     fun drawMainMenu(g: Graphics2D) {
+        // background
 //        g.color = Color.DARK_GRAY
 //        g.fillRect(0, 0, GameEngine.window.WIDTH, GameEngine.window.HEIGHT)
         val string = StringGui("Appuyez sur [ENTRER] pour jouer", DrawablePosition.CENTERED, null, Color.WHITE, Color.BLACK)
         string.draw(g)
     }
 
+    fun drawGameOver(g: Graphics2D) {
+        g.color = Color.DARK_GRAY
+        g.fillRect(0, 0, GameEngine.window.WIDTH, GameEngine.window.HEIGHT)
+        val string = StringGui("Game Over", DrawablePosition.CENTERED, null, Color.WHITE, Color.BLACK)
+        val s = StringGui("Appuyez sur [ENTRER] pour jouer", DrawablePosition.RELATIVE, string, Color.WHITE, Color.BLACK)
+        s.position = Vector2(0.0, -15.0)
+
+        string.draw(g)
+        s.draw(g)
+    }
+
     fun draw(g: Graphics2D) {
-        if (GameEngine.state == EnginState.PLAYING) {
-            // first layer
-            map.draw(g)
 
-            collidableEntities.forEach { it.draw(g) }
-            movableEntities.forEach { it.draw(g) }
-            staticEntities.forEach { it.draw(g) }
-            hero.draw(g)
+        when (GameEngine.state) {
+            EngineState.PLAYING -> {
+                // first layer
+                map.draw(g)
 
-            // last layer
-            gui.draw(g)
-        } else {
-            drawMainMenu(g)
+                collidableEntities.forEach { it.draw(g) }
+                movableEntities.forEach { it.draw(g) }
+                staticEntities.forEach { it.draw(g) }
+                hero.draw(g)
+
+                // last layer
+                gui.draw(g)
+            }
+            EngineState.MAIN_MENU -> {
+                drawMainMenu(g)
+            }
+            EngineState.GAME_OVER -> {
+                drawGameOver(g)
+            }
+            else -> {
+                GameEngine.state = EngineState.MAIN_MENU
+            }
         }
     }
 }

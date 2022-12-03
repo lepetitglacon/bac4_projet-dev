@@ -7,7 +7,7 @@ import java.io.IOException
 import javax.imageio.ImageIO
 
 
-object Sprite {
+object SpriteFactory {
     private var heroSpriteSheet: BufferedImage? = null
     private var spiderSpriteSheet: BufferedImage? = null
     private var map: BufferedImage? = null
