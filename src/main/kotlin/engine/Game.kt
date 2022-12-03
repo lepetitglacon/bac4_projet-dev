@@ -11,6 +11,7 @@ import engine.entity.gui.StringGui
 import engine.entity.map.Map
 import engine.entity.mob.Hero
 import engine.maths.Vector2
+import engine.sound.SoundManager
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -27,6 +28,8 @@ class Game {
 
     fun init() {
         hero.weapons.add(WeaponFactory.createStink())
+
+        SoundManager.playSong("main song")
 
         map.init()
         gui.init()

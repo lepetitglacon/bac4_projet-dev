@@ -2,6 +2,7 @@ package engine
 
 import engine.input.InputManager
 import engine.logger.Logger
+import engine.sound.SoundManager
 import engine.window.Window
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -38,6 +39,9 @@ object GameEngine : JPanel() {
                 }
             })
         }
+
+        SoundManager.loadFiles()
+
         // init du jeu
         game.init()
         // launch timer
