@@ -17,9 +17,20 @@ object SpriteFactory {
     private var enemy: BufferedImage? = null
     private var map: BufferedImage? = null
     private var objects: BufferedImage? = null
+    private var voidGameOver: BufferedImage? = null
+
+    private var weaponStink: BufferedImage? = null
+
 
     fun loadFiles() {
-        // TODO
+        hero = loadSprite("player")
+        enemy = loadSprite("pokemons")
+        map = loadSprite("tilemap")
+        objects = loadSprite("objects")
+        voidGameOver = loadSprite("voidondeath")
+
+        // weapons
+        weaponStink = loadSprite("weapons/Stink")
     }
 
     fun loadSprite(file: String): BufferedImage? {
@@ -60,6 +71,13 @@ object SpriteFactory {
             MapTilePosition.LEFT -> map!!.getSubimage(TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE)
         }
 
+    }
+
+    fun getGameOver(): BufferedImage {
+        if (voidGameOver == null) {
+            voidGameOver = loadSprite("voidondeath")
+        }
+        return voidGameOver!!
     }
 
     fun getSoul(): BufferedImage {

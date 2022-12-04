@@ -5,6 +5,7 @@ import engine.entity.Entity
 import engine.entity.MovableEntity
 import engine.entity.enums.DrawablePosition
 import engine.entity.factory.EntityFactory
+import engine.entity.factory.SpriteFactory
 import engine.entity.factory.WeaponFactory
 import engine.entity.gui.Gui
 import engine.entity.gui.StringGui
@@ -14,6 +15,9 @@ import engine.maths.Vector2
 import engine.sound.SoundManager
 import java.awt.Color
 import java.awt.Graphics2D
+import java.awt.geom.AffineTransform
+import java.awt.image.AffineTransformOp
+import java.awt.image.BufferedImage
 
 class Game {
     val hero: Hero = Hero()
@@ -95,7 +99,6 @@ class Game {
         movableEntities.removeIf { it.hp <= 0  }
         collidableEntities.removeIf {
             if (it.hp <= 0) {
-                println("create soul ${it.position.toInt()}")
                 objects.add(EntityFactory.createSoul(it.position))
             }
             it.hp <= 0
@@ -105,6 +108,8 @@ class Game {
             if (GameEngine.debug) {
                 hero.hp = hero.maxHp
             } else {
+                SoundManager.stop("main song")
+                SoundManager.play("death")
                 GameEngine.state = EngineState.GAME_OVER
             }
 
@@ -124,6 +129,16 @@ class Game {
         g.fillRect(0, 0, GameEngine.window.WIDTH, GameEngine.window.HEIGHT)
         val string = StringGui()
         val s = StringGui()
+        val at = AffineTransform()
+        at.scale(-2.0, -2.0)
+
+        g.drawImage(SpriteFactory.getGameOver(),
+            GameEngine.window.WIDTH/2 - 150,
+            GameEngine.window.WIDTH/2 - 150,
+            300, 300, 0, 0,
+            SpriteFactory.getGameOver().width,
+            SpriteFactory.getGameOver().height, null);
+
         s.position = Vector2(0.0, -15.0)
 
         string.draw(g)

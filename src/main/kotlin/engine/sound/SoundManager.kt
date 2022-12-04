@@ -12,6 +12,7 @@ object SoundManager {
 
     fun loadFiles() {
         registerAudioFile("main song", "assets/sound/main")
+        registerAudioFile("death", "assets/sound/death")
         registerAudioFile("xp", "assets/sound/xp/xp")
         registerAudioFile("level up", "assets/sound/xp/levelup")
     }
@@ -24,6 +25,13 @@ object SoundManager {
         } else {
             Logger.warning("\"$name\" does not exist in audio files (not loaded)")
         }
+    }
 
+    fun stop(name: String) {
+        if (clips.containsKey(name)) {
+            clips[name]!!.clip.stop()
+        } else {
+            Logger.warning("\"$name\" does not exist in audio files (not loaded)")
+        }
     }
 }

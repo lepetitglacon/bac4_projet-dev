@@ -18,7 +18,7 @@ object GameEngine : JPanel() {
     private const val FRAME_PER_SECOND = 60
     private const val FRAME_PER_MILLISECOND = 1
 
-    var debug = true
+    var debug = false
     var ticks = 0
 
     val window = Window()
@@ -28,7 +28,6 @@ object GameEngine : JPanel() {
     var state: EngineState = EngineState.PLAYING
 
     init {
-        println(FRAME_PER_MILLISECOND)
         // init window
         SwingUtilities.invokeLater {
             window.init()
@@ -41,8 +40,8 @@ object GameEngine : JPanel() {
             })
         }
 
-        SoundManager.loadFiles()
         SpriteFactory.loadFiles()
+        SoundManager.loadFiles()
 
         game.init()
         timer.start()
@@ -63,7 +62,6 @@ object GameEngine : JPanel() {
         }
 
         ticks++
-        println(ticks)
         repaint()
     }
 
