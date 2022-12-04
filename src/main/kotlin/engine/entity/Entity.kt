@@ -11,11 +11,12 @@ import java.awt.image.BufferedImage
 abstract class Entity : Drawable {
     override var position: Vector2 = Vector2()
     override var drawingPosition: Vector2 = Vector2()
-    override var width: Int = 100
-    override var height: Int = 100
+    override var width: Int = 64
+    override var height: Int = 64
     override var drawingPositionType: DrawablePosition = DrawablePosition.ABSOLUTE
     override var drawingPositionTypeRelative: Entity? = null
     override var sprite: BufferedImage? = null
+    override var delete: Boolean = false
 
     var maxHp: Int = 100
     var hp: Int = 100

@@ -18,6 +18,7 @@ interface Drawable {
     var width: Int
     var height: Int
     var sprite: BufferedImage?
+    var delete: Boolean
 
     fun draw(g: Graphics2D) {
         drawDebugPosition(g)

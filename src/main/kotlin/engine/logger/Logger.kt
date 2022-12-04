@@ -30,4 +30,8 @@ object Logger {
     fun error(string: String) {
         logger.severe(string)
     }
+
+    fun asset(assetName: String, string: String) {
+        logger.info("[ASSET] $assetName $string")
+    }
 }

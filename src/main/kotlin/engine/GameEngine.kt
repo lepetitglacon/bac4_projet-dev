@@ -1,5 +1,6 @@
 package engine
 
+import engine.entity.factory.SpriteFactory
 import engine.input.InputManager
 import engine.logger.Logger
 import engine.sound.SoundManager
@@ -15,10 +16,9 @@ import javax.swing.Timer
 
 object GameEngine : JPanel() {
     private const val FRAME_PER_SECOND = 60
-    private const val FRAME_PER_MILLISECOND = FRAME_PER_SECOND / 1000
+    private const val FRAME_PER_MILLISECOND = 1
 
     var debug = true
-    var debugShowCenter = true
     var ticks = 0
 
     val window = Window()
@@ -28,6 +28,7 @@ object GameEngine : JPanel() {
     var state: EngineState = EngineState.PLAYING
 
     init {
+        println(FRAME_PER_MILLISECOND)
         // init window
         SwingUtilities.invokeLater {
             window.init()
@@ -35,16 +36,15 @@ object GameEngine : JPanel() {
                 override fun componentResized(e: ComponentEvent) {
                     window.WIDTH = e.component.width
                     window.HEIGHT = e.component.height
-//                    game.map.onWindowResize()
+                    game.map.onWindowResize()
                 }
             })
         }
 
         SoundManager.loadFiles()
+        SpriteFactory.loadFiles()
 
-        // init du jeu
         game.init()
-        // launch timer
         timer.start()
         Logger.info("Engine running")
     }
@@ -58,25 +58,18 @@ object GameEngine : JPanel() {
             game.createEnemies()
             game.moveEntities()
             game.checkCollisions()
+            game.handleHeroLevelUp()
             game.handleDeaths()
         }
 
+        ticks++
+        println(ticks)
         repaint()
     }
 
     override fun paint(gg: Graphics?) {
         super.paint(gg)
         val g = gg as Graphics2D
-        if (debugShowCenter) {
-            g.drawLine(
-                window.WIDTH / 2, 0,
-                window.WIDTH / 2, window.HEIGHT
-            )
-            g.drawLine(
-                0, window.HEIGHT/2,
-                window.WIDTH, window.HEIGHT/2
-            )
-        }
         game.draw(g)
     }
 }

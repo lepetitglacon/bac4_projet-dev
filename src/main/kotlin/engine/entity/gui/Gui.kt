@@ -8,8 +8,11 @@ import java.awt.Graphics2D
 class Gui {
     val healthBar = BarGui()
     val xpBar = BarGui()
+    val levelCounter = StringGui()
 
     fun init() {
+        levelCounter.string = GameEngine.game.hero.level.toString()
+
         healthBar.width = GameEngine.window.WIDTH/2
         healthBar.height = 32
         healthBar.position = Vector2(GameEngine.window.center.x, (GameEngine.window.HEIGHT - healthBar.height - 50).toDouble())
@@ -26,9 +29,13 @@ class Gui {
     }
 
     fun update() {
+        levelCounter.string = GameEngine.game.hero.level.toString()
+
+        healthBar.position = Vector2(GameEngine.window.center.x, (GameEngine.window.HEIGHT - healthBar.height - 50).toDouble())
         healthBar.filled = GameEngine.game.hero.hp
         healthBar.maxFilled = GameEngine.game.hero.maxHp
 
+        xpBar.position = Vector2(GameEngine.window.center.x, (GameEngine.window.HEIGHT - healthBar.height - xpBar.height - 55).toDouble())
         xpBar.filled = GameEngine.game.hero.xp
         xpBar.maxFilled = GameEngine.game.hero.xpToNextLevel
     }
@@ -38,5 +45,6 @@ class Gui {
 
         xpBar.draw(g)
         healthBar.draw(g)
+        levelCounter.draw(g)
     }
 }

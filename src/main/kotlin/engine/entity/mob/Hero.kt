@@ -6,14 +6,19 @@ import engine.entity.enums.DrawablePosition
 import engine.entity.interfaces.Levelable
 import engine.entity.interfaces.Weaponized
 import engine.entity.factory.SpriteFactory
+import engine.entity.item.Soul
 import engine.entity.weapon.Projectile
+import engine.sound.SoundManager
 import java.awt.Color
 import java.awt.Graphics2D
 
 class Hero : CollidableEntity(), Levelable, Weaponized {
     override var xp: Int = 0
     override var xpToNextLevel: Int = 100
+    override var level: Int = 1
     override val weapons: MutableList<Projectile> = mutableListOf()
+
+    var pickUpRange: Int = 32
 
     init {
         width = 32
@@ -21,7 +26,7 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
         drawingPositionType = DrawablePosition.CENTERED
         drawingPositionTypeRelative = null
         sprite = SpriteFactory.getHeroSprite()
-        speed = 2.5
+        speed = 1.5
     }
 
     override fun draw(g: Graphics2D) {
@@ -39,11 +44,13 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
         GameEngine.game.map.onPlayerMovement()
     }
 
-    override fun nextLevel() {
+    override fun checkForLevelUp() {
         if (xp >= xpToNextLevel) {
-//           TODO Events.fire("heroNextLevel")
+            SoundManager.play("level up")
+            val diff = xp - xpToNextLevel
             xpToNextLevel *= 2
-            xp = 0
+            level++
+            xp = 0 + diff
         }
     }
 
@@ -52,6 +59,20 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
             it as Enemy
             if (collides(it)) {
                 it.applyDamage(this)
+            }
+        }
+    }
+
+    fun checkCollisionWithObjects() {
+        GameEngine.game.objects.forEach {
+            if (collides(it)) {
+                when(it) {
+                    is Soul -> {
+                        SoundManager.play("xp")
+                        xp += it.xp
+                        it.delete = true
+                    }
+                }
             }
         }
     }

@@ -2,8 +2,10 @@ package engine.entity.factory
 
 import engine.maths.Vector2
 import engine.GameEngine
+import engine.entity.Entity
 import engine.entity.enums.DrawablePosition
 import engine.entity.enums.MapTilePosition
+import engine.entity.item.Soul
 import engine.entity.map.Tile
 import engine.entity.mob.Enemy
 import engine.maths.Vector2Int
@@ -60,8 +62,8 @@ object EntityFactory {
     fun addTilesToMap(): HashMap<Vector2, Tile> {
         val tiles = hashMapOf<Vector2, Tile>()
 
-        for (i in GameEngine.game.map.minX/SpriteFactory.TILE_SIZE  ..GameEngine.game.map.maxX/SpriteFactory.TILE_SIZE+1) {
-            for (j in GameEngine.game.map.minY/SpriteFactory.TILE_SIZE..GameEngine.game.map.maxY/SpriteFactory.TILE_SIZE+1) {
+        for (i in GameEngine.game.map.minX/SpriteFactory.TILE_SIZE -1  ..GameEngine.game.map.maxX/SpriteFactory.TILE_SIZE+1) {
+            for (j in GameEngine.game.map.minY/SpriteFactory.TILE_SIZE -1..GameEngine.game.map.maxY/SpriteFactory.TILE_SIZE+1) {
                 val position = Vector2((i * SpriteFactory.TILE_SIZE).toDouble(), (j * SpriteFactory.TILE_SIZE).toDouble())
                 if (!GameEngine.game.map.tiles.containsKey(position)) {
                     val tile = Tile(position)
@@ -71,5 +73,9 @@ object EntityFactory {
             }
         }
         return tiles
+    }
+
+    fun createSoul(position: Vector2): Soul {
+        return Soul(position)
     }
 }

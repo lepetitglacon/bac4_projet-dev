@@ -1,5 +1,7 @@
 package engine.entity.factory
 
+import engine.GameEngine
+import engine.ResourceManager
 import engine.entity.enums.MapTilePosition
 import engine.logger.Logger
 import java.awt.image.BufferedImage
@@ -9,17 +11,21 @@ import javax.imageio.ImageIO
 
 
 object SpriteFactory {
-    private var heroSpriteSheet: BufferedImage? = null
-    private var spiderSpriteSheet: BufferedImage? = null
-    private var map: BufferedImage? = null
     const val TILE_SIZE = 64
+
+    private var hero: BufferedImage? = null
+    private var enemy: BufferedImage? = null
+    private var map: BufferedImage? = null
+    private var objects: BufferedImage? = null
+
+    fun loadFiles() {
+        // TODO
+    }
 
     fun loadSprite(file: String): BufferedImage? {
         var sprite: BufferedImage? = null
         try {
-            val url = "assets/img/$file.png"
-            sprite = ImageIO.read(File(url))
-            Logger.log("sprite loaded: $url")
+            sprite = ImageIO.read(ResourceManager.getPng("assets/img/$file"))
         } catch (e: IOException) {
             Logger.info(e.message ?: "no message")
         }
@@ -31,17 +37,17 @@ object SpriteFactory {
     }
 
     fun getHeroSprite(): BufferedImage {
-        if (heroSpriteSheet == null) {
-            heroSpriteSheet = loadSprite("player")
+        if (hero == null) {
+            hero = loadSprite("player")
         }
-        return heroSpriteSheet!!.getSubimage(0,0, TILE_SIZE, TILE_SIZE)
+        return hero!!.getSubimage(0,0, TILE_SIZE, TILE_SIZE)
     }
 
     fun getPokemonSprite(): BufferedImage {
-        if (spiderSpriteSheet == null) {
-            spiderSpriteSheet = loadSprite("pokemons")
+        if (enemy == null) {
+            enemy = loadSprite("pokemons")
         }
-        return spiderSpriteSheet!!.getSubimage(0, 0, TILE_SIZE, TILE_SIZE)
+        return enemy!!.getSubimage(0, 0, TILE_SIZE, TILE_SIZE)
     }
 
     fun getTilemap(mapTilePosition: MapTilePosition): BufferedImage {
@@ -54,5 +60,12 @@ object SpriteFactory {
             MapTilePosition.LEFT -> map!!.getSubimage(TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE)
         }
 
+    }
+
+    fun getSoul(): BufferedImage {
+        if (objects == null) {
+            objects = loadSprite("objects")
+        }
+        return objects!!.getSubimage(0,0, TILE_SIZE, TILE_SIZE)
     }
 }

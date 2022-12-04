@@ -22,6 +22,7 @@ class Game {
     val staticEntities: MutableList<Entity> = mutableListOf()
     val movableEntities: MutableList<MovableEntity> = mutableListOf()
     val collidableEntities: MutableList<CollidableEntity> = mutableListOf()
+    val objects: MutableList<CollidableEntity> = mutableListOf()
 
     val ENEMIES_PER_WAVE = 6
     var wave: Int = 1
@@ -29,18 +30,10 @@ class Game {
     fun init() {
         hero.weapons.add(WeaponFactory.createStink())
 
-        SoundManager.playSong("main song")
+        SoundManager.play("main song")
 
         map.init()
         gui.init()
-    }
-
-    fun entities(): MutableList<Entity> {
-        val e = mutableListOf<Entity>()
-        e.addAll(staticEntities)
-        e.addAll(movableEntities)
-        e.addAll(collidableEntities)
-        return e
     }
 
     fun handleStateChangeByUserInput() {
@@ -76,12 +69,15 @@ class Game {
         movableEntities.forEach { it.move() }
         collidableEntities.forEach { it.move() }
 
+        objects.forEach { it.move() }
+
         hero.weapons.forEach { it.move() }
         hero.move()
     }
 
     fun checkCollisions() {
-//        Logger.log("check collisions")
+        // remove items
+        objects.removeIf { it.delete }
 
         collidableEntities.forEach {
             it.checkCollisionBetweenEnemiesToRepulseThem()
@@ -89,6 +85,7 @@ class Game {
 
         hero.weapons.forEach { it.checkCollisionWithEnemies() }
 
+        hero.checkCollisionWithObjects()
         hero.checkCollisionWithEnemies()
 
     }
@@ -96,7 +93,13 @@ class Game {
     fun handleDeaths() {
         staticEntities.removeIf { it.hp <= 0  }
         movableEntities.removeIf { it.hp <= 0  }
-        collidableEntities.removeIf { it.hp <= 0  }
+        collidableEntities.removeIf {
+            if (it.hp <= 0) {
+                println("create soul ${it.position.toInt()}")
+                objects.add(EntityFactory.createSoul(it.position))
+            }
+            it.hp <= 0
+        }
 
         if (hero.hp <= 0) {
             if (GameEngine.debug) {
@@ -112,15 +115,15 @@ class Game {
         // background
 //        g.color = Color.DARK_GRAY
 //        g.fillRect(0, 0, GameEngine.window.WIDTH, GameEngine.window.HEIGHT)
-        val string = StringGui("Appuyez sur [ENTRER] pour jouer", DrawablePosition.CENTERED, null, Color.WHITE, Color.BLACK)
+        val string = StringGui()
         string.draw(g)
     }
 
     fun drawGameOver(g: Graphics2D) {
         g.color = Color.DARK_GRAY
         g.fillRect(0, 0, GameEngine.window.WIDTH, GameEngine.window.HEIGHT)
-        val string = StringGui("Game Over", DrawablePosition.CENTERED, null, Color.WHITE, Color.BLACK)
-        val s = StringGui("Appuyez sur [ENTRER] pour jouer", DrawablePosition.RELATIVE, string, Color.WHITE, Color.BLACK)
+        val string = StringGui()
+        val s = StringGui()
         s.position = Vector2(0.0, -15.0)
 
         string.draw(g)
@@ -134,10 +137,10 @@ class Game {
                 // first layer
                 map.draw(g)
 
+                objects.forEach { it.draw(g) }
                 collidableEntities.forEach { it.draw(g) }
                 movableEntities.forEach { it.draw(g) }
                 staticEntities.forEach { it.draw(g) }
-
 
                 hero.weapons.forEach { it.draw(g) }
                 hero.draw(g)
@@ -155,5 +158,9 @@ class Game {
                 GameEngine.state = EngineState.MAIN_MENU
             }
         }
+    }
+
+    fun handleHeroLevelUp() {
+        hero.checkForLevelUp()
     }
 }
