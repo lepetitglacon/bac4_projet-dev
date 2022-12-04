@@ -13,7 +13,7 @@ class Tile(override var position: Vector2) : MovableEntity() {
     init {
         drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
         drawingPositionTypeRelative = GameEngine.game.hero
-        sprite = SpriteFactory.getTilemap(MapTilePosition.CENTER)
+        sprite = SpriteFactory.getTilemap(MapTilePosition.GRASS)
     }
 
     override fun draw(g: Graphics2D) {

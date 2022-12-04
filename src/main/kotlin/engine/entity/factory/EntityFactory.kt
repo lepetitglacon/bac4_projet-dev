@@ -6,6 +6,7 @@ import engine.entity.enums.DrawablePosition
 import engine.entity.enums.MapTilePosition
 import engine.entity.map.Tile
 import engine.entity.mob.Enemy
+import engine.maths.Vector2Int
 import kotlin.random.Random
 
 object EntityFactory {
@@ -13,10 +14,10 @@ object EntityFactory {
         val enemy = Enemy()
 
         // get coordinates
-        val heroXMin = GameEngine.game.hero.position.x - GameEngine.window.WIDTH/2
-        val heroXMax = GameEngine.game.hero.position.x + GameEngine.window.WIDTH/2
-        val heroYMin = GameEngine.game.hero.position.y - GameEngine.window.HEIGHT/2
-        val heroYMax = GameEngine.game.hero.position.y + GameEngine.window.HEIGHT/2
+        val heroXMin = GameEngine.game.hero.position.x - GameEngine.window.WIDTH/2 - enemy.width
+        val heroXMax = GameEngine.game.hero.position.x + GameEngine.window.WIDTH/2 + enemy.width
+        val heroYMin = GameEngine.game.hero.position.y - GameEngine.window.HEIGHT/2 - enemy.height
+        val heroYMax = GameEngine.game.hero.position.y + GameEngine.window.HEIGHT/2 + enemy.height
 
         if (Random.nextBoolean()) {
             enemy.position.x = Random.nextDouble(heroXMin, heroXMax)
@@ -42,15 +43,31 @@ object EntityFactory {
         return enemy
     }
 
-    fun createMap(): HashSet<Tile> {
-        val tiles = hashSetOf<Tile>()
-        for (i in 0..64) {
-            for (j in 0..64) {
-                val x = i * SpriteFactory.TILE_SIZE
-                val y = j * SpriteFactory.TILE_SIZE
-                val tile = Tile(Vector2(x.toDouble(), y.toDouble()))
+    fun createMap(): HashMap<Vector2, Tile> {
+        val tiles = hashMapOf<Vector2, Tile>()
+
+        for (i in GameEngine.game.map.minX/SpriteFactory.TILE_SIZE  ..GameEngine.game.map.maxX/SpriteFactory.TILE_SIZE+1) {
+            for (j in GameEngine.game.map.minY/SpriteFactory.TILE_SIZE..GameEngine.game.map.maxY/SpriteFactory.TILE_SIZE+1) {
+                val position = Vector2((i * SpriteFactory.TILE_SIZE).toDouble(), (j * SpriteFactory.TILE_SIZE).toDouble())
+                val tile = Tile(position)
                 if (Random.nextBoolean()) tile.sprite = SpriteFactory.getTilemap(MapTilePosition.LEFT)
-                tiles.add(tile)
+                tiles[position] = tile
+            }
+        }
+        return tiles
+    }
+
+    fun addTilesToMap(): HashMap<Vector2, Tile> {
+        val tiles = hashMapOf<Vector2, Tile>()
+
+        for (i in GameEngine.game.map.minX/SpriteFactory.TILE_SIZE  ..GameEngine.game.map.maxX/SpriteFactory.TILE_SIZE+1) {
+            for (j in GameEngine.game.map.minY/SpriteFactory.TILE_SIZE..GameEngine.game.map.maxY/SpriteFactory.TILE_SIZE+1) {
+                val position = Vector2((i * SpriteFactory.TILE_SIZE).toDouble(), (j * SpriteFactory.TILE_SIZE).toDouble())
+                if (!GameEngine.game.map.tiles.containsKey(position)) {
+                    val tile = Tile(position)
+                    if (Random.nextBoolean()) tile.sprite = SpriteFactory.getTilemap(MapTilePosition.DIRT)
+                    tiles[position] = tile
+                }
             }
         }
         return tiles

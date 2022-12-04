@@ -36,6 +36,7 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
     override fun move() {
         setDrawingPositionFromPosition()
         moveFromKeyboard()
+        GameEngine.game.map.onPlayerMovement()
     }
 
     override fun nextLevel() {

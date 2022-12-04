@@ -1,7 +1,7 @@
 package engine.entity.enums
 
 enum class MapTilePosition {
-    CENTER,
+    GRASS,
     LEFT,
-    RIGHT
+    DIRT
 }

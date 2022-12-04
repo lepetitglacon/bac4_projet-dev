@@ -1,15 +1,11 @@
 package engine.entity.factory
 
-import Weapon
 import engine.entity.enums.MapTilePosition
-import engine.entity.weapon.Projectile
 import engine.logger.Logger
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
-import java.net.URL
 import javax.imageio.ImageIO
-import javax.imageio.ImageIO.*
 
 
 object SpriteFactory {
@@ -21,9 +17,9 @@ object SpriteFactory {
     fun loadSprite(file: String): BufferedImage? {
         var sprite: BufferedImage? = null
         try {
-            val url = "assets/$file.png"
-            println(url)
+            val url = "assets/img/$file.png"
             sprite = ImageIO.read(File(url))
+            Logger.log("sprite loaded: $url")
         } catch (e: IOException) {
             Logger.info(e.message ?: "no message")
         }
@@ -53,8 +49,8 @@ object SpriteFactory {
             map = loadSprite("tilemap")
         }
         return when (mapTilePosition) {
-            MapTilePosition.CENTER -> map!!.getSubimage(0, 0, TILE_SIZE, TILE_SIZE)
-            MapTilePosition.RIGHT -> map!!.getSubimage(0, TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            MapTilePosition.GRASS -> map!!.getSubimage(0, 0, TILE_SIZE, TILE_SIZE)
+            MapTilePosition.DIRT -> map!!.getSubimage(TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)
             MapTilePosition.LEFT -> map!!.getSubimage(TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE)
         }
 

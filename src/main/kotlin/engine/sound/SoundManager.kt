@@ -10,7 +10,7 @@ object SoundManager {
     val clips: MutableMap<String, AudioPlayer> = mutableMapOf()
 
     fun registerAudioFile(name: String, filepath: String) {
-        clips[name] = AudioPlayer(name, filepath)
+//        clips[name] = AudioPlayer(name, filepath)
     }
 
     fun loadFiles() {
@@ -22,7 +22,7 @@ object SoundManager {
             clips[name]!!.clip.open(clips[name]!!.ais)
             clips[name]!!.clip.start()
         } else {
-            Logger.warning("$name does not exist in audio files (not loaded)")
+            Logger.warning("\"$name\" does not exist in audio files (not loaded)")
         }
 
     }

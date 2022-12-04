@@ -35,7 +35,7 @@ object GameEngine : JPanel() {
                 override fun componentResized(e: ComponentEvent) {
                     window.WIDTH = e.component.width
                     window.HEIGHT = e.component.height
-                    GameEngine.game.map.updateSize()
+//                    game.map.onWindowResize()
                 }
             })
         }
