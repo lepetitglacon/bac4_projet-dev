@@ -34,4 +34,8 @@ object Logger {
     fun asset(assetName: String, string: String) {
         logger.info("[ASSET] $assetName $string")
     }
+
+    fun event(string: String) {
+        logger.info("[EVENT] $string")
+    }
 }

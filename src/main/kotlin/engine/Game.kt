@@ -5,17 +5,13 @@ import engine.entity.Entity
 import engine.entity.MovableEntity
 import engine.entity.enums.EngineState
 import engine.entity.factory.EntityFactory
-import engine.entity.factory.SpriteFactory
 import engine.entity.factory.WeaponFactory
 import engine.entity.gui.Gui
-import engine.entity.gui.component.StringGui
 import engine.entity.map.Map
-import engine.entity.mob.Hero
-import engine.maths.Vector2
+import game.mob.Hero
 import engine.sound.SoundManager
-import java.awt.Color
 import java.awt.Graphics2D
-import java.awt.geom.AffineTransform
+import kotlin.random.Random
 
 class Game {
     val hero: Hero = Hero()
@@ -39,8 +35,19 @@ class Game {
         SoundManager.play("main song")
 
         map.init()
-        GameEngine.gui.init()
+        gui.init()
         initialized = true
+    }
+
+    fun reset() {
+        hero.hp = hero.maxHp
+        hero.xp = 0
+
+
+        collidableEntities.clear()
+        staticEntities.clear()
+        movableEntities.clear()
+
     }
     
     fun run() {
@@ -89,7 +96,7 @@ class Game {
         movableEntities.removeIf { it.hp <= 0  }
         collidableEntities.removeIf {
             if (it.hp <= 0) {
-                objects.add(EntityFactory.createSoul(it.position))
+                if (Random.nextBoolean()) objects.add(EntityFactory.createSoul(it.position))
             }
             it.hp <= 0
         }

@@ -1,4 +1,4 @@
-package engine.entity.mob
+package game.mob
 
 import engine.GameEngine
 import engine.entity.CollidableEntity

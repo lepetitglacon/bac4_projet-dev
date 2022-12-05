@@ -2,7 +2,6 @@ package engine
 
 import engine.entity.enums.EngineState
 import engine.entity.factory.SpriteFactory
-import engine.entity.gui.Gui
 import engine.entity.gui.MainMenuGui
 import engine.input.InputManager
 import engine.logger.Logger
@@ -79,6 +78,7 @@ object GameEngine : JPanel() {
             EngineState.MAIN_MENU -> {
                 if (input.userInputEnter || input.userInputEscape) {
                     state = EngineState.PLAYING
+                    SoundManager.play("main song")
                 }
             }
             EngineState.PLAYING -> {
@@ -89,6 +89,8 @@ object GameEngine : JPanel() {
             EngineState.GAME_OVER -> {
                 if (input.userInputEnter) {
                     state = EngineState.MAIN_MENU
+                    SoundManager.stop("death")
+                    game.reset()
                 }
             }
         }

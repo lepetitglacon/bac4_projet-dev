@@ -2,13 +2,12 @@ package engine.entity.factory
 
 import engine.maths.Vector2
 import engine.GameEngine
-import engine.entity.Entity
 import engine.entity.enums.DrawablePosition
 import engine.entity.enums.MapTilePosition
 import engine.entity.item.Soul
 import engine.entity.map.Tile
-import engine.entity.mob.Enemy
-import engine.maths.Vector2Int
+import game.mob.Enemy
+import game.mob.Hero
 import kotlin.random.Random
 
 object EntityFactory {
@@ -37,6 +36,10 @@ object EntityFactory {
         enemy.speed = Random.nextDouble(0.5, 1.5)
         enemy.damages = 1
         return enemy
+    }
+
+    fun createHero(): Hero {
+        return Hero()
     }
 
     fun createEnemyFromPosition(v: Vector2): Enemy {
