@@ -1,4 +1,4 @@
-package engine.entity.gui
+package engine.entity.gui.component
 
 import engine.entity.MovableEntity
 import engine.entity.enums.DrawablePosition

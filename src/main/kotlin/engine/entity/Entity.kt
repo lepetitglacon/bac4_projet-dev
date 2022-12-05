@@ -1,9 +1,8 @@
 package engine.entity
 
-import engine.GameEngine
 import engine.maths.Vector2
 import engine.entity.enums.DrawablePosition
-import engine.entity.gui.BarGui
+import engine.entity.gui.component.BarGui
 import engine.entity.interfaces.Drawable
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage

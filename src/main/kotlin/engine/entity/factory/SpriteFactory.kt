@@ -17,7 +17,9 @@ object SpriteFactory {
     private var enemy: BufferedImage? = null
     private var map: BufferedImage? = null
     private var objects: BufferedImage? = null
+
     private var voidGameOver: BufferedImage? = null
+    private var mainTitle: BufferedImage? = null
 
     private var weaponStink: BufferedImage? = null
 
@@ -78,6 +80,13 @@ object SpriteFactory {
             voidGameOver = loadSprite("voidondeath")
         }
         return voidGameOver!!
+    }
+
+    fun getMainTitle(): BufferedImage {
+        if (mainTitle == null) {
+            mainTitle = loadSprite("maintitle")
+        }
+        return mainTitle!!
     }
 
     fun getSoul(): BufferedImage {

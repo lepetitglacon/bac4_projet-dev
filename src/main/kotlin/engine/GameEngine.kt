@@ -1,6 +1,9 @@
 package engine
 
+import engine.entity.enums.EngineState
 import engine.entity.factory.SpriteFactory
+import engine.entity.gui.Gui
+import engine.entity.gui.MainMenuGui
 import engine.input.InputManager
 import engine.logger.Logger
 import engine.sound.SoundManager
@@ -20,12 +23,13 @@ object GameEngine : JPanel() {
 
     var debug = false
     var ticks = 0
+    var state: EngineState = EngineState.MAIN_MENU
 
     val window = Window()
     val game = Game()
+    val gui = MainMenuGui()
     val input = InputManager()
     val timer: Timer = Timer(FRAME_PER_MILLISECOND) { run() }
-    var state: EngineState = EngineState.PLAYING
 
     init {
         // init window
@@ -51,23 +55,59 @@ object GameEngine : JPanel() {
     fun run() {
         input.getMouseLocation()
         input.getKeyboardMovement()
-        game.handleStateChangeByUserInput()
+        handleStateChangeByUserInput()
 
-        if (state == EngineState.PLAYING) {
-            game.createEnemies()
-            game.moveEntities()
-            game.checkCollisions()
-            game.handleHeroLevelUp()
-            game.handleDeaths()
+        when (state) {
+            EngineState.MAIN_MENU -> {
+
+            }
+            EngineState.PLAYING -> {
+                if (!game.initialized) game.init()
+                game.run()
+            }
+            EngineState.GAME_OVER -> {
+
+            }
         }
 
         ticks++
         repaint()
     }
 
+    fun handleStateChangeByUserInput() {
+        when (state) {
+            EngineState.MAIN_MENU -> {
+                if (input.userInputEnter || input.userInputEscape) {
+                    state = EngineState.PLAYING
+                }
+            }
+            EngineState.PLAYING -> {
+                if (input.userInputEscape) {
+                    state = EngineState.MAIN_MENU
+                }
+            }
+            EngineState.GAME_OVER -> {
+                if (input.userInputEnter) {
+                    state = EngineState.MAIN_MENU
+                }
+            }
+        }
+    }
+
     override fun paint(gg: Graphics?) {
         super.paint(gg)
         val g = gg as Graphics2D
-        game.draw(g)
+
+        when (state) {
+            EngineState.MAIN_MENU -> {
+                gui.drawMainMenu(g)
+            }
+            EngineState.PLAYING -> {
+                game.draw(g)
+            }
+            EngineState.GAME_OVER -> {
+                gui.drawGameOver(g)
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 package engine.entity.gui
 
 import engine.GameEngine
+import engine.entity.gui.component.BarGui
+import engine.entity.gui.component.StringGui
 import engine.maths.Vector2
 import java.awt.Color
 import java.awt.Graphics2D
