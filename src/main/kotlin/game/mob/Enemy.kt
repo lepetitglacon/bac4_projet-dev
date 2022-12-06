@@ -1,10 +1,10 @@
 package game.mob
 
 import engine.GameEngine
-import engine.entity.CollidableEntity
-import engine.entity.enums.DrawablePosition
-import engine.entity.interfaces.Attacker
-import engine.entity.factory.SpriteFactory
+import engine.entities.CollidableEntity
+import engine.entities.enums.DrawablePosition
+import engine.entities.interfaces.Attacker
+import engine.entities.factory.SpriteFactory
 import java.awt.Color
 import java.awt.Graphics2D
 

@@ -1,13 +1,13 @@
 package engine
 
-import engine.entity.CollidableEntity
-import engine.entity.Entity
-import engine.entity.MovableEntity
-import engine.entity.enums.EngineState
-import engine.entity.factory.EntityFactory
-import engine.entity.factory.WeaponFactory
-import engine.entity.gui.Gui
-import engine.entity.map.Map
+import engine.entities.CollidableEntity
+import engine.entities.Entity
+import engine.entities.MovableEntity
+import engine.entities.enums.EngineState
+import engine.entities.factory.EntityFactory
+import engine.entities.factory.WeaponFactory
+import engine.entities.gui.Gui
+import engine.entities.map.Map
 import game.mob.Hero
 import engine.sound.SoundManager
 import java.awt.Graphics2D

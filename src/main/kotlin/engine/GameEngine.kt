@@ -1,9 +1,9 @@
 package engine
 
-import engine.entity.enums.EngineState
-import engine.entity.factory.SpriteFactory
-import engine.entity.gui.MainMenuGui
-import engine.input.InputManager
+import engine.entities.enums.EngineState
+import engine.entities.factory.SpriteFactory
+import engine.entities.gui.MainMenuGui
+import engine.inputs.InputManager
 import engine.logger.Logger
 import engine.sound.SoundManager
 import engine.window.Window

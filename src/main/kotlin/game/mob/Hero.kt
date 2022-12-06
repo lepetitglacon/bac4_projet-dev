@@ -1,13 +1,13 @@
 package game.mob
 
 import engine.GameEngine
-import engine.entity.CollidableEntity
-import engine.entity.enums.DrawablePosition
-import engine.entity.interfaces.Levelable
-import engine.entity.interfaces.Weaponized
-import engine.entity.factory.SpriteFactory
-import engine.entity.item.Soul
-import engine.entity.weapon.Projectile
+import engine.entities.CollidableEntity
+import engine.entities.enums.DrawablePosition
+import engine.entities.interfaces.Levelable
+import engine.entities.interfaces.Weaponized
+import engine.entities.factory.SpriteFactory
+import engine.entities.item.Soul
+import engine.entities.weapon.Projectile
 import engine.sound.SoundManager
 import java.awt.Color
 import java.awt.Graphics2D
