@@ -3,6 +3,7 @@ package engine.inputs
 import engine.maths.Vector2
 import engine.GameEngine
 import engine.entities.factory.EntityFactory
+import engine.events.input.InputEventType
 import engine.logger.Logger
 import engine.maths.Vector2Int
 import java.awt.MouseInfo
@@ -32,15 +33,8 @@ class InputManager {
                     KeyEvent.VK_D -> userInputRight = true
                     KeyEvent.VK_R -> userInputRight = true
                     KeyEvent.VK_X -> GameEngine.debug = !GameEngine.debug
-                    KeyEvent.VK_SPACE -> {
-                        GameEngine.game.collidableEntities.clear()
-                        for (i in 0..2) {
-                            GameEngine.game.collidableEntities.add(EntityFactory.createRandomEnemy())
-                        }
-                    }
-                    //KeyEvent.VK_ESCAPE -> TODO("escape")
-                    KeyEvent.VK_ENTER -> userInputEnter = true
-                    KeyEvent.VK_ESCAPE -> userInputEscape = true
+                    KeyEvent.VK_ENTER -> GameEngine.inputEventManager.notify(InputEventType.ENTER)
+                    KeyEvent.VK_SPACE -> GameEngine.inputEventManager.notify(InputEventType.SPACE)
                 }
             }
             override fun keyReleased(e: KeyEvent) {
@@ -49,9 +43,6 @@ class InputManager {
                     KeyEvent.VK_S -> userInputDown = false
                     KeyEvent.VK_Q -> userInputLeft = false
                     KeyEvent.VK_D -> userInputRight = false
-                    KeyEvent.VK_SPACE -> userInputSpace = false
-                    KeyEvent.VK_ENTER -> userInputEnter = false
-                    KeyEvent.VK_ESCAPE -> userInputEscape = false
                 }
             }
         })
