@@ -1,10 +1,21 @@
 package engine.entities.factory
 
-import engine.entities.weapon.Stink
+import engine.entities.weapon.*
+import engine.entities.weapon.projectiles.UndeadStink
+import engine.entities.weapon.projectiles.SwordSwing
 
 object WeaponFactory {
 
-    fun createStink(): Stink {
-        return Stink()
+    fun createSword(): Sword {
+        return Sword()
+    }
+
+    fun createSwordSwing(): SwordSwing {
+        return SwordSwing()
+    }
+
+
+    fun createStink(): UndeadStink {
+        return UndeadStink()
     }
 }

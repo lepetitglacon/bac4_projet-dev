@@ -35,6 +35,7 @@ class InputManager {
                     KeyEvent.VK_X -> GameEngine.debug = !GameEngine.debug
                     KeyEvent.VK_ENTER -> GameEngine.inputEventManager.notify(InputEventType.ENTER)
                     KeyEvent.VK_SPACE -> GameEngine.inputEventManager.notify(InputEventType.SPACE)
+                    KeyEvent.VK_ESCAPE -> GameEngine.inputEventManager.notify(InputEventType.ESCAPE)
                 }
             }
             override fun keyReleased(e: KeyEvent) {

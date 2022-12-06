@@ -1,4 +1,4 @@
-package engine.entities.weapon
+package engine.entities.weapon.projectiles
 
 import engine.GameEngine
 import engine.entities.CollidableEntity
@@ -9,15 +9,9 @@ abstract class Projectile : CollidableEntity(), Attacker, Cooldownable {
 
     fun checkCollisionWithEnemies() {
         GameEngine.game.collidableEntities.forEach {
-            if (collides(it)) {
+            if (collides(it) && canMakeAction()) {
                 applyDamage(it)
             }
-        }
-    }
-
-    fun fire() {
-        if (canFire()) {
-            println("can fire")
         }
     }
 }

@@ -1,4 +1,4 @@
-package engine.entities.weapon
+package engine.entities.weapon.projectiles
 
 import engine.GameEngine
 import engine.entities.enums.DrawablePosition
@@ -7,7 +7,7 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.time.Instant
 
-class Stink : Projectile() {
+class UndeadStink : Projectile() {
     override var damages: Int = 1
     override var cooldownTime: Long = 2
     override var lastCooldownTime: Instant = Instant.now()
@@ -33,7 +33,6 @@ class Stink : Projectile() {
             g.color = Color.GREEN
             g.fillOval(getDrawingPosition().x, getDrawingPosition().y, width, height)
         }
-
         g.drawImage(sprite, null, getDrawingPosition().x, getDrawingPosition().y)
     }
 

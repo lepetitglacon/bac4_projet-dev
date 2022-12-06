@@ -6,7 +6,7 @@ interface Cooldownable {
     var cooldownTime: Long
     var lastCooldownTime: Instant
 
-    fun canFire(): Boolean {
+    fun canMakeAction(): Boolean {
         return lastCooldownTime.plusSeconds(cooldownTime).isBefore(Instant.now())
     }
 }
