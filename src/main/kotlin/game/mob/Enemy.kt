@@ -5,11 +5,17 @@ import engine.entities.CollidableEntity
 import engine.entities.enums.DrawablePosition
 import engine.entities.interfaces.Attacker
 import engine.entities.factory.SpriteFactory
+import engine.entities.factory.WeaponFactory
+import engine.entities.interfaces.Weaponized
+import engine.entities.weapon.Weapon
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Enemy : CollidableEntity(), Attacker {
-    override var damages: Int = 1
+class Enemy : CollidableEntity(), Attacker, Weaponized {
+
+
+    override var damages: Int = 5
+    override val weapons: MutableList<Weapon> = mutableListOf()
 
     init {
         width = 32
@@ -17,6 +23,8 @@ class Enemy : CollidableEntity(), Attacker {
         drawingPositionType = DrawablePosition.RELATIVE_TO_HERO
         sprite = SpriteFactory.getPokemonSprite()
         speed = 2.0
+
+        weapons.add(WeaponFactory.createSword())
     }
 
     override fun draw(g: Graphics2D) {
@@ -40,6 +48,12 @@ class Enemy : CollidableEntity(), Attacker {
     override fun move() {
         setDrawingPositionFromPosition()
         moveTo(GameEngine.game.hero.position)
+    }
+
+
+
+    override fun fireAll() {
+        TODO("Not yet implemented")
     }
 
 }

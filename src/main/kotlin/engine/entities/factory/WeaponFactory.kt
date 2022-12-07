@@ -3,6 +3,7 @@ package engine.entities.factory
 import engine.entities.weapon.*
 import engine.entities.weapon.projectiles.UndeadStink
 import engine.entities.weapon.projectiles.SwordSwing
+import engine.maths.Vector2
 
 object WeaponFactory {
 
@@ -10,8 +11,8 @@ object WeaponFactory {
         return Sword()
     }
 
-    fun createSwordSwing(): SwordSwing {
-        return SwordSwing()
+    fun createSwordSwing(v: Vector2): SwordSwing {
+        return SwordSwing(v)
     }
 
 

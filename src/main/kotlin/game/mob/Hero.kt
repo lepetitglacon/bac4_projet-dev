@@ -55,16 +55,6 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
         }
     }
 
-    fun checkCollisionWithEnemies() {
-        GameEngine.game.collidableEntities.forEach {
-            it as Enemy
-            if (collides(it)) {
-                it.applyDamage(this)
-                GameEngine.heroEventManager.notify(HeroEventType.HP_DOWN)
-            }
-        }
-    }
-
     fun checkCollisionWithObjects() {
         GameEngine.game.objects.forEach {
             if (collides(it)) {

@@ -1,5 +1,7 @@
 package engine.entities.weapon
 
+import engine.entities.CollidableEntity
+import engine.entities.Entity
 import engine.entities.interfaces.Cooldownable
 import engine.entities.weapon.projectiles.Projectile
 import java.awt.Graphics2D
@@ -14,8 +16,8 @@ abstract class Weapon : Cooldownable {
         projectiles.forEach { it.move() }
     }
 
-    fun checkProjectilesCollisions() {
-        projectiles.forEach { it.checkCollisionWithEnemies() }
+    fun checkProjectilesCollisions(entities: MutableList<CollidableEntity>) {
+        projectiles.forEach { it.checkCollisionWith(entities) }
     }
 
     fun drawProjectiles(g: Graphics2D) {

@@ -18,6 +18,7 @@ import engine.maths.Vector2
 import game.mob.Hero
 import engine.sound.SoundManager
 import engine.states.GameState
+import game.mob.Enemy
 import java.awt.Graphics2D
 import kotlin.random.Random
 
@@ -107,13 +108,20 @@ class Game : HeroListener, InputListener {
             it.checkCollisionBetweenEnemiesToRepulseThem()
         }
 
+        collidableEntities.forEach { e ->
+            e as Enemy
+            e.weapons.forEach {
+                it.fire()
+                it.checkProjectilesCollisions(mutableListOf(hero))
+            }
+        }
+
         hero.weapons.forEach {
             it.fire()
-            it.checkProjectilesCollisions()
+            it.checkProjectilesCollisions(collidableEntities)
         }
 
         hero.checkCollisionWithObjects()
-        hero.checkCollisionWithEnemies()
     }
 
     fun handleHeroLevelUp() {
