@@ -1,4 +1,4 @@
-package engine.entities.enums
+package engine.states
 
 enum class EngineState {
     MAIN_MENU,

@@ -7,7 +7,8 @@ import engine.entities.interfaces.Levelable
 import engine.entities.interfaces.Weaponized
 import engine.entities.factory.SpriteFactory
 import engine.entities.item.Soul
-import engine.entities.weapon.Projectile
+import engine.entities.weapon.Weapon
+import engine.events.hero.HeroEventType
 import engine.sound.SoundManager
 import java.awt.Color
 import java.awt.Graphics2D
@@ -16,7 +17,7 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
     override var xp: Int = 0
     override var xpToNextLevel: Int = 100
     override var level: Int = 1
-    override val weapons: MutableList<Projectile> = mutableListOf()
+    override val weapons: MutableList<Weapon> = mutableListOf()
 
     var pickUpRange: Int = 32
 
@@ -46,20 +47,11 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
 
     override fun checkForLevelUp() {
         if (xp >= xpToNextLevel) {
-            SoundManager.play("level up")
             val diff = xp - xpToNextLevel
-            xpToNextLevel *= 2
+            xpToNextLevel += 25
             level++
             xp = 0 + diff
-        }
-    }
-
-    fun checkCollisionWithEnemies() {
-        GameEngine.game.collidableEntities.forEach {
-            it as Enemy
-            if (collides(it)) {
-                it.applyDamage(this)
-            }
+            GameEngine.heroEventManager.notify(HeroEventType.XP_LEVELUP)
         }
     }
 
@@ -68,9 +60,9 @@ class Hero : CollidableEntity(), Levelable, Weaponized {
             if (collides(it)) {
                 when(it) {
                     is Soul -> {
-                        SoundManager.play("xp")
                         xp += it.xp
                         it.delete = true
+                        GameEngine.heroEventManager.notify(HeroEventType.XP_UP)
                     }
                 }
             }

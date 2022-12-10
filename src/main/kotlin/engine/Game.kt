@@ -3,59 +3,81 @@ package engine
 import engine.entities.CollidableEntity
 import engine.entities.Entity
 import engine.entities.MovableEntity
-import engine.entities.enums.EngineState
+import engine.states.EngineState
 import engine.entities.factory.EntityFactory
 import engine.entities.factory.WeaponFactory
 import engine.entities.gui.Gui
+import engine.entities.gui.shop.Shop
 import engine.entities.map.Map
+import engine.events.ListenerEventTypeInterface
+import engine.events.hero.HeroEventType
+import engine.events.hero.HeroListener
+import engine.events.input.InputEventType
+import engine.events.input.InputListener
+import engine.maths.Vector2
 import game.mob.Hero
 import engine.sound.SoundManager
+import engine.states.GameState
+import game.mob.Enemy
 import java.awt.Graphics2D
 import kotlin.random.Random
 
-class Game {
+class Game : HeroListener, InputListener {
     val hero: Hero = Hero()
     val map: Map = Map()
     val gui: Gui = Gui()
+    val shop: Shop = Shop()
     val staticEntities: MutableList<Entity> = mutableListOf()
     val movableEntities: MutableList<MovableEntity> = mutableListOf()
     val collidableEntities: MutableList<CollidableEntity> = mutableListOf()
     val objects: MutableList<CollidableEntity> = mutableListOf()
 
-    var initialized: Boolean = false
-
+    var state: GameState = GameState.UNINITIALIZED
 
     val ENEMIES_PER_WAVE = 6
     var wave: Int = 1
 
 
     fun init() {
-        hero.weapons.add(WeaponFactory.createStink())
+        hero.weapons.add(WeaponFactory.createSword())
 
         SoundManager.play("main song")
 
+        // Bind
+        GameEngine.heroEventManager.sub(this, mutableSetOf(HeroEventType.XP_UP, HeroEventType.XP_LEVELUP, HeroEventType.HP_ZERO, HeroEventType.HP_DOWN, HeroEventType.ATTACK))
+        GameEngine.inputEventManager.sub(this, mutableSetOf(InputEventType.ENTER))
+
         map.init()
         gui.init()
-        initialized = true
+        state = GameState.SURVIVING
     }
 
     fun reset() {
         hero.hp = hero.maxHp
         hero.xp = 0
-
+        hero.position = Vector2()
 
         collidableEntities.clear()
         staticEntities.clear()
         movableEntities.clear()
-
     }
     
     fun run() {
-        createEnemies()
-        moveEntities()
-        checkCollisions()
-        handleHeroLevelUp()
-        handleDeaths()
+        when (state) {
+            GameState.UNINITIALIZED -> {
+                init()
+            }
+            GameState.SURVIVING -> {
+                createEnemies()
+                moveEntities()
+                checkCollisions()
+                handleHeroLevelUp()
+                handleDeaths()
+            }
+            GameState.SHOP -> {
+
+            }
+        }
     }
 
     fun createEnemies() {
@@ -72,7 +94,9 @@ class Game {
 
         objects.forEach { it.move() }
 
-        hero.weapons.forEach { it.move() }
+        hero.weapons.forEach {
+            it.moveProjectiles()
+        }
         hero.move()
     }
 
@@ -84,11 +108,24 @@ class Game {
             it.checkCollisionBetweenEnemiesToRepulseThem()
         }
 
-        hero.weapons.forEach { it.checkCollisionWithEnemies() }
+        collidableEntities.forEach { e ->
+            e as Enemy
+            e.weapons.forEach {
+                it.fire()
+                it.checkProjectilesCollisions(mutableListOf(hero))
+            }
+        }
+
+        hero.weapons.forEach {
+            it.fire()
+            it.checkProjectilesCollisions(collidableEntities)
+        }
 
         hero.checkCollisionWithObjects()
-        hero.checkCollisionWithEnemies()
+    }
 
+    fun handleHeroLevelUp() {
+        hero.checkForLevelUp()
     }
 
     fun handleDeaths() {
@@ -112,10 +149,6 @@ class Game {
         }
     }
 
-    fun handleHeroLevelUp() {
-        hero.checkForLevelUp()
-    }
-
     fun draw(g: Graphics2D) {
         map.draw(g)
         objects.forEach { it.draw(g) }
@@ -124,8 +157,36 @@ class Game {
         movableEntities.forEach { it.draw(g) }
         staticEntities.forEach { it.draw(g) }
 
-        hero.weapons.forEach { it.draw(g) }
+        hero.weapons.forEach { it.drawProjectiles(g) }
         hero.draw(g)
         gui.draw(g)
+
+        if (state == GameState.SHOP) {
+            shop.draw(g)
+        }
+    }
+
+    override fun on(e: ListenerEventTypeInterface) {
+        if (e is HeroEventType) {
+            when (e) {
+                HeroEventType.XP_LEVELUP -> {
+                    SoundManager.play("level up")
+                    state = GameState.SHOP
+                }
+                HeroEventType.XP_UP -> SoundManager.play("xp")
+                else -> {}
+            }
+        }
+
+        if (e is InputEventType) {
+            when (e) {
+                InputEventType.ESCAPE -> TODO()
+                InputEventType.ENTER -> {
+                    if (state == GameState.SHOP) state = GameState.SURVIVING
+                }
+                InputEventType.SPACE -> TODO()
+            }
+        }
+
     }
 }
