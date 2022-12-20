@@ -1,6 +1,5 @@
 package engine.window
 
-import engine.maths.Vector2
 import engine.GameEngine
 import java.awt.BorderLayout
 import java.awt.Dimension
@@ -9,12 +8,12 @@ import javax.swing.JFrame
 class Window : JFrame() {
     var WIDTH: Int = 480
     var HEIGHT: Int = 720
-    val center: Vector2 = Vector2((WIDTH/2).toDouble(), (HEIGHT/2).toDouble())
 
-    fun init() {
+    init
+    {
         title = "Bac+4 survival game - Esteban GAGNEUR"
         defaultCloseOperation = EXIT_ON_CLOSE
-        isResizable = true
+        isResizable = GameEngine.debug
         isVisible = true
         preferredSize = Dimension(WIDTH, HEIGHT)
         add(GameEngine, BorderLayout.CENTER)
