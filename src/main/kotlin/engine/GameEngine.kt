@@ -16,7 +16,8 @@ object GameEngine : JPanel() {
     var game: Game? = null
     var window: Window? = null
 
-    init {
+    init
+    {
         game = Game()
         window = Window()
         running = true
@@ -32,7 +33,6 @@ object GameEngine : JPanel() {
                 game?.update()
                 game?.draw()
                 fpsCounter++
-                println(fpsCounter)
             }
         }
     }

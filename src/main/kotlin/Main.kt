@@ -1,5 +1,6 @@
 import engine.GameEngine
 
-fun main() {
+fun main()
+{
     GameEngine
 }
