@@ -1,4 +1,7 @@
 package engine.entity.gui
 
-class MainMenuGui {
+class MainMenuGui : Gui() {
+    override fun update() {
+
+    }
 }

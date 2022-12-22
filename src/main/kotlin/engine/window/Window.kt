@@ -3,6 +3,10 @@ package engine.window
 import engine.GameEngine
 import java.awt.BorderLayout
 import java.awt.Dimension
+import java.awt.event.KeyAdapter
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
+import java.util.EventListener
 import javax.swing.JFrame
 
 class Window : JFrame() {
@@ -19,5 +23,17 @@ class Window : JFrame() {
         add(GameEngine, BorderLayout.CENTER)
         pack()
         setLocationRelativeTo(null)
+
+        addKeyListener(object : KeyAdapter() {
+            override fun keyTyped(e: KeyEvent?) {
+            }
+
+            override fun keyPressed(e: KeyEvent) {
+                GameEngine.keyListenerManager.send(e)
+            }
+
+            override fun keyReleased(e: KeyEvent?) {
+            }
+        })
     }
 }

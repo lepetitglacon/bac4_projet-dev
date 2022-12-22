@@ -1,9 +1,12 @@
 package engine.game
 
 import engine.entity.gui.Gui
+import engine.entity.gui.MainMenuGui
 import engine.entity.map.Map
 import engine.entity.mob.Enemy
 import engine.entity.mob.Hero
+import java.awt.event.KeyEvent
+import javax.swing.KeyStroke
 
 class Game {
     var map: Map? = null
@@ -21,13 +24,15 @@ class Game {
         map = Map()
         hero = Hero()
 
-        mainMenu = Gui()
-        gameOverMenu = Gui()
-        shopMenu = Gui()
+        mainMenu = MainMenuGui()
+//        gameOverMenu = Gui()
+//        shopMenu = Gui()
     }
 
     fun update()
     {
+        updateState(null)
+
         when(state)
         {
             GameState.MAIN_MENU ->
@@ -49,6 +54,21 @@ class Game {
 
     fun draw()
     {
+
+    }
+
+    fun updateState(e: KeyEvent?) {
+        if (e != null) {
+            when (state)
+            {
+                GameState.MAIN_MENU -> if (e.keyCode == KeyEvent.VK_ENTER) state = GameState.PLAY
+                GameState.PLAY -> if (e.keyCode == KeyEvent.VK_ESCAPE) state = GameState.OPTIONS
+                GameState.PLAY_SHOP -> if (e.keyCode == KeyEvent.VK_ENTER) state = GameState.PLAY
+                GameState.OPTIONS -> if (e.keyCode == KeyEvent.VK_ESCAPE) state = GameState.PLAY
+                GameState.GAME_OVER -> if (e.keyCode == KeyEvent.VK_ENTER) state = GameState.MAIN_MENU
+                else -> println("unknown state change")
+            }
+        }
 
     }
 }
