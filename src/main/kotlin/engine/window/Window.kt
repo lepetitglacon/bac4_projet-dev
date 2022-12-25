@@ -29,7 +29,7 @@ class Window : JFrame() {
             }
 
             override fun keyPressed(e: KeyEvent) {
-                GameEngine.keyListenerManager.send(e)
+
             }
 
             override fun keyReleased(e: KeyEvent?) {
