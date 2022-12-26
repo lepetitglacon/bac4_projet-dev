@@ -1,12 +1,13 @@
 package engine.game
 
+import engine.GameEngine
 import engine.entity.gui.Gui
 import engine.entity.gui.MainMenuGui
 import engine.entity.map.Map
 import engine.entity.mob.Enemy
 import engine.entity.mob.Hero
+import java.awt.Graphics2D
 import java.awt.event.KeyEvent
-import javax.swing.KeyStroke
 
 class Game {
     var map: Map? = null
@@ -25,6 +26,7 @@ class Game {
         hero = Hero()
 
         mainMenu = MainMenuGui()
+        GameEngine.inputListenerManager.subAll(mainMenu as MainMenuGui)
 //        gameOverMenu = Gui()
 //        shopMenu = Gui()
     }
@@ -52,9 +54,15 @@ class Game {
 
     }
 
-    fun draw()
+    fun draw(g: Graphics2D)
     {
+        hero?.draw(g)
+        enemies.forEach { it.draw(g) }
+        map?.draw(g)
 
+        if (state == GameState.MAIN_MENU) {
+            mainMenu?.draw(g)
+        }
     }
 
     fun updateState(e: KeyEvent?) {

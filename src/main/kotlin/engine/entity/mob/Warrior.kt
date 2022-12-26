@@ -6,12 +6,8 @@ import java.awt.Graphics2D
 
 class Warrior : Enemy()
 {
-    override var speed: Int
-        get() = TODO("Not yet implemented")
-        set(value) {}
-    override var sprite: Sprite
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override var speed: Int = 5
+    override var sprite: Sprite = Sprite()
 
     override fun xFromHero() {
         TODO("Not yet implemented")
@@ -34,7 +30,7 @@ class Warrior : Enemy()
     }
 
     override fun draw(g: Graphics2D) {
-        TODO("Not yet implemented")
+
     }
 
 }

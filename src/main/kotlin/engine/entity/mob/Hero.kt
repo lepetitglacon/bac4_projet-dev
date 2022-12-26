@@ -30,7 +30,7 @@ class Hero : Entity()
     }
 
     override fun draw(g: Graphics2D) {
-        TODO("Not yet implemented")
+
     }
 
 }

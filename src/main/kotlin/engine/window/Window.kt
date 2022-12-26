@@ -1,6 +1,8 @@
 package engine.window
 
 import engine.GameEngine
+import engine.event.input.InputEvent
+import engine.event.input.InputListenerType
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.KeyAdapter
@@ -29,11 +31,23 @@ class Window : JFrame() {
             }
 
             override fun keyPressed(e: KeyEvent) {
+                println(e.keyCode)
+                val event = InputEvent()
+                when (e.keyCode)
+                {
+                    KeyEvent.VK_ENTER -> event.type = InputListenerType.ENTER
+                }
 
+
+                GameEngine.inputListenerManager.on(event)
             }
 
             override fun keyReleased(e: KeyEvent?) {
             }
         })
+    }
+
+    fun updateTitle() {
+        title = "Bac+4 survival game - Esteban GAGNEUR ${GameEngine.ticksCounter}"
     }
 }

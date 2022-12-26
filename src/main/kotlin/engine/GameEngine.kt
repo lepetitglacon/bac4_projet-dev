@@ -1,7 +1,10 @@
 package engine
 
+import engine.event.input.InputListenerManager
 import engine.game.Game
 import engine.window.Window
+import java.awt.Graphics
+import java.awt.Graphics2D
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
@@ -12,6 +15,7 @@ object GameEngine : JPanel() {
 
     // game loop
     val fps: Long = (1_000_000 / 60).toLong()
+    var ticksCounter = 0
     var running = false
     val timer: Timer = Timer(1) { run() }
 
@@ -20,6 +24,7 @@ object GameEngine : JPanel() {
     var window: Window? = null
 
     // events
+    val inputListenerManager = InputListenerManager()
 
     init
     {
@@ -29,18 +34,23 @@ object GameEngine : JPanel() {
 
             running = true
             timer.start()
-            run()
+            println("engine running")
         }
     }
 
     fun run()
     {
-        var fpsCounter = 0
+        window?.updateTitle()
+        game?.update()
+        ticksCounter++
 
-        if (System.nanoTime() % fps == 0.toLong()) {
-            game?.update()
-            game?.draw()
-            fpsCounter++
-        }
+        repaint()
+    }
+
+    override fun paint(gg: Graphics?) {
+        super.paint(gg)
+        val g = gg as Graphics2D
+
+        game?.draw(g)
     }
 }
