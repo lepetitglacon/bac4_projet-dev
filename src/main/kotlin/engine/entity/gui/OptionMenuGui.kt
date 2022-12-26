@@ -7,7 +7,8 @@ import engine.event.input.InputEvent
 import engine.event.input.InputListenerType
 import engine.game.GameState
 
-class MainMenuGui : Gui() {
+class OptionMenuGui : Gui() {
+    val buttons = mutableMapOf<String, Int>()
 
     init {
         val window = WindowComponent()
@@ -18,7 +19,7 @@ class MainMenuGui : Gui() {
         window.height = 150
 
         val string = StringComponent()
-        string.string = "BONJOUR les amis"
+        string.string = "Options"
         string.gui = this
         string.parent = window
         string.x = 25
@@ -33,12 +34,20 @@ class MainMenuGui : Gui() {
     }
 
     override fun onInputEvent(e: InputEvent) {
-        if (GameEngine.game?.state == GameState.MAIN_MENU)
+        if (GameEngine.game?.state == GameState.OPTIONS)
         {
             super.onInputEvent(e)
-            if (e.type == InputListenerType.ENTER) {
+            if (e.type == InputListenerType.ESCAPE)
+            {
+                e.consumed = true
                 GameEngine.game?.state = GameState.PLAY
             }
+            if (e.type == InputListenerType.ENTER)
+            {
+                e.consumed = true
+                GameEngine.game?.state = GameState.MAIN_MENU
+            }
         }
+
     }
 }

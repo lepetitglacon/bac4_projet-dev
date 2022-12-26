@@ -36,6 +36,8 @@ class Window : JFrame() {
                 when (e.keyCode)
                 {
                     KeyEvent.VK_ENTER -> event.type = InputListenerType.ENTER
+                    KeyEvent.VK_ESCAPE -> event.type = InputListenerType.ESCAPE
+                    KeyEvent.VK_SPACE -> event.type = InputListenerType.SPACE
                 }
 
 

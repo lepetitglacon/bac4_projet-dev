@@ -11,7 +11,7 @@ import javax.swing.Timer
 
 object GameEngine : JPanel() {
     // debug
-    var debug = false
+    var debug = true
 
     // game loop
     val fps: Long = (1_000_000 / 60).toLong()

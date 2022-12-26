@@ -7,7 +7,7 @@ class InputListenerManager
     fun on(e: InputEvent)
     {
         listeners.forEach {
-            if (it.value.contains(e.type)) {
+            if (it.value.contains(e.type) && !e.consumed) {
                 it.key.onInputEvent(e)
             }
         }

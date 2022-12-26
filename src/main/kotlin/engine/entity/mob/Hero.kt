@@ -22,11 +22,11 @@ class Hero : Entity()
     }
 
     override fun move() {
-        TODO("Not yet implemented")
+
     }
 
     override fun update() {
-        TODO("Not yet implemented")
+        move()
     }
 
     override fun draw(g: Graphics2D) {
