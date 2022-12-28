@@ -5,5 +5,10 @@ enum class InputListenerType {
     ESCAPE,
     SPACE,
 
+    UP,
+    LEFT,
+    DOWN,
+    RIGHT,
+
     UNDEFINED
 }

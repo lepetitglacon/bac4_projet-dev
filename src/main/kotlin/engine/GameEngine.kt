@@ -1,6 +1,9 @@
 package engine
 
+import engine.entity.registrer.EnemyRegistrer
+import engine.entity.registrer.EnemyType
 import engine.event.input.InputListenerManager
+import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
 import engine.window.Window
 import java.awt.Graphics
@@ -21,15 +24,20 @@ object GameEngine : JPanel() {
 
     // objects
     var game: Game? = null
-    var window: Window? = null
+    var window: Window = Window()
+    val enemyRegistrer = EnemyRegistrer()
 
-    // events
+    // events manager
     val inputListenerManager = InputListenerManager()
+    val heroMovementListenerManager = HeroMovementListenerManager()
 
     init
     {
+        // enemy registration
+        enemyRegistrer.add(EnemyType("warrior", 0, 20, 50))
+        enemyRegistrer.add(EnemyType("mercenary", 2, 50, 50))
+
         SwingUtilities.invokeLater {
-            window = Window()
             game = Game()
 
             running = true
@@ -40,16 +48,19 @@ object GameEngine : JPanel() {
 
     fun run()
     {
-        window?.updateTitle()
+        window.updateTitle()
+        window.getKeyboardMovementInput()
         game?.update()
-        ticksCounter++
 
         repaint()
+        ticksCounter++
     }
 
     override fun paint(gg: Graphics?) {
         super.paint(gg)
         val g = gg as Graphics2D
+
+//        g.drawLine(window?.WIDTH!!/2, 0, window?.WIDTH!!/2, window?.HEIGHT!!)
 
         game?.draw(g)
     }

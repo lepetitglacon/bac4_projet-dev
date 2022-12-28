@@ -28,11 +28,11 @@ class StringComponent : GuiComponent() {
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override fun xFromHero() {
+    override fun xFromHero(): Int {
         TODO("Not yet implemented")
     }
 
-    override fun yFromHero() {
+    override fun yFromHero(): Int {
         TODO("Not yet implemented")
     }
 
@@ -63,6 +63,7 @@ class StringComponent : GuiComponent() {
             drawX = ((g.fontMetrics.getStringBounds(string, g).width / 2) + drawX).toInt()
             drawY = ((g.fontMetrics.getStringBounds(string, g).height / 2) + drawY).toInt()
         }
+        g.color = Color.WHITE
         g.drawString(string, drawX, drawY)
     }
 

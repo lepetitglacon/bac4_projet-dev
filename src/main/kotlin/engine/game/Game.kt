@@ -5,13 +5,14 @@ import engine.entity.gui.Gui
 import engine.entity.gui.MainMenuGui
 import engine.entity.gui.OptionMenuGui
 import engine.entity.map.Map
-import engine.entity.mob.Enemy
+import engine.entity.mob.enemy.Enemy
 import engine.entity.mob.Hero
+import engine.entity.mob.enemy.EnemyFactory
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.event.input.InputListenerType
+import engine.resource.SpriteFactory
 import java.awt.Graphics2D
-import java.awt.event.KeyEvent
 
 class Game : InputListener {
     var map: Map? = null
@@ -27,8 +28,12 @@ class Game : InputListener {
 
     init
     {
+        // resources
+        SpriteFactory.registerSprites()
+
         // entities
         map = Map()
+        map?.build()
         hero = Hero()
 
         // GUI
@@ -37,14 +42,17 @@ class Game : InputListener {
 //        gameOverMenu = Gui()
 //        shopMenu = Gui()
 
+        enemies.addAll(EnemyFactory.createFromRegistrer())
+
         // Event binding
-        GameEngine.inputListenerManager.subAll(this)
         GameEngine.inputListenerManager.subAll(mainMenu as MainMenuGui)
         GameEngine.inputListenerManager.subAll(optionMenu as OptionMenuGui)
+        GameEngine.inputListenerManager.subAll(this)
     }
 
     fun update()
     {
+
         updateState(null)
 
         when(state)
@@ -68,9 +76,9 @@ class Game : InputListener {
 
     fun draw(g: Graphics2D)
     {
+        map?.draw(g)
         hero?.draw(g)
         enemies.forEach { it.draw(g) }
-        map?.draw(g)
 
         if (state == GameState.MAIN_MENU) {
             mainMenu?.draw(g)

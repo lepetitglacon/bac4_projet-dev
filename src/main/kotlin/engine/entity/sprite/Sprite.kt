@@ -2,7 +2,7 @@ package engine.entity.sprite
 
 import java.awt.image.BufferedImage
 
-class Sprite
+open class Sprite(open var image: BufferedImage? = null)
 {
-    val image: BufferedImage? = null
+
 }

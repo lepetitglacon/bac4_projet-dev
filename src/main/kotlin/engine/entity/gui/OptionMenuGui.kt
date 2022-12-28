@@ -25,8 +25,8 @@ class OptionMenuGui : Gui() {
         string.x = 25
         string.y = 25
 
-        components.add(string)
         components.add(window)
+        components.add(string)
     }
 
     override fun update() {
@@ -37,15 +37,29 @@ class OptionMenuGui : Gui() {
         if (GameEngine.game?.state == GameState.OPTIONS)
         {
             super.onInputEvent(e)
-            if (e.type == InputListenerType.ESCAPE)
+            when (e.type)
             {
-                e.consumed = true
-                GameEngine.game?.state = GameState.PLAY
-            }
-            if (e.type == InputListenerType.ENTER)
-            {
-                e.consumed = true
-                GameEngine.game?.state = GameState.MAIN_MENU
+                InputListenerType.ENTER ->
+                {
+                    e.consumed = true
+                    GameEngine.game?.state = GameState.MAIN_MENU
+                }
+                InputListenerType.ESCAPE ->
+                {
+                    e.consumed = true
+                    GameEngine.game?.state = GameState.PLAY
+                }
+                InputListenerType.UP ->
+                {
+                    e.consumed = true
+                    // TODO go to previous button
+                }
+                InputListenerType.DOWN ->
+                {
+                    e.consumed = true
+                    // TODO go to next button
+                }
+                else -> {}
             }
         }
 

@@ -33,11 +33,11 @@ class WindowComponent : GuiComponent() {
         get() = TODO("Not yet implemented")
         set(value) {}
 
-    override fun xFromHero() {
+    override fun xFromHero(): Int {
         TODO("Not yet implemented")
     }
 
-    override fun yFromHero() {
+    override fun yFromHero(): Int {
         TODO("Not yet implemented")
     }
 
