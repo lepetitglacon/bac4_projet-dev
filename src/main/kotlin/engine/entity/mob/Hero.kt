@@ -13,7 +13,8 @@ class Hero : Entity()
     override var speed: Int = 5
     override var sprite: Sprite = SpriteFactory.get("hero")
 
-    init {
+    fun init() {
+        sprite = SpriteFactory.get("hero") as HeroSprite
         x = 0
         y = 0
         width = 64
@@ -47,7 +48,6 @@ class Hero : Entity()
             g.color = Color.black
             g.drawRect(xFromHero(), yFromHero(), width, height)
         }
-
         g.drawImage((sprite as HeroSprite).get(), null, xFromHero(), yFromHero())
     }
 

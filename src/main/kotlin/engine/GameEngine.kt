@@ -22,14 +22,14 @@ object GameEngine : JPanel() {
     var running = false
     val timer: Timer = Timer(1) { run() }
 
-    // objects
-    var game: Game? = null
-    var window: Window = Window()
-    val enemyRegistrer = EnemyRegistrer()
-
     // events manager
     val inputListenerManager = InputListenerManager()
     val heroMovementListenerManager = HeroMovementListenerManager()
+
+    // objects
+    var game: Game = Game()
+    var window: Window = Window()
+    val enemyRegistrer = EnemyRegistrer()
 
     init
     {
@@ -38,7 +38,8 @@ object GameEngine : JPanel() {
         enemyRegistrer.add(EnemyType("mercenary", 2, 50, 50))
 
         SwingUtilities.invokeLater {
-            game = Game()
+            window.init()
+            game.init()
 
             running = true
             timer.start()

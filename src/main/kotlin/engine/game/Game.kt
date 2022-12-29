@@ -15,8 +15,8 @@ import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 
 class Game : InputListener {
-    var map: Map? = null
-    var hero: Hero? = null
+    var map: Map = Map()
+    var hero: Hero = Hero()
     var enemies = mutableListOf<Enemy>()
 
     var state: GameState = GameState.MAIN_MENU
@@ -26,15 +26,13 @@ class Game : InputListener {
     var gameOverMenu: Gui? = null
     var shopMenu: Gui? = null
 
-    init
-    {
+    fun init() {
         // resources
         SpriteFactory.registerSprites()
 
         // entities
-        map = Map()
-        map?.build()
-        hero = Hero()
+        hero.init()
+        map.build()
 
         // GUI
         mainMenu = MainMenuGui()

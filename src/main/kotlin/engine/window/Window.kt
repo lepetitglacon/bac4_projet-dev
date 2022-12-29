@@ -25,8 +25,7 @@ class Window : JFrame() {
     var right = false
     var keyboardMovementVector = Vector2()
 
-    init
-    {
+    fun init() {
         title = "Bac+4 survival game - Esteban GAGNEUR"
         defaultCloseOperation = EXIT_ON_CLOSE
         isResizable = GameEngine.debug
@@ -90,7 +89,7 @@ class Window : JFrame() {
             }
         })
     }
-    
+
     fun getKeyboardMovementInput()
     {
         val e = HeroMovementEvent()
