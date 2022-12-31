@@ -4,6 +4,8 @@ import engine.GameEngine
 import engine.entity.Entity
 import engine.entity.sprite.hero.HeroSprite
 import engine.entity.sprite.Sprite
+import engine.entity.weapon.Weapon
+import engine.entity.weapon.weapon.Gun
 import engine.resource.SpriteFactory
 import java.awt.Color
 import java.awt.Graphics2D
@@ -13,8 +15,11 @@ class Hero : Entity()
     override var speed: Int = 5
     override var sprite: Sprite = SpriteFactory.get("hero")
 
+    val weapons = mutableListOf<Weapon>()
+
     fun init() {
         sprite = SpriteFactory.get("hero") as HeroSprite
+        weapons.add(Gun())
         x = 0
         y = 0
         width = 64
@@ -34,12 +39,16 @@ class Hero : Entity()
     }
 
     override fun move() {
-        x += GameEngine.window.keyboardMovementVector.x * speed
-        y += GameEngine.window.keyboardMovementVector.y * speed
+        val pos = GameEngine.window.keyboardMovementVector * speed
+        x += pos.x.toInt()
+        y += pos.y.toInt()
     }
 
     override fun update() {
         move()
+        weapons.forEach {
+            it.update()
+        }
     }
 
     override fun draw(g: Graphics2D) {
@@ -47,8 +56,15 @@ class Hero : Entity()
         {
             g.color = Color.black
             g.drawRect(xFromHero(), yFromHero(), width, height)
+            g.drawArc(xFromHero(), yFromHero(), width, height, 0, 180)
+            g.drawString("$x $y", xFromHero(), yFromHero() - 20)
+            g.drawLine(xFromHero(), yFromHero(), GameEngine.game.enemies.first().xFromHero(), GameEngine.game.enemies.first().yFromHero())
         }
         g.drawImage((sprite as HeroSprite).get(), null, xFromHero(), yFromHero())
+
+        weapons.forEach {
+            it.draw(g)
+        }
     }
 
 }

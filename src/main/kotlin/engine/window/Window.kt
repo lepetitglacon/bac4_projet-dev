@@ -41,7 +41,6 @@ class Window : JFrame() {
             }
 
             override fun keyPressed(e: KeyEvent) {
-                println(e.keyCode)
                 val event = InputEvent()
                 when (e.keyCode)
                 {
@@ -95,41 +94,42 @@ class Window : JFrame() {
         val e = HeroMovementEvent()
         if (up && left) {
             e.type = HeroMovementListenerType.UP_LEFT
-            keyboardMovementVector.x = -1
-            keyboardMovementVector.y = -1
+            keyboardMovementVector.x = -8.0
+            keyboardMovementVector.y = -8.0
         } else if (up && right) {
             e.type = HeroMovementListenerType.UP_RIGHT
-            keyboardMovementVector.x = 1
-            keyboardMovementVector.y = -1
+            keyboardMovementVector.x = 8.0
+            keyboardMovementVector.y = -8.0
         } else if (down && left) {
             e.type = HeroMovementListenerType.DOWN_LEFT
-            keyboardMovementVector.x = -1
-            keyboardMovementVector.y = 1
+            keyboardMovementVector.x = -8.0
+            keyboardMovementVector.y = 8.0
         } else if (down && right) {
             e.type = HeroMovementListenerType.DOWN_RIGHT
-            keyboardMovementVector.x = 1
-            keyboardMovementVector.y = 1
+            keyboardMovementVector.x = 8.0
+            keyboardMovementVector.y = 8.0
         } else if (up) {
             e.type = HeroMovementListenerType.UP
-            keyboardMovementVector.x = 0
-            keyboardMovementVector.y = -1
+            keyboardMovementVector.x = 0.0
+            keyboardMovementVector.y = -8.0
         } else if (down) {
             e.type = HeroMovementListenerType.DOWN
-            keyboardMovementVector.x = 0
-            keyboardMovementVector.y = 1
+            keyboardMovementVector.x = 0.0
+            keyboardMovementVector.y = 8.0
         } else if (left) {
             e.type = HeroMovementListenerType.LEFT
-            keyboardMovementVector.x = -1
-            keyboardMovementVector.y = 0
+            keyboardMovementVector.x = -8.0
+            keyboardMovementVector.y = 0.0
         } else if (right) {
             e.type = HeroMovementListenerType.RIGHT
-            keyboardMovementVector.x = 1
-            keyboardMovementVector.y = 0
+            keyboardMovementVector.x = 8.0
+            keyboardMovementVector.y = 0.0
         } else {
             e.type = HeroMovementListenerType.IDLE
-            keyboardMovementVector.x = 0
-            keyboardMovementVector.y = 0
+            keyboardMovementVector.x = 0.0
+            keyboardMovementVector.y = 0.0
         }
+        keyboardMovementVector.normalize()
         GameEngine.heroMovementListenerManager.on(e)
     }
 

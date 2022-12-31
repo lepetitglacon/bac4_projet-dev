@@ -1,6 +1,7 @@
 package engine.entity
 
 import engine.entity.sprite.Sprite
+import engine.math.Vector2
 import java.awt.Graphics2D
 import java.awt.Point
 import java.awt.Rectangle
@@ -24,8 +25,8 @@ abstract class Entity : Rectangle()
     /**
      * return the center of the entity
      */
-     fun center(): Point
+     fun center(): Vector2
     {
-        return Point(x + width / 2, y + height / 2)
+        return Vector2(Point(x + width / 2, y + height / 2))
     }
 }

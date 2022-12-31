@@ -37,6 +37,7 @@ class Warrior : Enemy()
     override fun draw(g: Graphics2D) {
         if (GameEngine.debug) {
             g.drawRect(xFromHero(), yFromHero(), width, height)
+            g.drawString("$x $y", xFromHero(), yFromHero() - 20)
         }
         val hpBar = BarComponent()
         hpBar.x = x

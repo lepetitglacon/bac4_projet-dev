@@ -8,7 +8,7 @@ interface HeroMovementListener {
     {
         if (GameEngine.debug)
         {
-            println("$this received event : $e")
+            //println("$this received event : $e")
         }
     }
 }
