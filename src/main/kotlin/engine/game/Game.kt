@@ -1,5 +1,6 @@
 package engine.game
 
+import engine.EngineState
 import engine.GameEngine
 import engine.entity.gui.Gui
 import engine.entity.gui.MainMenuGui
@@ -19,11 +20,8 @@ class Game : InputListener {
     var hero: Hero = Hero()
     var enemies = mutableListOf<Enemy>()
 
-    var state: GameState = GameState.MAIN_MENU
+    var state: GameState = GameState.PLAY
 
-    var mainMenu: Gui? = null
-    var optionMenu: Gui? = null
-    var gameOverMenu: Gui? = null
     var shopMenu: Gui? = null
 
     fun init() {
@@ -34,17 +32,9 @@ class Game : InputListener {
         hero.init()
         map.build()
 
-        // GUI
-        mainMenu = MainMenuGui()
-        optionMenu = OptionMenuGui()
-//        gameOverMenu = Gui()
-//        shopMenu = Gui()
-
         enemies.addAll(EnemyFactory.createFromRegistrer())
 
         // Event binding
-        GameEngine.inputListenerManager.subAll(mainMenu as MainMenuGui)
-        GameEngine.inputListenerManager.subAll(optionMenu as OptionMenuGui)
         GameEngine.inputListenerManager.subAll(this)
     }
 
@@ -54,21 +44,19 @@ class Game : InputListener {
 
         when(state)
         {
-            GameState.MAIN_MENU ->
-            {
-                mainMenu?.update()
-            }
             GameState.PLAY ->
             {
+                // Init
                 removeDeadEntities()
 
+
+                // Update
                 map?.update()
                 hero?.update()
                 enemies.forEach { it.update() }
+
             }
-            GameState.PLAY_SHOP -> TODO()
-            GameState.OPTIONS -> optionMenu?.update()
-            GameState.GAME_OVER -> TODO()
+            GameState.SHOP -> TODO()
         }
 
     }
@@ -78,43 +66,15 @@ class Game : InputListener {
         map?.draw(g)
         hero?.draw(g)
         enemies.forEach { it.draw(g) }
-
-        if (state == GameState.MAIN_MENU) {
-            mainMenu?.draw(g)
-        }
-        if (state == GameState.OPTIONS) {
-            optionMenu?.draw(g)
-        }
     }
 
-    fun updateState(e: InputEvent?) {
-        // input handler
-        if (e != null) {
-            when (state)
-            {
-                GameState.MAIN_MENU -> {
-                    if (e.type == InputListenerType.ENTER)
-                    {
-                        e.consumed = true
-                        state = GameState.PLAY
-                    }
-                }
-                GameState.PLAY -> {
-                    if (e.type == InputListenerType.ESCAPE)
-                    {
-                        e.consumed = true
-                        state = GameState.OPTIONS
-                    }
-                }
-//                GameState.PLAY_SHOP -> if (e.type == InputListenerType.ENTER) state = GameState.PLAY
-                GameState.OPTIONS -> if (e.type == InputListenerType.ESCAPE) state = GameState.PLAY
-//                GameState.GAME_OVER -> if (e.type == InputListenerType.ENTER) state = GameState.MAIN_MENU
-                else -> println("unknown state change")
-            }
-        }
+    fun updateState(e: InputEvent?)
+    {
+
     }
 
-    override fun onInputEvent(e: InputEvent) {
+    override fun onInputEvent(e: InputEvent)
+    {
         super.onInputEvent(e)
         updateState(e)
     }

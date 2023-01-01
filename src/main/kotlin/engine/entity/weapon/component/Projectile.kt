@@ -14,11 +14,11 @@ class Projectile : Entity() {
     override var sprite: Sprite = SpriteFactory.get("pokemons")
 
     override fun xFromHero(): Int {
-        return x - width/2 - GameEngine.game.hero.x + GameEngine.window.WIDTH / 2
+        return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
     }
 
     override fun yFromHero(): Int {
-        return y - height/2 - GameEngine.game.hero.y + GameEngine.window.HEIGHT / 2
+        return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
     }
 
     override fun collides(entity: Entity) {
@@ -35,10 +35,7 @@ class Projectile : Entity() {
     }
 
     override fun draw(g: Graphics2D) {
-        g.drawLine(xFromHero(), yFromHero(), direction.x.toInt(), direction.y.toInt())
-        g.drawString("$x $y", xFromHero(), yFromHero() - 20)
         g.fillOval(xFromHero(), yFromHero(), width, height)
-        g.fillOval(direction.x.toInt() - width/2 - GameEngine.game.hero.x + GameEngine.window.WIDTH / 2, direction.y.toInt() - height/2 - GameEngine.game.hero.y + GameEngine.window.HEIGHT / 2, width, height)
         g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE, TILE_SIZE), null, xFromHero(), yFromHero())
     }
 

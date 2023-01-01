@@ -34,34 +34,34 @@ class OptionMenuGui : Gui() {
     }
 
     override fun onInputEvent(e: InputEvent) {
-        if (GameEngine.game?.state == GameState.OPTIONS)
-        {
-            super.onInputEvent(e)
-            when (e.type)
-            {
-                InputListenerType.ENTER ->
-                {
-                    e.consumed = true
-                    GameEngine.game?.state = GameState.MAIN_MENU
-                }
-                InputListenerType.ESCAPE ->
-                {
-                    e.consumed = true
-                    GameEngine.game?.state = GameState.PLAY
-                }
-                InputListenerType.UP ->
-                {
-                    e.consumed = true
-                    // TODO go to previous button
-                }
-                InputListenerType.DOWN ->
-                {
-                    e.consumed = true
-                    // TODO go to next button
-                }
-                else -> {}
-            }
-        }
+//        if (GameEngine.game?.state == GameState.OPTIONS)
+//        {
+//            super.onInputEvent(e)
+//            when (e.type)
+//            {
+//                InputListenerType.ENTER ->
+//                {
+//                    e.consumed = true
+//                    GameEngine.game?.state = GameState.MAIN_MENU
+//                }
+//                InputListenerType.ESCAPE ->
+//                {
+//                    e.consumed = true
+//                    GameEngine.game?.state = GameState.PLAY
+//                }
+//                InputListenerType.UP ->
+//                {
+//                    e.consumed = true
+//                    // TODO go to previous button
+//                }
+//                InputListenerType.DOWN ->
+//                {
+//                    e.consumed = true
+//                    // TODO go to next button
+//                }
+//                else -> {}
+//            }
+//        }
 
     }
 }
