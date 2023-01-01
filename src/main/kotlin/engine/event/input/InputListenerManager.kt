@@ -14,7 +14,7 @@ class InputListenerManager
     }
 
     fun sub(e: InputListener, types: MutableList<InputListenerType>) { listeners[e] = types }
-    fun subAll(e: InputListener) { sub(e, InputListenerType.values().toMutableList()) }
+    fun sub(e: InputListener) { sub(e, InputListenerType.values().toMutableList()) }
     fun unsub(e: InputListener, types: MutableList<InputListenerType>) { listeners[e]?.removeAll(types) }
-    fun unsubAll(e: InputListener) { unsub(e, InputListenerType.values().toMutableList()) }
+    fun unsub(e: InputListener) { unsub(e, InputListenerType.values().toMutableList()) }
 }

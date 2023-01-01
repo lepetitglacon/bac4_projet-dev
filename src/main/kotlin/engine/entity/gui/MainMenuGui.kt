@@ -1,5 +1,6 @@
 package engine.entity.gui
 
+import engine.EngineState
 import engine.GameEngine
 import engine.entity.gui.component.ButtonComponent
 import engine.entity.gui.component.StringComponent
@@ -9,6 +10,7 @@ import engine.event.input.InputListenerType
 import engine.game.GameState
 
 class MainMenuGui : Gui() {
+    var title: String = ""
     val buttons: MutableList<ButtonComponent> = mutableListOf()
 
     init {
@@ -26,15 +28,27 @@ class MainMenuGui : Gui() {
         string.x = 25
         string.y = 25
 
-        val btnLaunchGame= ButtonComponent()
+        val btnLaunchGame = ButtonComponent()
         btnLaunchGame.string = StringComponent()
         btnLaunchGame.string.string = "New game"
+        btnLaunchGame.gui = this
+        btnLaunchGame.parent = window
         btnLaunchGame.x = 50
         btnLaunchGame.y = 50
+
+        val btnOption = ButtonComponent()
+        btnOption.string = StringComponent()
+        btnOption.string.string = "Options"
+        btnOption.gui = this
+        btnOption.parent = window
+        btnOption.x = 50
+        btnOption.y = 75
+
 
         components.add(window)
         components.add(string)
         components.add(btnLaunchGame)
+        components.add(btnOption)
     }
 
     override fun update() {
@@ -42,29 +56,29 @@ class MainMenuGui : Gui() {
     }
 
     override fun onInputEvent(e: InputEvent) {
-//        if (GameEngine.game?.state == GameState.MAIN_MENU)
-//        {
-//            super.onInputEvent(e)
-//            when (e.type)
-//            {
-//                InputListenerType.ENTER ->
-//                {
-//                    e.consumed = true
-//                    GameEngine.game?.state = GameState.PLAY
-//                }
-//                InputListenerType.UP ->
-//                {
-//                    e.consumed = true
-//                    // TODO go to previous button
-//                }
-//                InputListenerType.DOWN ->
-//                {
-//                    e.consumed = true
-//                    // TODO go to next button
-//                }
-//                else -> {}
-//            }
-//
-//        }
+        if (GameEngine.state == EngineState.MAIN_MENU)
+        {
+            super.onInputEvent(e)
+            when (e.type)
+            {
+                InputListenerType.ENTER ->
+                {
+                    e.consumed = true
+                    GameEngine.game?.state = GameState.PLAY
+                }
+                InputListenerType.UP ->
+                {
+                    e.consumed = true
+                    // TODO go to previous button
+                }
+                InputListenerType.DOWN ->
+                {
+                    e.consumed = true
+                    // TODO go to next button
+                }
+                else -> {}
+            }
+
+        }
     }
 }

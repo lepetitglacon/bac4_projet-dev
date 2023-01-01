@@ -1,17 +1,13 @@
 package engine.game
 
-import engine.EngineState
 import engine.GameEngine
 import engine.entity.gui.Gui
-import engine.entity.gui.MainMenuGui
-import engine.entity.gui.OptionMenuGui
 import engine.entity.map.Map
 import engine.entity.mob.enemy.Enemy
 import engine.entity.mob.Hero
 import engine.entity.mob.enemy.EnemyFactory
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
-import engine.event.input.InputListenerType
 import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 
@@ -33,9 +29,6 @@ class Game : InputListener {
         map.build()
 
         enemies.addAll(EnemyFactory.createFromRegistrer())
-
-        // Event binding
-        GameEngine.inputListenerManager.subAll(this)
     }
 
     fun update()

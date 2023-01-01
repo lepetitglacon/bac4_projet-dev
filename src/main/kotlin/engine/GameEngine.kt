@@ -1,8 +1,13 @@
 package engine
 
 import engine.entity.gui.Gui
+import engine.entity.gui.ButtonMenu
 import engine.entity.gui.MainMenuGui
 import engine.entity.gui.OptionMenuGui
+import engine.entity.gui.component.WindowGui
+import engine.entity.gui.component.button.ExitGameButton
+import engine.entity.gui.component.button.GoToMainMenuButton
+import engine.entity.gui.component.button.NewGameButton
 import engine.entity.registrer.EnemyRegistrer
 import engine.entity.registrer.EnemyType
 import engine.event.input.InputEvent
@@ -11,8 +16,6 @@ import engine.event.input.InputListenerManager
 import engine.event.input.InputListenerType
 import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
-import engine.game.GameFactory
-import engine.game.GameState
 import engine.window.Window
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -36,9 +39,9 @@ object GameEngine : JPanel(), InputListener {
     val heroMovementListenerManager = HeroMovementListenerManager()
 
     // objects
-    var mainMenu: Gui? = null
-    var optionMenu: Gui? = null
-    var gameOverMenu: Gui? = null
+    var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.MAIN_MENU))
+    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.OPTIONS))
+    var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.GAME_OVER))
 
     var game: Game? = null
     var window: Window = Window()
@@ -50,16 +53,11 @@ object GameEngine : JPanel(), InputListener {
         enemyRegistrer.add(EnemyType("warrior", 0, 20, 50))
         enemyRegistrer.add(EnemyType("mercenary", 2, 50, 50))
 
-        // GUI
-        mainMenu = MainMenuGui()
-        optionMenu = OptionMenuGui()
-//        gameOverMenu = Gui()
-//        shopMenu = Gui()
-
         // event binding
-        inputListenerManager.subAll(mainMenu as MainMenuGui)
-        inputListenerManager.subAll(optionMenu as OptionMenuGui)
-        inputListenerManager.subAll(this)
+//        inputListenerManager.subAll(mainMenu as MainMenuGui)
+        inputListenerManager.sub(mainMenu)
+        inputListenerManager.sub(optionMenu)
+        inputListenerManager.sub(this)
 
         SwingUtilities.invokeLater {
             window.init()
@@ -72,7 +70,14 @@ object GameEngine : JPanel(), InputListener {
     {
         window.updateTitle()
         window.getKeyboardMovementInput()
-        game?.update()
+
+        when (state)
+        {
+            EngineState.MAIN_MENU -> {}
+            EngineState.PLAY -> game?.update()
+            EngineState.OPTIONS -> {}
+            EngineState.GAME_OVER -> {}
+        }
 
         repaint()
         ticksCounter++
@@ -83,24 +88,17 @@ object GameEngine : JPanel(), InputListener {
         val g = gg as Graphics2D
 
         game?.draw(g)
-        if (state == EngineState.MAIN_MENU) mainMenu?.draw(g)
-        if (state == EngineState.OPTIONS) optionMenu?.draw(g)
+        if (state == EngineState.MAIN_MENU) mainMenu.draw(g)
+        if (state == EngineState.OPTIONS) optionMenu.draw(g)
     }
 
     override fun onInputEvent(e: InputEvent) {
         super.onInputEvent(e)
         when (state) {
-            EngineState.MAIN_MENU ->
-            {
-                if (e.type == InputListenerType.ENTER) {
-                    state = EngineState.PLAY
-                    game = GameFactory.createGame()
-                    game!!.init()
-                }
-            }
+            EngineState.MAIN_MENU -> {}
             EngineState.PLAY -> if (e.type == InputListenerType.ESCAPE) state = EngineState.OPTIONS
             EngineState.OPTIONS -> if (e.type == InputListenerType.ESCAPE) state = EngineState.PLAY
-            EngineState.GAME_OVER -> TODO()
+            EngineState.GAME_OVER -> {}
         }
 
     }

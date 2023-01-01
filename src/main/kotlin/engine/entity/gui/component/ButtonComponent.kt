@@ -8,6 +8,7 @@ import java.awt.Graphics2D
 
 class ButtonComponent : GuiComponent() {
     var backgroundColor: Color = Color(155, 155,155, 150)
+    var textColor: Color = Color.WHITE
     var string: StringComponent = StringComponent()
 
     override var gui: Gui? = null
@@ -45,10 +46,23 @@ class ButtonComponent : GuiComponent() {
     }
 
     override fun draw(g: Graphics2D) {
+        var drawX = x
+        var drawY = y
+
+        if (parent != null)
+        {
+            drawX = parent!!.x + x
+            drawY = parent!!.y + y
+
+            string.x = parent!!.x + x
+            string.y = parent!!.y + y
+        }
+
         // background
         g.color = backgroundColor
-        g.fillRect(x, y, width, height)
+        g.fillRect(drawX, drawY, width, height)
 
+        g.color = textColor
         string.draw(g)
     }
 
