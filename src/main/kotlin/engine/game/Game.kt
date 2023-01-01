@@ -50,7 +50,6 @@ class Game : InputListener {
 
     fun update()
     {
-
         updateState(null)
 
         when(state)
@@ -61,6 +60,8 @@ class Game : InputListener {
             }
             GameState.PLAY ->
             {
+                removeDeadEntities()
+
                 map?.update()
                 hero?.update()
                 enemies.forEach { it.update() }
@@ -118,4 +119,7 @@ class Game : InputListener {
         updateState(e)
     }
 
+    fun removeDeadEntities() {
+
+    }
 }
