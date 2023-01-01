@@ -58,7 +58,7 @@ class BarComponent : GuiComponent()
         return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
     }
 
-    override fun collides(entity: Entity) {
+    override fun collides(entity: Entity): Boolean {
         TODO("Not yet implemented")
     }
 

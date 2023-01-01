@@ -14,7 +14,7 @@ object WeaponFactory {
         p.width = 10
         p.height = 10
         val e = GameEngine.game?.enemies?.first()
-        p.direction = (e!!.center() - GameEngine.game?.hero!!.center()).normalize()
+        p.direction = (e!!.center() - GameEngine.game?.hero!!.center()).normalized()
         return p
     }
 }

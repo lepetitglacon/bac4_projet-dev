@@ -34,7 +34,7 @@ class Hero : Entity()
         return GameEngine.window?.HEIGHT!! / 2 - height / 2
     }
 
-    override fun collides(entity: Entity) {
+    override fun collides(entity: Entity): Boolean {
         TODO("Not yet implemented")
     }
 

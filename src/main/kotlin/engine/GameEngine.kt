@@ -8,6 +8,7 @@ import engine.entity.gui.component.WindowGui
 import engine.entity.gui.component.button.ExitGameButton
 import engine.entity.gui.component.button.GoToMainMenuButton
 import engine.entity.gui.component.button.NewGameButton
+import engine.entity.gui.component.button.ResumeButton
 import engine.entity.registrer.EnemyRegistrer
 import engine.entity.registrer.EnemyType
 import engine.event.input.InputEvent
@@ -40,7 +41,7 @@ object GameEngine : JPanel(), InputListener {
 
     // objects
     var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.MAIN_MENU))
-    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.OPTIONS))
+    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.OPTIONS))
     var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.GAME_OVER))
 
     var game: Game? = null

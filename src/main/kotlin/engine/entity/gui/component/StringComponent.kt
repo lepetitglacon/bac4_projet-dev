@@ -36,7 +36,7 @@ class StringComponent : GuiComponent() {
         TODO("Not yet implemented")
     }
 
-    override fun collides(entity: Entity) {
+    override fun collides(entity: Entity): Boolean {
         TODO("Not yet implemented")
     }
 

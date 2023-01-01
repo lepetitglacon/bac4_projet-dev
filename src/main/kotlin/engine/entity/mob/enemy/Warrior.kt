@@ -11,7 +11,7 @@ import java.awt.Graphics2D
 
 class Warrior : Enemy()
 {
-    override var speed: Int = 5
+    override var speed: Int = 2
     override var sprite: Sprite = SpriteFactory.get("warrior")
 
     override fun xFromHero(): Int {
@@ -22,16 +22,19 @@ class Warrior : Enemy()
         return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
     }
 
-    override fun collides(entity: Entity) {
-        TODO("Not yet implemented")
-    }
-
     override fun move() {
-
+        var pos = (center() - GameEngine.game?.hero?.center()!!).normalized()
+        println("norma ${pos.x}x ${pos.y}y")
+        pos *= speed
+        println(" add to  pos ${pos.x}x ${pos.y}y")
+        println()
+        x -= pos.x.toInt()
+        y -= pos.y.toInt()
     }
 
     override fun update() {
         move()
+        //GameEngine.game?.enemies?.forEach { if (collides(it)) repulseNotToCollide(it) }
     }
 
     override fun draw(g: Graphics2D) {
@@ -41,12 +44,12 @@ class Warrior : Enemy()
         }
         val hpBar = BarComponent()
         hpBar.x = x
-        hpBar.y = y - height
+        hpBar.y = y - height / 2
         hpBar.width = width
         hpBar.draw(g)
 
         g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE,TILE_SIZE), null, xFromHero(), yFromHero())
     }
 
-
+    
 }

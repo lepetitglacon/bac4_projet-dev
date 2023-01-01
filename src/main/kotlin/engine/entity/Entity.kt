@@ -13,7 +13,7 @@ abstract class Entity : Rectangle()
 
     abstract fun xFromHero(): Int
     abstract fun yFromHero(): Int
-    abstract fun collides(entity: Entity)
+    abstract fun collides(entity: Entity) : Boolean
     abstract fun move()
     abstract fun update()
     abstract fun draw(g: Graphics2D)
