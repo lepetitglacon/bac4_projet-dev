@@ -1,8 +1,9 @@
 package engine.entity.mob.enemy
 
 import engine.entity.Entity
+import engine.entity.mob.component.Living
 
-abstract class Enemy : Entity()
+abstract class Enemy : Entity(), Living
 {
     fun repulseNotToCollide(e: Enemy) {
         val distance = center().distance(e.center())

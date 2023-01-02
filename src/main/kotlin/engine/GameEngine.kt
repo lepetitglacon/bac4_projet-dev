@@ -1,22 +1,21 @@
 package engine
 
-import engine.entity.gui.Gui
 import engine.entity.gui.ButtonMenu
-import engine.entity.gui.MainMenuGui
-import engine.entity.gui.OptionMenuGui
 import engine.entity.gui.component.WindowGui
 import engine.entity.gui.component.button.ExitGameButton
 import engine.entity.gui.component.button.GoToMainMenuButton
 import engine.entity.gui.component.button.NewGameButton
 import engine.entity.gui.component.button.ResumeButton
+import engine.entity.mob.enemy.EnemyType
 import engine.entity.registrer.EnemyRegistrer
-import engine.entity.registrer.EnemyType
+import engine.entity.registrer.EnemyRegistrerType
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.event.input.InputListenerManager
 import engine.event.input.InputListenerType
 import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
+import engine.resource.SpriteFactory
 import engine.window.Window
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -35,24 +34,24 @@ object GameEngine : JPanel(), InputListener {
     // game loop
     val timer: Timer = Timer(1) { run() }
 
+    var game: Game? = null
+    var window: Window = Window()
+    val enemyRegistrer = EnemyRegistrer()
+
     // event managers
     val inputListenerManager = InputListenerManager()
     val heroMovementListenerManager = HeroMovementListenerManager()
 
     // objects
-    var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.MAIN_MENU))
-    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.OPTIONS))
-    var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowGui(75,75,150,150), mutableListOf(EngineState.GAME_OVER))
-
-    var game: Game? = null
-    var window: Window = Window()
-    val enemyRegistrer = EnemyRegistrer()
+    var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowGui(150,150), mutableListOf(EngineState.MAIN_MENU))
+    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowGui(150,150), mutableListOf(EngineState.OPTIONS))
+    var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowGui(150,150), mutableListOf(EngineState.GAME_OVER))
 
     init
     {
         // enemy registration
-        enemyRegistrer.add(EnemyType("warrior", 0, 20, 50))
-        enemyRegistrer.add(EnemyType("mercenary", 2, 50, 50))
+        enemyRegistrer.add(EnemyRegistrerType("warrior", EnemyType.WARRIOR, 0, 100, 100, .5, SpriteFactory.get("hero")))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .5, SpriteFactory.get("pokemons")))
 
         SwingUtilities.invokeLater {
             window.init()

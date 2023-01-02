@@ -1,9 +1,9 @@
 package engine.entity.registrer
 
 class EnemyRegistrer {
-    val enemies = mutableListOf<EnemyType>()
+    val enemies = mutableListOf<EnemyRegistrerType>()
 
-    fun add(enemyType: EnemyType) {
+    fun add(enemyType: EnemyRegistrerType) {
         enemies.add(enemyType)
     }
 }

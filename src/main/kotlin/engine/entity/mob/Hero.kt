@@ -58,7 +58,7 @@ class Hero : Entity()
             g.drawArc(xFromHero(), yFromHero(), width, height, 0, 180)
             g.drawString("$x $y", xFromHero(), yFromHero() - 20)
         }
-//        g.drawImage((sprite as HeroSprite).get(), null, xFromHero(), yFromHero())
+        g.drawImage((sprite as HeroSprite).get(), null, xFromHero(), yFromHero())
 
         weapons.forEach {
             it.draw(g)

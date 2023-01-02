@@ -6,6 +6,7 @@ import engine.entity.map.Map
 import engine.entity.mob.enemy.Enemy
 import engine.entity.mob.Hero
 import engine.entity.mob.enemy.EnemyFactory
+import engine.entity.weapon.weapon.Gun
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.resource.SpriteFactory
@@ -17,6 +18,9 @@ class Game : InputListener {
     var enemies = mutableListOf<Enemy>()
 
     var state: GameState = GameState.PLAY
+    var wave: Int = 1
+
+    var enemyPerWave = 6
 
     var shopMenu: Gui? = null
 
@@ -73,6 +77,11 @@ class Game : InputListener {
     }
 
     fun removeDeadEntities() {
-
+        hero.weapons.forEach { weapon ->
+            when (weapon) {
+                is Gun -> weapon.projectiles.removeIf { it.hp <= 0 }
+            }
+        }
+        enemies.removeIf { it.hp <= 0 }
     }
 }

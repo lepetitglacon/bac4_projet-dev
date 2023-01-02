@@ -1,5 +1,6 @@
 package engine.entity.sprite.hero
 
+import engine.EngineState
 import engine.GameEngine
 import engine.entity.sprite.Sprite
 import engine.event.movement.hero.HeroMovementEvent
@@ -23,7 +24,7 @@ class HeroSprite(override var image: BufferedImage?) : Sprite(), HeroMovementLis
     }
 
     override fun onHeroMovementEvent(e: HeroMovementEvent) {
-        if (GameEngine.game?.state == GameState.PLAY)
+        if (GameEngine.state == EngineState.PLAY)
         {
             super.onHeroMovementEvent(e)
             e.consumed

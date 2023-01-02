@@ -1,13 +1,50 @@
 package engine.entity.mob.enemy
 
 import engine.GameEngine
+import engine.entity.registrer.EnemyRegistrerType
+import engine.resource.SpriteFactory
 import kotlin.random.Random
 
 object EnemyFactory {
     
-    fun createRandomEnemy(): Enemy {
-        val enemy = Warrior()
-        // get coordinates
+    fun createRandomEnemy(et: EnemyRegistrerType): Enemy {
+        val enemy: Enemy
+
+        when (et.type) {
+            EnemyType.WARRIOR ->
+            {
+                enemy = Warrior()
+                enemy.sprite = SpriteFactory.get(et.name)
+            }
+            EnemyType.SPECTRE -> TODO()
+            EnemyType.APOSTLE -> TODO()
+        }
+
+        enemy.hp = et.hp
+        enemy.maxHp = et.maxHp
+
+        setRandomCoordinates(enemy)
+        enemy.width = 64
+        enemy.height = 64
+
+
+
+        return enemy
+    }
+
+    fun createFromRegistrer(): MutableList<Enemy> {
+        val enemies = mutableListOf<Enemy>()
+        var i = 0
+        while (i < GameEngine.game?.enemyPerWave!!) {
+            GameEngine.enemyRegistrer.enemies.forEach {
+                enemies.add(createRandomEnemy(it))
+                i++
+            }
+        }
+        return enemies
+    }
+
+    private fun setRandomCoordinates(enemy: Enemy): Enemy {
         val heroXMin = (GameEngine.game?.hero?.pos?.x!!) - GameEngine.window.WIDTH/2 - enemy.width
         val heroXMax = (GameEngine.game?.hero?.pos?.x!!) + GameEngine.window.WIDTH/2 + enemy.width
         val heroYMin = (GameEngine.game?.hero?.pos?.y!!) - GameEngine.window.HEIGHT/2 - enemy.height
@@ -23,20 +60,6 @@ object EnemyFactory {
         }
         enemy.pos.x += 50 / 2
         enemy.pos.y += 50 / 2
-        enemy.width = 64
-        enemy.height = 64
         return enemy
-    }
-
-    fun createFromRegistrer(): MutableList<Enemy> {
-        val enemies = mutableListOf<Enemy>()
-        GameEngine.enemyRegistrer.enemies.forEach {
-            enemies.add(createRandomEnemy())
-        }
-        return enemies;
-    }
-
-    fun createWarrior() {
-
     }
 }

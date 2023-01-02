@@ -14,8 +14,13 @@ import kotlin.math.floor
 
 class Warrior : Enemy()
 {
+    override var hp: Int = 0
+    override var maxHp: Int = 0
+
     override var speed: Int = 2
     override var sprite: Sprite = SpriteFactory.get("warrior")
+
+    val hpBar = BarComponent()
 
     override fun xFromHero(): Int {
         return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
@@ -37,13 +42,17 @@ class Warrior : Enemy()
         super.update()
     }
 
+
+
     override fun draw(g: Graphics2D) {
         if (GameEngine.debug) {
             g.drawRect(xFromHero(), yFromHero(), width, height)
             g.drawString("$x $y", xFromHero(), yFromHero() - 20)
             g.drawOval(xFromHero(), yFromHero(), width, height)
         }
-        val hpBar = BarComponent()
+
+        hpBar.maxFilled = maxHp
+        hpBar.filled = hp
         hpBar.x = x
         hpBar.y = y - height / 2
         hpBar.width = width
