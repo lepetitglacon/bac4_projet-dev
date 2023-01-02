@@ -18,7 +18,7 @@ object WeaponFactory {
         var lastDistance = GameEngine.game?.enemies?.firstOrNull()?.center()?.distance(GameEngine.game?.hero!!.center()) ?: 0.0
         var closest: Enemy? = GameEngine.game?.enemies?.firstOrNull()
         GameEngine.game?.enemies?.forEach {
-            if (it.center().distance(GameEngine.game?.hero!!.center()) > lastDistance) {
+            if (it.center().distance(GameEngine.game?.hero!!.center()) < lastDistance) {
                 lastDistance = it.center().distance(GameEngine.game?.hero!!.center())
                 closest = it
             }

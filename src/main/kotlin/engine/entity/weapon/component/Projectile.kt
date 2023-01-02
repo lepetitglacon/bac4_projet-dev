@@ -16,7 +16,7 @@ class Projectile : Entity(), Attacking, Living {
     override var speed: Int = 2
     override var sprite: Sprite = SpriteFactory.get("pokemons")
 
-    override val damages: Int = 25
+    override val damages: Int = 100
     override var hp: Int = 1
     override var maxHp: Int = 1
 
