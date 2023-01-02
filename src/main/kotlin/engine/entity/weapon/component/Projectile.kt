@@ -29,16 +29,17 @@ class Projectile : Entity(), Attacking, Living {
     }
 
     override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < (width/2 + entity.width/2)
+        return center().distance(entity.center()) < entity.width / 2 + width / 2
     }
 
     fun onHit(entity: Entity) {
-        println("hit")
+        println("$entity hit")
         when (entity) {
             is Enemy -> {
                 entity.applyDamage(damages)
                 hp--
             }
+            else -> { println("bullet hit something unknown") }
 
         }
     }

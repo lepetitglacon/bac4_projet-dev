@@ -7,7 +7,7 @@ import java.time.Instant
 
 abstract class Weapon
 {
-    val cooldown: Long = 5000
+    val cooldown: Long = 2000 // ms
     var lastCooldown = Instant.now()
 
     fun canFire(): Boolean

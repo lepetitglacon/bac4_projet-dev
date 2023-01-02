@@ -25,7 +25,9 @@ object WeaponFactory {
         }
 
         val direction = closest?.center() ?: Vec2()
+        println(direction)
         p.direction = (direction - GameEngine.game?.hero!!.center()).normalized()
+        println(p.direction)
         return p
     }
 }

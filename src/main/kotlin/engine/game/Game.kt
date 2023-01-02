@@ -79,7 +79,7 @@ class Game : InputListener {
     fun removeDeadEntities() {
         hero.weapons.forEach { weapon ->
             when (weapon) {
-                is Gun -> weapon.projectiles.removeIf { it.hp <= 0 }
+                is Gun -> weapon.projectiles.removeIf { it.hp <= 0  }
             }
         }
         enemies.removeIf { it.hp <= 0 }
