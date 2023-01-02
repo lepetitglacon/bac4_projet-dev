@@ -8,21 +8,21 @@ object EnemyFactory {
     fun createRandomEnemy(): Enemy {
         val enemy = Warrior()
         // get coordinates
-        val heroXMin = (GameEngine.game?.hero?.x ?: 0) - GameEngine.window.WIDTH/2 - enemy.width
-        val heroXMax = (GameEngine.game?.hero?.x ?: 0)  + GameEngine.window.WIDTH/2 + enemy.width
-        val heroYMin = (GameEngine.game?.hero?.y ?: 0)  - GameEngine.window.HEIGHT/2 - enemy.height
-        val heroYMax = (GameEngine.game?.hero?.y ?: 0)  + GameEngine.window.HEIGHT/2 + enemy.height
+        val heroXMin = (GameEngine.game?.hero?.pos?.x!!) - GameEngine.window.WIDTH/2 - enemy.width
+        val heroXMax = (GameEngine.game?.hero?.pos?.x!!) + GameEngine.window.WIDTH/2 + enemy.width
+        val heroYMin = (GameEngine.game?.hero?.pos?.y!!) - GameEngine.window.HEIGHT/2 - enemy.height
+        val heroYMax = (GameEngine.game?.hero?.pos?.y!!) + GameEngine.window.HEIGHT/2 + enemy.height
         if (Random.nextBoolean()) {
-            enemy.x = Random.nextInt(heroXMin, heroXMax)
+            enemy.pos.x = Random.nextDouble(heroXMin, heroXMax)
             val y = if (Random.nextBoolean()) heroYMin else heroYMax
-            enemy.y = y
+            enemy.pos.y = y
         } else {
             val x = if (Random.nextBoolean()) heroXMin else heroXMax
-            enemy.x = x
-            enemy.y = Random.nextInt(heroYMin, heroYMax)
+            enemy.pos.x = x
+            enemy.pos.y = Random.nextDouble(heroYMin, heroYMax)
         }
-        enemy.x = enemy.x + 50 / 2
-        enemy.y = enemy.y + 50 / 2
+        enemy.pos.x += 50 / 2
+        enemy.pos.y += 50 / 2
         enemy.width = 64
         enemy.height = 64
         return enemy

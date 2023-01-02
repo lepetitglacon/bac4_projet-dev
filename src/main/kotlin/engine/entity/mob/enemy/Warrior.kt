@@ -7,7 +7,10 @@ import engine.entity.sprite.Sprite
 import engine.entity.sprite.enemy.WarriorSprite
 import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
+import java.awt.Color
 import java.awt.Graphics2D
+import kotlin.math.ceil
+import kotlin.math.floor
 
 class Warrior : Enemy()
 {
@@ -23,24 +26,22 @@ class Warrior : Enemy()
     }
 
     override fun move() {
-        var pos = (center() - GameEngine.game?.hero?.center()!!).normalized()
-        println("norma ${pos.x}x ${pos.y}y")
-        pos *= speed
-        println(" add to  pos ${pos.x}x ${pos.y}y")
-        println()
-        x -= pos.x.toInt()
-        y -= pos.y.toInt()
+        pos -= (center() - GameEngine.game?.hero?.center()!!).normalized() * speed
     }
 
     override fun update() {
         move()
-        //GameEngine.game?.enemies?.forEach { if (collides(it)) repulseNotToCollide(it) }
+        GameEngine.game?.enemies?.forEach {
+            if (it != this && collides(it)) repulseNotToCollide(it)
+        }
+        super.update()
     }
 
     override fun draw(g: Graphics2D) {
         if (GameEngine.debug) {
             g.drawRect(xFromHero(), yFromHero(), width, height)
             g.drawString("$x $y", xFromHero(), yFromHero() - 20)
+            g.drawOval(xFromHero(), yFromHero(), width, height)
         }
         val hpBar = BarComponent()
         hpBar.x = x
@@ -49,6 +50,9 @@ class Warrior : Enemy()
         hpBar.draw(g)
 
         g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE,TILE_SIZE), null, xFromHero(), yFromHero())
+        g.color = Color.RED
+        g.drawOval(xFromHero() + width/2, yFromHero() + height/2, 10, 10)
+
     }
 
     

@@ -54,15 +54,15 @@ object GameEngine : JPanel(), InputListener {
         enemyRegistrer.add(EnemyType("warrior", 0, 20, 50))
         enemyRegistrer.add(EnemyType("mercenary", 2, 50, 50))
 
-        // event binding
-//        inputListenerManager.subAll(mainMenu as MainMenuGui)
-        inputListenerManager.sub(mainMenu)
-        inputListenerManager.sub(optionMenu)
-        inputListenerManager.sub(this)
-
         SwingUtilities.invokeLater {
             window.init()
             timer.start()
+
+            // event binding
+            inputListenerManager.sub(mainMenu)
+            inputListenerManager.sub(optionMenu)
+            inputListenerManager.sub(this)
+
             println("engine running")
         }
     }

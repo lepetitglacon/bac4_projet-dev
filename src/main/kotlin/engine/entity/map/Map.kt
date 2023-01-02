@@ -17,8 +17,6 @@ class Map
     }
 
     fun fillGrass() {
-        println(GameEngine.window.WIDTH / TILE_SIZE)
-        println(GameEngine.window.HEIGHT / TILE_SIZE)
         for (i in 0..GameEngine.window.WIDTH / TILE_SIZE)
         {
             for (j in 0..GameEngine.window.HEIGHT / TILE_SIZE)

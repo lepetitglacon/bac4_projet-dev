@@ -3,13 +3,13 @@ package engine.entity.weapon.component
 import engine.GameEngine
 import engine.entity.Entity
 import engine.entity.sprite.Sprite
-import engine.math.Vector2
+import engine.math.Vec2
 import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.Graphics2D
 
 class Projectile : Entity() {
-    var direction: Vector2 = Vector2()
+    var direction: Vec2 = Vec2()
     override var speed: Int = 5
     override var sprite: Sprite = SpriteFactory.get("pokemons")
 

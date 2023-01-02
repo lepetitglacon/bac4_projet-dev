@@ -2,7 +2,6 @@ package engine.entity.weapon
 
 import engine.GameEngine
 import engine.entity.weapon.component.Projectile
-import engine.math.Vector2
 
 object WeaponFactory {
 

@@ -39,9 +39,7 @@ class Hero : Entity()
     }
 
     override fun move() {
-        val pos = GameEngine.window.keyboardMovementVector * speed
-        x += pos.x.toInt()
-        y += pos.y.toInt()
+        pos += GameEngine.window.keyboardMovementVector * speed
     }
 
     override fun update() {
@@ -49,6 +47,7 @@ class Hero : Entity()
         weapons.forEach {
             it.update()
         }
+        super.update()
     }
 
     override fun draw(g: Graphics2D) {

@@ -5,14 +5,11 @@ import engine.event.input.InputEvent
 import engine.event.input.InputListenerType
 import engine.event.movement.hero.HeroMovementEvent
 import engine.event.movement.hero.HeroMovementListenerType
-import engine.math.Vector2
+import engine.math.Vec2
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
-import java.util.EventListener
-import java.util.Vector
 import javax.swing.JFrame
 
 class Window : JFrame() {
@@ -23,7 +20,7 @@ class Window : JFrame() {
     var left = false
     var down = false
     var right = false
-    var keyboardMovementVector = Vector2()
+    var keyboardMovementVector = Vec2()
 
     fun init() {
         title = "Bac+4 survival game - Esteban GAGNEUR"
@@ -48,19 +45,19 @@ class Window : JFrame() {
                     KeyEvent.VK_ESCAPE -> event.type = InputListenerType.ESCAPE
                     KeyEvent.VK_SPACE -> event.type = InputListenerType.SPACE
 
-                    KeyEvent.VK_Z -> {
+                    KeyEvent.VK_Z, KeyEvent.VK_UP -> {
                         up = true
                         event.type = InputListenerType.UP
                     }
-                    KeyEvent.VK_Q -> {
+                    KeyEvent.VK_Q, KeyEvent.VK_LEFT -> {
                         left = true
                         event.type = InputListenerType.LEFT
                     }
-                    KeyEvent.VK_S -> {
+                    KeyEvent.VK_S, KeyEvent.VK_DOWN -> {
                         down = true
                         event.type = InputListenerType.DOWN
                     }
-                    KeyEvent.VK_D -> {
+                    KeyEvent.VK_D, KeyEvent.VK_RIGHT -> {
                         right = true
                         event.type = InputListenerType.RIGHT
                     }
@@ -72,16 +69,16 @@ class Window : JFrame() {
             override fun keyReleased(e: KeyEvent) {
                 when (e.keyCode)
                 {
-                    KeyEvent.VK_Z -> {
+                    KeyEvent.VK_Z, KeyEvent.VK_UP -> {
                         up = false
                     }
-                    KeyEvent.VK_Q -> {
+                    KeyEvent.VK_Q, KeyEvent.VK_LEFT -> {
                         left = false
                     }
-                    KeyEvent.VK_S -> {
+                    KeyEvent.VK_S, KeyEvent.VK_DOWN -> {
                         down = false
                     }
-                    KeyEvent.VK_D -> {
+                    KeyEvent.VK_D, KeyEvent.VK_RIGHT -> {
                         right = false
                     }
                 }
