@@ -11,7 +11,7 @@ object SpriteFactory {
     fun registerSprites()
     {
         sprites["hero"] = HeroSprite(ResourceManager.getSpriteSheet("hero"))
-        sprites["warrior"] = Sprite(ResourceManager.getSpriteSheet("pokemons"))
+        sprites["warrior"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 3*TILE_SIZE, TILE_SIZE,TILE_SIZE))
         sprites["warrior_1"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 2*TILE_SIZE, TILE_SIZE,TILE_SIZE))
 
         val map = ResourceManager.getSpriteSheet("map")

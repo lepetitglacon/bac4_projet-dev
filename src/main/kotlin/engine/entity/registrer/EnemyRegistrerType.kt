@@ -11,7 +11,10 @@ class EnemyRegistrerType(
     val maxHp: Int,
     val hp: Int = maxHp,
     val xpDropRate: Double,
-    val sprite: Sprite
+    val sprite: Sprite,
+
+    val width: Int,
+    val height: Int
 ) {
 
 }

@@ -54,11 +54,11 @@ class Warrior : Enemy()
         hpBar.maxFilled = maxHp
         hpBar.filled = hp
         hpBar.x = x
-        hpBar.y = y - height / 2
+        hpBar.y = y - height
         hpBar.width = width
         hpBar.draw(g)
 
-        g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE,TILE_SIZE), null, xFromHero(), yFromHero())
+        g.drawImage(sprite.image, null, xFromHero() - (sprite.image?.width!!/2 - width/2), yFromHero() - (sprite.image?.height!!/2 - height/2))
         g.color = Color.RED
         g.drawOval(xFromHero() + width/2, yFromHero() + height/2, 10, 10)
 

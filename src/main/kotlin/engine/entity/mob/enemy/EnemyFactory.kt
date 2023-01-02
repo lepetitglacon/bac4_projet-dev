@@ -24,8 +24,8 @@ object EnemyFactory {
         enemy.maxHp = et.maxHp
 
         setRandomCoordinates(enemy)
-        enemy.width = 64
-        enemy.height = 64
+        enemy.width = et.width
+        enemy.height = et.height
 
 
 
