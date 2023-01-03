@@ -1,7 +1,7 @@
 package engine.entity.weapon.weapon
 
+import engine.GameEngine
 import engine.entity.weapon.Weapon
-import engine.entity.weapon.WeaponEffect
 import engine.entity.weapon.WeaponFactory
 import engine.entity.weapon.component.Projectile
 import java.awt.Graphics2D
@@ -11,8 +11,7 @@ class Gun : Weapon() {
     val projectiles: MutableList<Projectile> = mutableListOf()
 
     fun fire() {
-        println("gun fire")
-        projectiles.add(WeaponFactory.createProjectile())
+        projectiles.add(WeaponFactory.createProjectile(GameEngine.game?.hero?.center()!!))
         lastCooldown = Instant.now()
     }
 

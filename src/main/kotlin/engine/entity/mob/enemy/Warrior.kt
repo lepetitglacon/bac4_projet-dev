@@ -1,26 +1,19 @@
 package engine.entity.mob.enemy
 
 import engine.GameEngine
-import engine.entity.Entity
 import engine.entity.gui.component.BarComponent
 import engine.entity.sprite.Sprite
-import engine.entity.sprite.enemy.WarriorSprite
 import engine.resource.SpriteFactory
-import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.Color
 import java.awt.Graphics2D
-import kotlin.math.ceil
-import kotlin.math.floor
 
 class Warrior : Enemy()
 {
     override var hp: Int = 0
     override var maxHp: Int = 0
 
-    override var speed: Int = 2
+    override var speed: kotlin.Double = 2.0
     override var sprite: Sprite = SpriteFactory.get("warrior")
-
-    val hpBar = BarComponent()
 
     override fun xFromHero(): Int {
         return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
@@ -42,8 +35,6 @@ class Warrior : Enemy()
         super.update()
     }
 
-
-
     override fun draw(g: Graphics2D) {
         if (GameEngine.debug) {
             g.drawRect(xFromHero(), yFromHero(), width, height)
@@ -51,12 +42,7 @@ class Warrior : Enemy()
             g.drawOval(xFromHero(), yFromHero(), width, height)
         }
 
-        hpBar.maxFilled = maxHp
-        hpBar.filled = hp
-        hpBar.x = x
-        hpBar.y = y - height
-        hpBar.width = width
-        hpBar.draw(g)
+        drawHpBar(g)
 
         g.drawImage(sprite.image, null, xFromHero() - (sprite.image?.width!!/2 - width/2), yFromHero() - (sprite.image?.height!!/2 - height/2))
         g.color = Color.RED

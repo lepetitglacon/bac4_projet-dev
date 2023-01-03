@@ -3,13 +3,13 @@ package engine.entity
 import engine.entity.sprite.Sprite
 import engine.math.Vec2
 import java.awt.Graphics2D
-import java.awt.Point
 import java.awt.Rectangle
+
 
 abstract class Entity : Rectangle()
 {
     var pos: Vec2 = Vec2()
-    abstract var speed: Int
+    abstract var speed: kotlin.Double
     abstract var sprite: Sprite
 
     abstract fun xFromHero(): Int

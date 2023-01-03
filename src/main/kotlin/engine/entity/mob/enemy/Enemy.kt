@@ -1,10 +1,15 @@
 package engine.entity.mob.enemy
 
 import engine.entity.Entity
+import engine.entity.gui.component.BarComponent
 import engine.entity.mob.component.Living
+import java.awt.Graphics2D
 
 abstract class Enemy : Entity(), Living
 {
+    val hpBar = BarComponent()
+    val xpToGive: Int = 25
+
     fun repulseNotToCollide(e: Enemy) {
         val distance = center().distance(e.center())
         val rayon = width
@@ -13,6 +18,16 @@ abstract class Enemy : Entity(), Living
         val d = distanceBetweenPos * overlap / distance
         pos -= d
         e.pos += d
+    }
+
+    fun drawHpBar(g: Graphics2D) {
+        hpBar.width = 64
+        hpBar.height = 7
+        hpBar.x = xFromHero() - ((hpBar.width - width) / 2)
+        hpBar.y = yFromHero() - 25
+        hpBar.maxFilled = maxHp
+        hpBar.filled = hp
+        hpBar.draw(g)
     }
 
     override fun collides(entity: Entity): Boolean {

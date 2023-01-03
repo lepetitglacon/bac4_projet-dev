@@ -1,7 +1,5 @@
 package engine.game
 
-import engine.GameEngine
-import engine.entity.gui.Gui
 import engine.entity.map.Map
 import engine.entity.mob.enemy.Enemy
 import engine.entity.mob.Hero
@@ -19,10 +17,7 @@ class Game : InputListener {
 
     var state: GameState = GameState.PLAY
     var wave: Int = 1
-
     var enemyPerWave = 6
-
-    var shopMenu: Gui? = null
 
     fun init() {
         // resources
@@ -32,7 +27,7 @@ class Game : InputListener {
         hero.init()
         map.build()
 
-        enemies.addAll(EnemyFactory.createFromRegistrer())
+        enemies.addAll(EnemyFactory.createFromRegistrer(wave * enemyPerWave))
     }
 
     fun update()
@@ -46,6 +41,12 @@ class Game : InputListener {
                 // Init
                 removeDeadEntities()
 
+                if (hero.xp > hero.maxXp) hero.levelUp(hero.maxXp + 25 * 2)
+
+                if (enemies.size <= enemyPerWave) {
+                    wave++
+                    enemies.addAll(EnemyFactory.createFromRegistrer(wave * enemyPerWave))
+                }
 
                 // Update
                 map?.update()
@@ -61,8 +62,8 @@ class Game : InputListener {
     fun draw(g: Graphics2D)
     {
         map?.draw(g)
-        hero?.draw(g)
         enemies.forEach { it.draw(g) }
+        hero?.draw(g)
     }
 
     fun updateState(e: InputEvent?)
@@ -82,6 +83,9 @@ class Game : InputListener {
                 is Gun -> weapon.projectiles.removeIf { it.hp <= 0  }
             }
         }
-        enemies.removeIf { it.hp <= 0 }
+        enemies.removeIf {
+            if (it.hp <= 0) hero.xp = it.xpToGive
+            it.hp <= 0
+        }
     }
 }

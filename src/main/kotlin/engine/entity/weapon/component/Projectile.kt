@@ -11,14 +11,18 @@ import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.Graphics2D
 
-class Projectile : Entity(), Attacking, Living {
+open class Projectile : Entity(), Attacking, Living {
     var direction: Vec2 = Vec2()
-    override var speed: Int = 2
+    override var speed: kotlin.Double = 10.0
     override var sprite: Sprite = SpriteFactory.get("pokemons")
 
     override val damages: Int = 100
     override var hp: Int = 1
     override var maxHp: Int = 1
+
+    override fun attack() : Int {
+        return damages
+    }
 
     override fun xFromHero(): Int {
         return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
@@ -29,11 +33,10 @@ class Projectile : Entity(), Attacking, Living {
     }
 
     override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < entity.width / 2 + width / 2
+        return center().distance(entity.center()) < (entity.width/2) + (width/2)
     }
 
     fun onHit(entity: Entity) {
-        println("$entity hit")
         when (entity) {
             is Enemy -> {
                 entity.applyDamage(damages)
@@ -45,13 +48,13 @@ class Projectile : Entity(), Attacking, Living {
     }
 
     override fun move() {
-        pos += (direction * speed)
+        pos += (direction.clone() * speed)
     }
 
     override fun update() {
         move()
         GameEngine.game?.enemies?.forEach {
-            if (collides(it)) onHit(it)
+            if (it.collides(this)) onHit(it)
         }
         super.update()
     }

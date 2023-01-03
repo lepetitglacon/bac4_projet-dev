@@ -13,6 +13,7 @@ object SpriteFactory {
         sprites["hero"] = HeroSprite(ResourceManager.getSpriteSheet("hero"))
         sprites["warrior"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 3*TILE_SIZE, TILE_SIZE,TILE_SIZE))
         sprites["warrior_1"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 2*TILE_SIZE, TILE_SIZE,TILE_SIZE))
+        sprites["warrior_2"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 9*TILE_SIZE, TILE_SIZE,TILE_SIZE))
 
         val map = ResourceManager.getSpriteSheet("map")
         sprites["map_grass"] = Sprite(map.getSubimage(TILE_SIZE,0, TILE_SIZE,TILE_SIZE))

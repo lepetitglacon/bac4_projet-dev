@@ -2,13 +2,14 @@ package engine.entity.gui.component
 
 import engine.GameEngine
 import engine.entity.Entity
-import engine.entity.gui.Gui
 import engine.entity.sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
-class BarComponent : GuiComponent()
+class BarComponent(var x: Int = 0, var y: Int = 0, var width: Int = 0, var height: Int = 0)
 {
+    constructor(width: Int, height: Int) : this(GameEngine.window.WIDTH/2 - width/2,GameEngine.window.HEIGHT - height - 25, width, height)
+
     val PADDING = 2
     var static = false
 
@@ -18,13 +19,9 @@ class BarComponent : GuiComponent()
     var completingColor: Color = Color(122, 48, 7)
     var backgroundColor: Color = Color(217,217,217, 230)
 
-    init {
-        width = 100
-        height = 8
-    }
-
     fun getFilledWidth(): Int {
-        val centpourcent = width - 2 * PADDING
+        val centpourcent = width - (2 * PADDING)
+        if (filled < 0) filled = 0
         return centpourcent * filled / maxFilled
     }
 
@@ -32,71 +29,14 @@ class BarComponent : GuiComponent()
         return  width - getFilledWidth()
     }
 
-    override var gui: Gui? = null
-    override var parent: GuiComponent? = null
-
-    override fun drawAbsolute() {
-        TODO("Not yet implemented")
-    }
-
-    override fun drawRelativeToParent() {
-        TODO("Not yet implemented")
-    }
-
-    override var speed: Int
-        get() = TODO("Not yet implemented")
-        set(value) {}
-    override var sprite: Sprite
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override fun xFromHero(): Int {
-        return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
-    }
-
-    override fun yFromHero(): Int {
-        return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
-    }
-
-    override fun collides(entity: Entity): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun move() {
-        TODO("Not yet implemented")
-    }
-
-    override fun update() {
-        TODO("Not yet implemented")
-    }
-
-    override fun draw(g: Graphics2D) {
-        var drawX: Int
-        var drawY: Int
-
-        if (static)
-        {
-            drawX = x
-            drawY = y
-        } else
-        {
-            drawX = xFromHero()
-            drawY = yFromHero()
-        }
-
-        if (parent != null)
-        {
-            drawX = parent!!.x + x
-            drawY = parent!!.y + y
-        }
-
+    fun draw(g: Graphics2D) {
         g.color = backgroundColor
-        g.fillRect(drawX, drawY, width, height)
+        g.fillRect(x, y, width, height)
 
         g.color = color
-        g.fillRect(drawX + PADDING, drawY + PADDING, getFilledWidth(), height - 2*PADDING)
+        g.fillRect(x + PADDING, y + PADDING, getFilledWidth(), height - 2*PADDING)
 
         g.color = completingColor
-        g.fillRect(drawX + getFilledWidth(), drawY + PADDING, getNonFilledWidth() - PADDING, height - 2*PADDING)
+        g.fillRect(x + getFilledWidth(), y + PADDING, getNonFilledWidth() - PADDING, height - 2*PADDING)
     }
 }

@@ -3,7 +3,7 @@ package engine.entity.gui
 import engine.EngineState
 import engine.GameEngine
 import engine.entity.gui.component.button.Button
-import engine.entity.gui.component.WindowGui
+import engine.entity.gui.component.WindowComponent
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.event.input.InputListenerType
@@ -13,7 +13,7 @@ import java.awt.Graphics2D
 class ButtonMenu(
     var title: String = "",
     val buttons: MutableList<Button> = mutableListOf(),
-    val window: WindowGui = WindowGui(),
+    val window: WindowComponent = WindowComponent(),
     var listeningState: MutableList<EngineState> = mutableListOf()
 ) : InputListener {
 

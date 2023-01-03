@@ -1,7 +1,7 @@
 package engine
 
 import engine.entity.gui.ButtonMenu
-import engine.entity.gui.component.WindowGui
+import engine.entity.gui.component.WindowComponent
 import engine.entity.gui.component.button.ExitGameButton
 import engine.entity.gui.component.button.GoToMainMenuButton
 import engine.entity.gui.component.button.NewGameButton
@@ -25,14 +25,14 @@ import javax.swing.Timer
 
 object GameEngine : JPanel(), InputListener {
     // debug
-    var debug = true
+    var debug = false
 
     // vars
     var state: EngineState = EngineState.MAIN_MENU
     var ticksCounter = 0
 
     // game loop
-    val timer: Timer = Timer(1) { run() }
+    val timer: Timer = Timer(1000/60) { run() }
 
     var game: Game? = null
     var window: Window = Window()
@@ -43,15 +43,16 @@ object GameEngine : JPanel(), InputListener {
     val heroMovementListenerManager = HeroMovementListenerManager()
 
     // objects
-    var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowGui(150,150), mutableListOf(EngineState.MAIN_MENU))
-    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowGui(150,150), mutableListOf(EngineState.OPTIONS))
-    var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowGui(150,150), mutableListOf(EngineState.GAME_OVER))
+    var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowComponent(150,150), mutableListOf(EngineState.MAIN_MENU))
+    var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowComponent(150,150), mutableListOf(EngineState.OPTIONS))
+    var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowComponent(150,150), mutableListOf(EngineState.GAME_OVER))
 
     init
     {
         // enemy registration
-        enemyRegistrer.add(EnemyRegistrerType("warrior", EnemyType.WARRIOR, 0, 100, 100, .5, SpriteFactory.get("hero"), 48, 48))
-        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .5, SpriteFactory.get("pokemons"), 32, 32))
+        enemyRegistrer.add(EnemyRegistrerType("warrior", EnemyType.WARRIOR, 0, 100, 100, .8, .5, SpriteFactory.get("hero"), 48, 48))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .7, .5, SpriteFactory.get("pokemons"), 32, 32))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_2", EnemyType.WARRIOR, 5, 400, 150, .6, .5, SpriteFactory.get("pokemons"), 64, 64))
 
         SwingUtilities.invokeLater {
             window.init()

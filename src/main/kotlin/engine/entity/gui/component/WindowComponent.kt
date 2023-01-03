@@ -1,55 +1,18 @@
 package engine.entity.gui.component
 
-import engine.entity.Entity
-import engine.entity.gui.Gui
-import engine.entity.sprite.Sprite
+import engine.GameEngine
 import java.awt.Color
 import java.awt.Graphics2D
+import java.awt.Rectangle
 
-class WindowComponent : GuiComponent() {
-    override var gui: Gui? = null
-    override var parent: GuiComponent? = null
+class WindowComponent(val x: Int = 0, val y: Int = 0, val width: Int = 0, val height: Int = 0) {
+    constructor(width: Int, height: Int) : this(GameEngine.window.WIDTH/2 - width/2,GameEngine.window.HEIGHT/2 - height/2, width, height)
 
-    override fun draw(g: Graphics2D) {
+    fun draw(g: Graphics2D) {
         g.color = Color(0, 0, 0, 150)
         g.fillRect(x, y, width, height)
         g.color = Color.WHITE
         g.drawLine(x, y, x + width, y)
         g.drawLine(x, y + height, x + width, y + height)
-    }
-
-    override fun drawAbsolute() {
-        TODO("Not yet implemented")
-    }
-
-    override fun drawRelativeToParent() {
-        TODO("Not yet implemented")
-    }
-
-    override var speed: Int
-        get() = TODO("Not yet implemented")
-        set(value) {}
-    override var sprite: Sprite
-        get() = TODO("Not yet implemented")
-        set(value) {}
-
-    override fun xFromHero(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun yFromHero(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun collides(entity: Entity): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun move() {
-        TODO("Not yet implemented")
-    }
-
-    override fun update() {
-        TODO("Not yet implemented")
     }
 }

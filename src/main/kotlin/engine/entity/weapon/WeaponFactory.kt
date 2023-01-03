@@ -7,7 +7,7 @@ import engine.math.Vec2
 
 object WeaponFactory {
 
-    fun createProjectile() : Projectile
+    fun createProjectile(direction: Vec2) : Projectile
     {
         val p = Projectile()
         p.pos = GameEngine.game?.hero?.pos?.clone() ?: Vec2()
@@ -15,7 +15,7 @@ object WeaponFactory {
         p.height = 10
 
         // finding the closest enemy
-        var lastDistance = GameEngine.game?.enemies?.firstOrNull()?.center()?.distance(GameEngine.game?.hero!!.center()) ?: 0.0
+        var lastDistance = Double.MAX_VALUE
         var closest: Enemy? = GameEngine.game?.enemies?.firstOrNull()
         GameEngine.game?.enemies?.forEach {
             if (it.center().distance(GameEngine.game?.hero!!.center()) < lastDistance) {
@@ -24,10 +24,8 @@ object WeaponFactory {
             }
         }
 
-        val direction = closest?.center() ?: Vec2()
-        println(direction)
-        p.direction = (direction - GameEngine.game?.hero!!.center()).normalized()
-        println(p.direction)
+        val dir = closest?.center() ?: Vec2()
+        p.direction = (dir - GameEngine.game?.hero!!.center()).normalized()
         return p
     }
 }

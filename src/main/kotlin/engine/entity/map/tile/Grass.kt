@@ -8,7 +8,7 @@ import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 
 class Grass : Tile() {
-    override var speed: Int = 0
+    override var speed: kotlin.Double = 0.0
     override var sprite: Sprite = SpriteFactory.get("map_grass")
 
     override fun xFromHero(): Int {
