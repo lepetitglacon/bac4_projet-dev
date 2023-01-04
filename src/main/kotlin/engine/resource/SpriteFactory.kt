@@ -10,15 +10,23 @@ object SpriteFactory {
 
     fun registerSprites()
     {
+        // enemies
         sprites["hero"] = HeroSprite(ResourceManager.getSpriteSheet("hero"))
         sprites["warrior"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 3*TILE_SIZE, TILE_SIZE,TILE_SIZE))
         sprites["warrior_1"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 2*TILE_SIZE, TILE_SIZE,TILE_SIZE))
         sprites["warrior_2"] = Sprite(ResourceManager.getSpriteSheet("pokemons").getSubimage(TILE_SIZE, 9*TILE_SIZE, TILE_SIZE,TILE_SIZE))
 
+        // map
         val map = ResourceManager.getSpriteSheet("map")
         sprites["map_grass"] = Sprite(map.getSubimage(TILE_SIZE,0, TILE_SIZE,TILE_SIZE))
         sprites["map_path_horizontal"] = Sprite(map.getSubimage(5 * TILE_SIZE,4 * TILE_SIZE, TILE_SIZE,TILE_SIZE))
 
+        // objects
+        //sprites["object_soul"] = Sprite(ResourceManager.getSpriteSheet("mark"))
+        sprites["object_mark"] = Sprite(ResourceManager.getSpriteSheet("mark"))
+        sprites["object_behelit"] = Sprite(ResourceManager.getSpriteSheet("behelit"))
+
+        // items
     }
 
     fun get(name: String): Sprite {

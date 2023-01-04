@@ -18,7 +18,7 @@ class HeroSprite(override var image: BufferedImage?) : Sprite(), HeroMovementLis
         GameEngine.heroMovementListenerManager.subAll(this)
     }
 
-    fun get(): BufferedImage?
+    override fun get(): BufferedImage?
     {
         return image?.getSubimage(positionState.getPoint().x, positionState.getPoint().y, TILE_SIZE, TILE_SIZE)
     }

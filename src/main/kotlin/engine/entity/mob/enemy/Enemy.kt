@@ -9,6 +9,7 @@ abstract class Enemy : Entity(), Living
 {
     val hpBar = BarComponent()
     var xpToGive: Int = 25
+    var xpDropRate: kotlin.Double = 0.8
 
     fun repulseNotToCollide(e: Enemy) {
         val distance = center().distance(e.center())

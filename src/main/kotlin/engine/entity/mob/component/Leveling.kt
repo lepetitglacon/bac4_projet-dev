@@ -2,6 +2,7 @@ package engine.entity.mob.component
 
 import engine.EngineState
 import engine.GameEngine
+import kotlin.math.pow
 
 interface Leveling {
     var level: Int
@@ -10,7 +11,8 @@ interface Leveling {
 
     fun levelUp(scalar: Double) {
         xp = 0.0
-        maxXp *= scalar
+        maxXp *= 1.4
+        level++
         GameEngine.state = EngineState.SHOP
     }
 }

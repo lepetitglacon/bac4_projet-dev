@@ -18,16 +18,18 @@ class Hero : Entity(), Living, Leveling
     override var speed: kotlin.Double = 5.0
     override var sprite: Sprite = SpriteFactory.get("hero")
 
-    val weapons = mutableListOf<Weapon>()
-    val hpBar = BarComponent()
-    val xpBar = BarComponent()
-
     override var hp: Int = 100
     override var maxHp: Int = 100
 
     override var level: Int = 1
     override var xp: kotlin.Double = 0.0
     override var maxXp: kotlin.Double = 100.0
+
+    val weapons = mutableListOf<Weapon>()
+    val hpBar = BarComponent()
+    val xpBar = BarComponent()
+
+    val pickupRadius: kotlin.Double = width.toDouble()
 
     fun init() {
         sprite = SpriteFactory.get("hero") as HeroSprite
@@ -47,7 +49,7 @@ class Hero : Entity(), Living, Leveling
     }
 
     override fun collides(entity: Entity): Boolean {
-        TODO("Not yet implemented")
+        return center().distance(entity.center()) < (width/2) + (entity.width/2)
     }
 
     override fun move() {
@@ -59,6 +61,9 @@ class Hero : Entity(), Living, Leveling
         weapons.forEach {
             it.update()
         }
+
+
+
         super.update()
     }
 
@@ -71,7 +76,7 @@ class Hero : Entity(), Living, Leveling
             g.drawString("$x $y", xFromHero(), yFromHero() - 20)
         }
 
-        g.drawImage((sprite as HeroSprite).get(), null, xFromHero(), yFromHero())
+        g.drawImage(sprite.get(), null, xFromHero(), yFromHero())
         weapons.forEach { it.draw(g) }
         drawHpBar(g)
         drawXpBar(g)
@@ -97,6 +102,8 @@ class Hero : Entity(), Living, Leveling
         xpBar.color = Color(0,191,255)
         xpBar.completingColor = Color(30,144,255)
         xpBar.draw(g)
+        g.drawString(level.toString(), xpBar.x + xpBar.width/2, xpBar.y - 5)
+        g.drawString(maxXp.toInt().toString(), xpBar.x + xpBar.width + 5, xpBar.y)
     }
 
 }
