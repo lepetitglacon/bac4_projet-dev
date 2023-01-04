@@ -8,7 +8,7 @@ import java.awt.Graphics2D
 abstract class Enemy : Entity(), Living
 {
     val hpBar = BarComponent()
-    val xpToGive: Int = 25
+    var xpToGive: Int = 25
 
     fun repulseNotToCollide(e: Enemy) {
         val distance = center().distance(e.center())

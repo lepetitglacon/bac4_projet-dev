@@ -1,12 +1,16 @@
 package engine.entity.mob.component
 
+import engine.EngineState
+import engine.GameEngine
+
 interface Leveling {
     var level: Int
-    var xp: Int
-    var maxXp: Int
+    var xp: Double
+    var maxXp: Double
 
-    fun levelUp(scalar: Int) {
-        xp = 0
+    fun levelUp(scalar: Double) {
+        xp = 0.0
         maxXp *= scalar
+        GameEngine.state = EngineState.SHOP
     }
 }

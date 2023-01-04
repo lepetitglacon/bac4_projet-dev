@@ -20,6 +20,8 @@ open class Projectile : Entity(), Attacking, Living {
     override var hp: Int = 1
     override var maxHp: Int = 1
 
+    val allreadyHitEnemy: MutableSet<Enemy> = mutableSetOf()
+
     override fun attack() : Int {
         return damages
     }
@@ -39,8 +41,11 @@ open class Projectile : Entity(), Attacking, Living {
     fun onHit(entity: Entity) {
         when (entity) {
             is Enemy -> {
-                entity.applyDamage(damages)
-                hp--
+                if (!allreadyHitEnemy.contains(entity)) {
+                    entity.applyDamage(damages)
+                    hp--
+                    allreadyHitEnemy.add(entity)
+                }
             }
             else -> { println("bullet hit something unknown") }
 

@@ -1,5 +1,6 @@
 package engine.event.movement.hero
 
+import engine.EngineState
 import engine.GameEngine
 import engine.entity.sprite.hero.HeroPositionState
 import engine.game.GameState
@@ -21,7 +22,7 @@ enum class HeroMovementListenerType {
     var walking = 0
 
     fun getPoint() : Point {
-        if (GameEngine.game?.state == GameState.PLAY) {
+        if (GameEngine.state == EngineState.PLAY) {
             // change walking every 16 ticks
             if (GameEngine.ticksCounter % 16 == 0) walking++
             // reset animation

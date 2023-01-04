@@ -1,6 +1,7 @@
 package engine
 
 import engine.entity.gui.ButtonMenu
+import engine.entity.gui.ShopMenu
 import engine.entity.gui.component.WindowComponent
 import engine.entity.gui.component.button.ExitGameButton
 import engine.entity.gui.component.button.GoToMainMenuButton
@@ -45,20 +46,22 @@ object GameEngine : JPanel(), InputListener {
     // objects
     var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowComponent(150,150), mutableListOf(EngineState.MAIN_MENU))
     var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowComponent(150,150), mutableListOf(EngineState.OPTIONS))
+    var shopMenu: ShopMenu = ShopMenu("Shop", window = WindowComponent(150,150), listeningState = mutableListOf(EngineState.SHOP))
     var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowComponent(150,150), mutableListOf(EngineState.GAME_OVER))
 
     init
     {
         // enemy registration
-        enemyRegistrer.add(EnemyRegistrerType("warrior", EnemyType.WARRIOR, 0, 100, 100, .8, .5, SpriteFactory.get("hero"), 48, 48))
-        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .7, .5, SpriteFactory.get("pokemons"), 32, 32))
-        enemyRegistrer.add(EnemyRegistrerType("warrior_2", EnemyType.WARRIOR, 5, 400, 150, .6, .5, SpriteFactory.get("pokemons"), 64, 64))
+        enemyRegistrer.add(EnemyRegistrerType("warrior", EnemyType.WARRIOR, 0, 100, 100, .6, .5, 25, SpriteFactory.get("hero"), 48, 48))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .5, .5, 50, SpriteFactory.get("pokemons"), 32, 32))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_2", EnemyType.WARRIOR, 5, 400, 400, .4, .5, 100, SpriteFactory.get("pokemons"), 64, 64))
 
         SwingUtilities.invokeLater {
             window.init()
             timer.start()
 
             // event binding
+            inputListenerManager.sub(shopMenu)
             inputListenerManager.sub(mainMenu)
             inputListenerManager.sub(optionMenu)
             inputListenerManager.sub(this)
@@ -76,6 +79,11 @@ object GameEngine : JPanel(), InputListener {
         {
             EngineState.MAIN_MENU -> {}
             EngineState.PLAY -> game?.update()
+            EngineState.SHOP -> {
+                if (shopMenu.upgrades.isEmpty()) {
+                    shopMenu.buildUpgrades()
+                }
+            }
             EngineState.OPTIONS -> {}
             EngineState.GAME_OVER -> {}
         }
@@ -89,6 +97,7 @@ object GameEngine : JPanel(), InputListener {
         val g = gg as Graphics2D
 
         game?.draw(g)
+        if (state == EngineState.SHOP) shopMenu.draw(g)
         if (state == EngineState.MAIN_MENU) mainMenu.draw(g)
         if (state == EngineState.OPTIONS) optionMenu.draw(g)
     }
@@ -98,6 +107,7 @@ object GameEngine : JPanel(), InputListener {
         when (state) {
             EngineState.MAIN_MENU -> {}
             EngineState.PLAY -> if (e.type == InputListenerType.ESCAPE) state = EngineState.OPTIONS
+            EngineState.SHOP -> {}
             EngineState.OPTIONS -> if (e.type == InputListenerType.ESCAPE) state = EngineState.PLAY
             EngineState.GAME_OVER -> {}
         }

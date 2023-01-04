@@ -41,7 +41,7 @@ class Game : InputListener {
                 // Init
                 removeDeadEntities()
 
-                if (hero.xp > hero.maxXp) hero.levelUp(hero.maxXp + 25 * 2)
+                if (hero.xp >= hero.maxXp) hero.levelUp(1.2)
 
                 if (enemies.size <= enemyPerWave) {
                     wave++
@@ -84,7 +84,7 @@ class Game : InputListener {
             }
         }
         enemies.removeIf {
-            if (it.hp <= 0) hero.xp = it.xpToGive
+            if (it.hp <= 0) hero.xp += it.xpToGive
             it.hp <= 0
         }
     }

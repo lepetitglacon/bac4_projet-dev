@@ -26,8 +26,8 @@ class Hero : Entity(), Living, Leveling
     override var maxHp: Int = 100
 
     override var level: Int = 1
-    override var xp: Int = 0
-    override var maxXp: Int = 100
+    override var xp: kotlin.Double = 0.0
+    override var maxXp: kotlin.Double = 100.0
 
     fun init() {
         sprite = SpriteFactory.get("hero") as HeroSprite
@@ -92,8 +92,8 @@ class Hero : Entity(), Living, Leveling
         xpBar.height = 8
         xpBar.x = GameEngine.window.WIDTH / 4
         xpBar.y = hpBar.y - xpBar.height - 5
-        xpBar.maxFilled = maxXp
-        xpBar.filled = xp
+        xpBar.maxFilled = maxXp.toInt()
+        xpBar.filled = xp.toInt()
         xpBar.color = Color(0,191,255)
         xpBar.completingColor = Color(30,144,255)
         xpBar.draw(g)

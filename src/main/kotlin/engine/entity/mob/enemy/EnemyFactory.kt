@@ -27,6 +27,7 @@ object EnemyFactory {
         // HP + bar
         enemy.hp = et.hp
         enemy.maxHp = et.maxHp
+        enemy.xpToGive = et.xp
 
         return enemy
     }
