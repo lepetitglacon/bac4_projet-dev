@@ -14,7 +14,6 @@ class EnemyRegistrerType(
 
     val xpDropRate: Double,
     val xp: Int,
-    val sprite: Sprite,
 
     val width: Int,
     val height: Int

@@ -8,11 +8,11 @@ import java.time.Instant
 abstract class Weapon
 {
     open var cooldown: Long = 500 // ms
-    var lastCooldown = Instant.now()
+    var lastCooldown = Instant.now().toEpochMilli()
 
-    fun canFire(): Boolean
+    open fun canFire(): Boolean
     {
-        return lastCooldown.toEpochMilli() + cooldown < Instant.now().toEpochMilli()
+        return lastCooldown + cooldown < Instant.now().toEpochMilli()
     }
 
     abstract fun update()

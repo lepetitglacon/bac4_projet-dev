@@ -1,38 +1,58 @@
 package engine.entity.mob.enemy.boss
 
+import engine.GameEngine
 import engine.entity.Entity
 import engine.entity.sprite.Sprite
+import engine.resource.SpriteFactory
+import java.awt.Color
 import java.awt.Graphics2D
 
 class Corkus : EnemyBoss() {
+    override var hp: Int = 1000
+    override var maxHp: Int = 1000
+
     override fun attack() {
         TODO("Not yet implemented")
     }
 
-    override var speed: kotlin.Double
-        get() = TODO("Not yet implemented")
-        set(value) {}
-    override var sprite: Sprite
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override var speed: kotlin.Double = 0.4
+    override var sprite: Sprite = SpriteFactory.get("boss_corkus")
 
     override fun xFromHero(): Int {
-        TODO("Not yet implemented")
+        return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
     }
 
     override fun yFromHero(): Int {
-        TODO("Not yet implemented")
+        return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
     }
 
     override fun collides(entity: Entity): Boolean {
-        TODO("Not yet implemented")
+        return center().distance(entity.center()) < width
     }
 
     override fun move() {
-        TODO("Not yet implemented")
+        pos -= (center() - GameEngine.game?.hero?.center()!!).normalized() * speed
+    }
+
+    override fun update() {
+        move()
+        GameEngine.game?.enemies?.forEach {
+            if (it != this && collides(it)) repulseNotToCollide(it)
+        }
+        super.update()
     }
 
     override fun draw(g: Graphics2D) {
-        TODO("Not yet implemented")
+        if (GameEngine.debug) {
+            g.drawRect(xFromHero(), yFromHero(), width, height)
+            g.drawString("$x $y", xFromHero(), yFromHero() - 20)
+            g.drawOval(xFromHero(), yFromHero(), width, height)
+        }
+
+        drawHpBar(g)
+
+        g.drawImage(sprite.image, null, xFromHero() - (sprite.image?.width!!/2 - width/2), yFromHero() - (sprite.image?.height!!/2 - height/2))
+        g.color = Color.RED
+        g.drawOval(xFromHero() + width/2, yFromHero() + height/2, 10, 10)
     }
 }

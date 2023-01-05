@@ -1,11 +1,14 @@
 package engine.entity.mob.enemy
 
 import engine.GameEngine
+import engine.entity.mob.enemy.boss.Corkus
+import engine.entity.mob.enemy.boss.EnemyBoss
 import engine.entity.registrer.EnemyRegistrerType
 import engine.resource.SpriteFactory
 import kotlin.random.Random
 
 object EnemyFactory {
+    val padding = 500
     
     fun createRandomEnemy(et: EnemyRegistrerType): Enemy {
         val enemy: Enemy
@@ -15,6 +18,7 @@ object EnemyFactory {
             {
                 enemy = Warrior()
                 enemy.sprite = SpriteFactory.get(et.name)
+                enemy.type = et
             }
             EnemyType.SPECTRE -> TODO()
             EnemyType.APOSTLE -> TODO()
@@ -47,8 +51,6 @@ object EnemyFactory {
     }
 
     private fun setRandomCoordinates(enemy: Enemy) {
-        fun Boolean.toInt(): Int = if (this) 1 else 0
-
         val heroXMin = (GameEngine.game?.hero?.pos?.x!!) - GameEngine.window.WIDTH/2 - enemy.width
         val heroXMax = (GameEngine.game?.hero?.pos?.x!!) + GameEngine.window.WIDTH/2 + enemy.width
         val heroYMin = (GameEngine.game?.hero?.pos?.y!!) - GameEngine.window.HEIGHT/2 - enemy.height
@@ -56,15 +58,21 @@ object EnemyFactory {
 
         val bool = Random.nextBoolean()
         if (bool) {
-            enemy.pos.x = Random.nextDouble(heroXMin, heroXMax)
-            val y = if (Random.nextBoolean()) heroYMin - enemy.height else heroYMax + enemy.height
-            enemy.pos.y = y
+            // set width
+            enemy.pos.x = Random.nextDouble(heroXMin - padding, heroXMax + padding)
+            enemy.pos.y = if (Random.nextBoolean()) heroYMin - enemy.height else heroYMax + enemy.height
         } else {
-            val x = if (Random.nextBoolean()) heroXMin - enemy.width else heroXMax + enemy.width
-            enemy.pos.x = x
-            enemy.pos.y = Random.nextDouble(heroYMin, heroYMax)
+            // set height
+            enemy.pos.x = if (Random.nextBoolean()) heroXMin - enemy.width else heroXMax + enemy.width
+            enemy.pos.y = Random.nextDouble(heroYMin - padding, heroYMax + padding)
         }
-//        enemy.pos.x += enemy.width + bool.toInt() * 2
-//        enemy.pos.y += enemy.height + bool.toInt() * 2
+    }
+
+    fun createBoss() : EnemyBoss {
+        val b = Corkus()
+        b.width = 64
+        b.height = 64
+        setRandomCoordinates(b)
+        return b
     }
 }

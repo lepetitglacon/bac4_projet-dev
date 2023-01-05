@@ -13,7 +13,7 @@ class Warrior : Enemy()
     override var maxHp: Int = 0
 
     override var speed: kotlin.Double = 2.0
-    override var sprite: Sprite = SpriteFactory.get("warrior")
+    override var sprite: Sprite = SpriteFactory.get("warrior_0")
 
     override fun xFromHero(): Int {
         return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
@@ -49,6 +49,4 @@ class Warrior : Enemy()
         g.drawOval(xFromHero() + width/2, yFromHero() + height/2, 10, 10)
 
     }
-
-    
 }

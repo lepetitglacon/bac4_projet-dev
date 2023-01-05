@@ -57,14 +57,15 @@ class Hero : Entity(), Living, Leveling
     }
 
     override fun update() {
+        // move
         move()
-        weapons.forEach {
-            it.update()
-        }
-
-
-
         super.update()
+
+        // update weapon
+        weapons.forEach { it.update() }
+
+        // check for levelup
+        if (xp >= maxXp) levelUp(1.2)
     }
 
     override fun draw(g: Graphics2D) {

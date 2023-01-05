@@ -1,15 +1,16 @@
 package engine.entity.map
 
 import engine.GameEngine
-import engine.entity.map.tile.Grass
+import engine.entity.map.tile.GrassTile
+import engine.math.Vec2
 import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.Graphics2D
-import java.awt.Point
+import kotlin.random.Random
 
 class Map
 {
-    val tiles: MutableMap<Point, Tile> = mutableMapOf()
+    val tiles: MutableMap<Vec2, Tile> = mutableMapOf()
 
     fun build()
     {
@@ -21,10 +22,10 @@ class Map
         {
             for (j in 0..GameEngine.window.HEIGHT / TILE_SIZE)
             {
-                val grass = Grass()
-                grass.x = i * TILE_SIZE
-                grass.y = j * TILE_SIZE
-                tiles[Point(i,j)] = grass
+                val tile: Tile = SpriteFactory.getRandomGrassTile()
+                tile.x = i * TILE_SIZE
+                tile.y = j * TILE_SIZE
+                tiles[Vec2(i,j)] = tile
             }
         }
     }

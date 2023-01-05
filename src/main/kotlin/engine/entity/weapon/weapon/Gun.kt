@@ -1,6 +1,5 @@
 package engine.entity.weapon.weapon
 
-import engine.GameEngine
 import engine.entity.weapon.Weapon
 import engine.entity.weapon.WeaponFactory
 import engine.entity.weapon.component.Projectile
@@ -8,29 +7,41 @@ import java.awt.Graphics2D
 import java.time.Instant
 
 class Gun : Weapon() {
-    override var cooldown: Long = 1000 // ms
+    override var cooldown: Long = 2000 // ms
+
     val projectiles: MutableList<Projectile> = mutableListOf()
 
     // timers
-    var timeBetweenShots = 250 // ms
+    var timeBetweenShots: Long = 100 // ms
+    var mustFireUntil: Long = 0
+    var lastFire: Long = 0
 
-    // projectile
+    // projectiles
     var projectilesPerShot = 1
     var projectileHP = 1
 
+//    override fun canFire(): Boolean {
+//        return true
+//    }
+
     fun fire() {
-        var shotTime: Instant? = null
-        for (i in 0..projectilesPerShot) {
-            if (shotTime == null || shotTime.toEpochMilli() + timeBetweenShots >= Instant.now().toEpochMilli()) {
-                projectiles.add(WeaponFactory.createProjectile(null, projectileHP))
-                shotTime = Instant.now()
-            }
+        mustFireUntil = Instant.now().toEpochMilli() + (projectilesPerShot * timeBetweenShots)
+        println("fire until $mustFireUntil")
+        lastFire = Instant.now().toEpochMilli() - 100
+        lastCooldown = Instant.now().toEpochMilli()
+    }
+
+    fun fireSubShots() {
+        if (mustFireUntil >= Instant.now().toEpochMilli() && lastFire + timeBetweenShots <= Instant.now().toEpochMilli()) {
+            println("fire at $lastFire")
+            projectiles.add(WeaponFactory.createProjectile(null, projectileHP))
+            lastFire = Instant.now().toEpochMilli()
         }
-        lastCooldown = Instant.now()
     }
 
     override fun update() {
         if (canFire()) fire()
+        fireSubShots()
         projectiles.forEach { it.update() }
     }
 

@@ -52,9 +52,9 @@ object GameEngine : JPanel(), InputListener {
     init
     {
         // enemy registration
-        enemyRegistrer.add(EnemyRegistrerType("warrior", EnemyType.WARRIOR, 0, 100, 100, .6, .5, 25, SpriteFactory.get("hero"), 48, 48))
-        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .5, .5, 50, SpriteFactory.get("pokemons"), 32, 32))
-        enemyRegistrer.add(EnemyRegistrerType("warrior_2", EnemyType.WARRIOR, 5, 400, 400, .4, .5, 100, SpriteFactory.get("pokemons"), 64, 64))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_0", EnemyType.WARRIOR, 0, 100, 100, .6, .5, 25, 48, 48))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .5, .5, 50, 32, 32))
+        enemyRegistrer.add(EnemyRegistrerType("warrior_2", EnemyType.WARRIOR, 5, 400, 400, .4, .5, 100, 64, 64))
 
         SwingUtilities.invokeLater {
             window.init()

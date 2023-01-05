@@ -3,10 +3,14 @@ package engine.entity.mob.enemy
 import engine.entity.Entity
 import engine.entity.gui.component.BarComponent
 import engine.entity.mob.component.Living
+import engine.entity.registrer.EnemyRegistrerType
+import engine.entity.sprite.Sprite
 import java.awt.Graphics2D
 
 abstract class Enemy : Entity(), Living
 {
+    var type: EnemyRegistrerType = EnemyRegistrerType("warrior_0", EnemyType.WARRIOR, 0, 100, 100, .8, .8, 25, width, height)
+
     val hpBar = BarComponent()
     var xpToGive: Int = 25
     var xpDropRate: kotlin.Double = 0.8
@@ -36,5 +40,9 @@ abstract class Enemy : Entity(), Living
     }
     fun collidesSquare(entity: Entity): Boolean {
         return intersects(entity)
+    }
+
+    override fun toString(): String {
+        return "${this.javaClass.name} hp: $hp, "
     }
 }

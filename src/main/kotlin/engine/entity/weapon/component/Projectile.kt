@@ -5,13 +5,16 @@ import engine.entity.Entity
 import engine.entity.mob.component.Attacking
 import engine.entity.mob.component.Living
 import engine.entity.mob.enemy.Enemy
+import engine.entity.mob.enemy.boss.EnemyBoss
 import engine.entity.sprite.Sprite
 import engine.math.Vec2
 import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.Graphics2D
+import java.time.Instant
 
 open class Projectile : Entity(), Attacking, Living {
+    val shotAt: Instant = Instant.now()
     var direction: Vec2 = Vec2()
     override var speed: kotlin.Double = 10.0
     override var sprite: Sprite = SpriteFactory.get("pokemons")
@@ -46,7 +49,9 @@ open class Projectile : Entity(), Attacking, Living {
                     hp--
                     allreadyHitEnemy.add(entity)
                 }
+
             }
+            is EnemyBoss -> println("test")
             else -> { println("bullet hit something unknown") }
 
         }
