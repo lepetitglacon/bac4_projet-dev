@@ -18,10 +18,6 @@ class Behelit : Object() {
         return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
     }
 
-    override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < width/2
-    }
-
     override fun move() {
 
     }

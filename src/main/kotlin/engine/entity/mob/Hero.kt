@@ -26,8 +26,6 @@ class Hero : Entity(), Living, Leveling
     override var maxXp: kotlin.Double = 100.0
 
     val weapons = mutableListOf<Weapon>()
-    val hpBar = BarComponent()
-    val xpBar = BarComponent()
 
     val pickupRadius: kotlin.Double = width.toDouble()
 
@@ -48,10 +46,6 @@ class Hero : Entity(), Living, Leveling
         return GameEngine.window?.HEIGHT!! / 2 - height / 2
     }
 
-    override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < (width/2) + (entity.width/2)
-    }
-
     override fun move() {
         pos += GameEngine.window.keyboardMovementVector * speed
     }
@@ -69,42 +63,9 @@ class Hero : Entity(), Living, Leveling
     }
 
     override fun draw(g: Graphics2D) {
-        if (GameEngine.debug)
-        {
-            g.color = Color.black
-            g.drawRect(xFromHero(), yFromHero(), width, height)
-            g.drawArc(xFromHero(), yFromHero(), width, height, 0, 180)
-            g.drawString("$x $y", xFromHero(), yFromHero() - 20)
-        }
-
         g.drawImage(sprite.get(), null, xFromHero(), yFromHero())
         weapons.forEach { it.draw(g) }
-        drawHpBar(g)
-        drawXpBar(g)
-    }
-
-    fun drawHpBar(g: Graphics2D) {
-        hpBar.width = GameEngine.window.WIDTH / 2
-        hpBar.height = 25
-        hpBar.x = GameEngine.window.WIDTH / 4
-        hpBar.y = GameEngine.window.HEIGHT - 150
-        hpBar.maxFilled = maxHp
-        hpBar.filled = hp
-        hpBar.draw(g)
-    }
-
-    fun drawXpBar(g: Graphics2D) {
-        xpBar.width = GameEngine.window.WIDTH / 2
-        xpBar.height = 8
-        xpBar.x = GameEngine.window.WIDTH / 4
-        xpBar.y = hpBar.y - xpBar.height - 5
-        xpBar.maxFilled = maxXp.toInt()
-        xpBar.filled = xp.toInt()
-        xpBar.color = Color(0,191,255)
-        xpBar.completingColor = Color(30,144,255)
-        xpBar.draw(g)
-        g.drawString(level.toString(), xpBar.x + xpBar.width/2, xpBar.y - 5)
-        g.drawString(maxXp.toInt().toString(), xpBar.x + xpBar.width + 5, xpBar.y)
+        super.draw(g)
     }
 
 }

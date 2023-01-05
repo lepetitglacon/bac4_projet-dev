@@ -18,6 +18,7 @@ import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
 import engine.resource.SpriteFactory
 import engine.window.Window
+import java.awt.Font
 import java.awt.Graphics
 import java.awt.Graphics2D
 import javax.swing.JPanel
@@ -26,7 +27,7 @@ import javax.swing.Timer
 
 object GameEngine : JPanel(), InputListener {
     // debug
-    var debug = false
+    var debug = true
 
     // vars
     var state: EngineState = EngineState.MAIN_MENU
@@ -95,6 +96,8 @@ object GameEngine : JPanel(), InputListener {
     override fun paint(gg: Graphics?) {
         super.paint(gg)
         val g = gg as Graphics2D
+        g.font = g.font.deriveFont(Font.BOLD)
+
 
         game?.draw(g)
         if (state == EngineState.SHOP) shopMenu.draw(g)
@@ -104,6 +107,7 @@ object GameEngine : JPanel(), InputListener {
 
     override fun onInputEvent(e: InputEvent) {
         super.onInputEvent(e)
+        if (e.type == InputListenerType.X) debug = !debug
         when (state) {
             EngineState.MAIN_MENU -> {}
             EngineState.PLAY -> if (e.type == InputListenerType.ESCAPE) state = EngineState.OPTIONS

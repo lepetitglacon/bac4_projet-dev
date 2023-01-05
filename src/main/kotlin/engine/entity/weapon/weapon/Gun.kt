@@ -1,12 +1,15 @@
 package engine.entity.weapon.weapon
 
+import engine.entity.sprite.Sprite
 import engine.entity.weapon.Weapon
 import engine.entity.weapon.WeaponFactory
 import engine.entity.weapon.component.Projectile
+import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 import java.time.Instant
 
 class Gun : Weapon() {
+    override var sprite: Sprite = SpriteFactory.getEmptySprite()
     override var cooldown: Long = 2000 // ms
 
     val projectiles: MutableList<Projectile> = mutableListOf()

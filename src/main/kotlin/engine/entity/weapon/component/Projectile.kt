@@ -23,33 +23,24 @@ open class Projectile : Entity(), Attacking, Living {
     override var hp: Int = 1
     override var maxHp: Int = 1
 
-    val allreadyHitEnemy: MutableSet<Enemy> = mutableSetOf()
+    val allreadyHitEnemy: MutableList<Enemy> = mutableListOf()
 
     override fun attack() : Int {
         return damages
-    }
-
-    override fun xFromHero(): Int {
-        return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
-    }
-
-    override fun yFromHero(): Int {
-        return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
-    }
-
-    override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < (entity.width/2) + (width/2)
     }
 
     fun onHit(entity: Entity) {
         when (entity) {
             is Enemy -> {
                 if (!allreadyHitEnemy.contains(entity)) {
+                    println(allreadyHitEnemy.hashCode())
+                    println(allreadyHitEnemy.firstOrNull().hashCode())
+                    println(entity.hashCode())
+                    println()
+                    allreadyHitEnemy.add(entity)
                     entity.applyDamage(damages)
                     hp--
-                    allreadyHitEnemy.add(entity)
                 }
-
             }
             is EnemyBoss -> println("test")
             else -> { println("bullet hit something unknown") }
@@ -70,7 +61,11 @@ open class Projectile : Entity(), Attacking, Living {
     }
 
     override fun draw(g: Graphics2D) {
-        g.fillOval(xFromHero(), yFromHero(), width, height)
+        g.fillOval(xFromHero() - width/2, yFromHero() - height/2, width, height)
         g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE, TILE_SIZE), null, xFromHero(), yFromHero())
+        super.draw(g)
+        if (GameEngine.debug) {
+            g.drawLine(GameEngine.window.WIDTH/2, GameEngine.window.HEIGHT/2, (xFromHero() + direction.clone().x * 100).toInt(), (yFromHero() + direction.clone().y * 100).toInt())
+        }
     }
 }

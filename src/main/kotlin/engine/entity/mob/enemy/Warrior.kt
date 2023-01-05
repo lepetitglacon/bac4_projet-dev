@@ -15,14 +15,6 @@ class Warrior : Enemy()
     override var speed: kotlin.Double = 2.0
     override var sprite: Sprite = SpriteFactory.get("warrior_0")
 
-    override fun xFromHero(): Int {
-        return x - width/2 - GameEngine.game?.hero?.x!! + GameEngine.window.WIDTH / 2
-    }
-
-    override fun yFromHero(): Int {
-        return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
-    }
-
     override fun move() {
         pos -= (center() - GameEngine.game?.hero?.center()!!).normalized() * speed
     }
@@ -36,17 +28,8 @@ class Warrior : Enemy()
     }
 
     override fun draw(g: Graphics2D) {
-        if (GameEngine.debug) {
-            g.drawRect(xFromHero(), yFromHero(), width, height)
-            g.drawString("$x $y", xFromHero(), yFromHero() - 20)
-            g.drawOval(xFromHero(), yFromHero(), width, height)
-        }
-
+        g.drawImage(sprite.image, null, xFromHero(), yFromHero())
         drawHpBar(g)
-
-        g.drawImage(sprite.image, null, xFromHero() - (sprite.image?.width!!/2 - width/2), yFromHero() - (sprite.image?.height!!/2 - height/2))
-        g.color = Color.RED
-        g.drawOval(xFromHero() + width/2, yFromHero() + height/2, 10, 10)
-
+        super.draw(g)
     }
 }

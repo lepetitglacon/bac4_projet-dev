@@ -2,12 +2,15 @@ package engine.entity.weapon
 
 import engine.entity.Entity
 import engine.entity.sprite.Sprite
+import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 import java.time.Instant
 
 abstract class Weapon
 {
-    open var cooldown: Long = 500 // ms
+    abstract var sprite: Sprite
+    abstract var cooldown: Long // ms
+
     var lastCooldown = Instant.now().toEpochMilli()
 
     open fun canFire(): Boolean

@@ -2,6 +2,7 @@ package engine.entity.mob.enemy.boss
 
 import engine.GameEngine
 import engine.entity.Entity
+import engine.entity.mob.enemy.EnemyType
 import engine.entity.sprite.Sprite
 import engine.resource.SpriteFactory
 import java.awt.Color
@@ -10,6 +11,8 @@ import java.awt.Graphics2D
 class Corkus : EnemyBoss() {
     override var hp: Int = 1000
     override var maxHp: Int = 1000
+
+    override var type: EnemyType = EnemyType.APOSTLE
 
     override fun attack() {
         TODO("Not yet implemented")
@@ -24,10 +27,6 @@ class Corkus : EnemyBoss() {
 
     override fun yFromHero(): Int {
         return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
-    }
-
-    override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < width
     }
 
     override fun move() {

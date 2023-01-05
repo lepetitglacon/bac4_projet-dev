@@ -27,7 +27,6 @@ object SpriteFactory {
         // bosses
         sprites["boss_corkus"] = Sprite(warriors.getSubimage(TILE_SIZE, 15*TILE_SIZE, TILE_SIZE,TILE_SIZE))
 
-
         // map
         val map = ResourceManager.getSpriteSheet("map")
         sprites["map_grass_0"] = Sprite(map.getSubimage(TILE_SIZE,0, TILE_SIZE,TILE_SIZE))
@@ -35,6 +34,11 @@ object SpriteFactory {
         sprites["map_grass_2"] = Sprite(map.getSubimage(TILE_SIZE*2,0, TILE_SIZE,TILE_SIZE))
         sprites["map_grass_3"] = Sprite(map.getSubimage(TILE_SIZE*3,0, TILE_SIZE,TILE_SIZE))
         sprites["map_path_horizontal"] = Sprite(map.getSubimage(5 * TILE_SIZE,4 * TILE_SIZE, TILE_SIZE,TILE_SIZE))
+
+        // weapons
+        // val weaponItems = ResourceManager.getSpriteSheet("weapons_item")
+        val weaponItems = ResourceManager.getSpriteSheet("Stink")
+        sprites["weapon_item_sword"] = Sprite(weaponItems.getSubimage(0,0,TILE_SIZE,TILE_SIZE))
 
         // objects / items
         //sprites["object_soul"] = Sprite(ResourceManager.getSpriteSheet("mark"))
@@ -46,6 +50,8 @@ object SpriteFactory {
     fun get(name: String): Sprite {
         return sprites[name] ?: Sprite()
     }
+
+    fun getEmptySprite(): Sprite = Sprite()
 
     fun getRandomGrassTile() : Tile {
         val rdm = sprites.filterKeys { it.startsWith("map_grass") }

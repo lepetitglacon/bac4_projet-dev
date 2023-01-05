@@ -61,6 +61,7 @@ class ShopMenu(
                 InputListenerType.DOWN -> if (currentButton == upgrades.size - 1) currentButton = 0 else currentButton++
                 InputListenerType.RIGHT -> {}
                 InputListenerType.UNDEFINED -> {}
+                InputListenerType.X -> {}
             }
         }
     }

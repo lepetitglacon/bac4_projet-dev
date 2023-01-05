@@ -18,7 +18,7 @@ object EnemyFactory {
             {
                 enemy = Warrior()
                 enemy.sprite = SpriteFactory.get(et.name)
-                enemy.type = et
+                enemy.type = et.type
             }
             EnemyType.SPECTRE -> TODO()
             EnemyType.APOSTLE -> TODO()

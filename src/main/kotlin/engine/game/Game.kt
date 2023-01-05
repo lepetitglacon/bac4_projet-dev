@@ -1,18 +1,22 @@
 package engine.game
 
+import engine.GameEngine
 import engine.entity.`object`.Behelit
 import engine.entity.`object`.Object
 import engine.entity.`object`.ObjectFactory
 import engine.entity.`object`.Soul
+import engine.entity.gui.Gui
 import engine.entity.map.Map
 import engine.entity.mob.enemy.Enemy
 import engine.entity.mob.Hero
 import engine.entity.mob.enemy.EnemyFactory
+import engine.entity.mob.enemy.EnemyType
 import engine.entity.mob.enemy.boss.EnemyBoss
 import engine.entity.weapon.weapon.Gun
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.resource.SpriteFactory
+import java.awt.Color
 import java.awt.Graphics2D
 import java.time.Instant
 import kotlin.random.Random
@@ -23,6 +27,7 @@ class Game : InputListener {
     var enemies = mutableListOf<Enemy>()
     var bosses = mutableListOf<EnemyBoss>()
     var objects = mutableListOf<Object>()
+    var gui = Gui()
 
     var state: GameState = GameState.PLAY
 
@@ -102,6 +107,8 @@ class Game : InputListener {
         objects.forEach { it.draw(g) }
         hero.draw(g)
         enemies.forEach { it.draw(g) }
+
+        gui.draw(g)
     }
 
     fun updateState(e: InputEvent?)
@@ -123,7 +130,12 @@ class Game : InputListener {
         }
         enemies.removeIf {
             if (it.hp <= 0) {
-                if (Random.nextDouble(0.0, 1.0) <= it.xpDropRate) ObjectFactory.createSoul(it)
+                when(it.type) {
+                    EnemyType.WARRIOR, EnemyType.SPECTRE -> {
+                        if (Random.nextDouble(0.0, 1.0) <= it.xpDropRate) ObjectFactory.createSoul(it)
+                    }
+                    EnemyType.APOSTLE -> ObjectFactory.createBehelit(it)
+                }
             }
             it.hp <= 0
         }

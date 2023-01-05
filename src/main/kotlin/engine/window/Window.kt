@@ -10,6 +10,7 @@ import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
+import java.util.*
 import javax.swing.JFrame
 
 class Window : JFrame() {
@@ -21,6 +22,8 @@ class Window : JFrame() {
     var down = false
     var right = false
     var keyboardMovementVector = Vec2()
+
+    val sync = Object()
 
     fun init() {
         title = "Bac+4 survival game - Esteban GAGNEUR"
@@ -44,6 +47,7 @@ class Window : JFrame() {
                     KeyEvent.VK_ENTER -> event.type = InputListenerType.ENTER
                     KeyEvent.VK_ESCAPE -> event.type = InputListenerType.ESCAPE
                     KeyEvent.VK_SPACE -> event.type = InputListenerType.SPACE
+                    KeyEvent.VK_X -> event.type = InputListenerType.X
 
                     KeyEvent.VK_Z, KeyEvent.VK_UP -> {
                         up = true
@@ -62,8 +66,9 @@ class Window : JFrame() {
                         event.type = InputListenerType.RIGHT
                     }
                 }
-
-                GameEngine.inputListenerManager.on(event)
+                synchronized(GameEngine.inputListenerManager) {
+                    GameEngine.inputListenerManager.on(event)
+                }
             }
 
             override fun keyReleased(e: KeyEvent) {

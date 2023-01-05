@@ -19,14 +19,13 @@ object ObjectFactory {
     }
 
     fun createBehelit(e: Enemy) {
-        val s = Soul()
+        val s = Behelit()
         s.width = 32
         s.height = 32
         s.pos.x = e.center().x - s.width/2
         s.pos.y = e.center().y - s.height/2
         s.pos.x = e.pos.x
         s.pos.y = e.pos.y
-        s.xp = e.xpToGive
         s.setDrawingPosition()
         GameEngine.game?.objects?.add(s)
     }

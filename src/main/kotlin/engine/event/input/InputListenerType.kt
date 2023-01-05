@@ -10,5 +10,6 @@ enum class InputListenerType {
     DOWN,
     RIGHT,
 
+    X,
     UNDEFINED
 }

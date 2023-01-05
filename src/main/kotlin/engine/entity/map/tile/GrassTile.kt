@@ -19,10 +19,6 @@ class GrassTile : Tile() {
         return y - height/2 - GameEngine.game?.hero?.y!! + GameEngine.window.HEIGHT / 2
     }
 
-    override fun collides(entity: Entity): Boolean {
-        TODO("Not yet implemented")
-    }
-
     override fun move() {
         TODO("Not yet implemented")
     }

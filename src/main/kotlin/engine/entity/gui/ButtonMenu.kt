@@ -51,11 +51,12 @@ class ButtonMenu(
                 InputListenerType.ENTER -> buttons[currentButton].onClick()
                 InputListenerType.ESCAPE -> {}
                 InputListenerType.SPACE -> {}
-                InputListenerType.UP -> if (currentButton <= 0) currentButton = buttons.size - 1 else currentButton--
+                InputListenerType.UP -> if (currentButton <= 0) currentButton = 0 else currentButton--
                 InputListenerType.LEFT -> {}
-                InputListenerType.DOWN -> if (currentButton >= buttons.size - 1) currentButton = 0 else currentButton++
+                InputListenerType.DOWN -> if (currentButton >= buttons.size - 1) buttons.size - 1 else currentButton++
                 InputListenerType.RIGHT -> {}
                 InputListenerType.UNDEFINED -> {}
+                InputListenerType.X -> {}
             }
         }
     }

@@ -3,13 +3,11 @@ package engine.entity.mob.enemy
 import engine.entity.Entity
 import engine.entity.gui.component.BarComponent
 import engine.entity.mob.component.Living
-import engine.entity.registrer.EnemyRegistrerType
-import engine.entity.sprite.Sprite
 import java.awt.Graphics2D
 
 abstract class Enemy : Entity(), Living
 {
-    var type: EnemyRegistrerType = EnemyRegistrerType("warrior_0", EnemyType.WARRIOR, 0, 100, 100, .8, .8, 25, width, height)
+    open var type: EnemyType = EnemyType.WARRIOR
 
     val hpBar = BarComponent()
     var xpToGive: Int = 25
@@ -29,15 +27,12 @@ abstract class Enemy : Entity(), Living
         hpBar.width = 64
         hpBar.height = 7
         hpBar.x = xFromHero() - ((hpBar.width - width) / 2)
-        hpBar.y = yFromHero() - 25
+        hpBar.y = yFromHero() - 15
         hpBar.maxFilled = maxHp
         hpBar.filled = hp
         hpBar.draw(g)
     }
 
-    override fun collides(entity: Entity): Boolean {
-        return center().distance(entity.center()) < width
-    }
     fun collidesSquare(entity: Entity): Boolean {
         return intersects(entity)
     }
@@ -45,4 +40,6 @@ abstract class Enemy : Entity(), Living
     override fun toString(): String {
         return "${this.javaClass.name} hp: $hp, "
     }
+
+
 }
