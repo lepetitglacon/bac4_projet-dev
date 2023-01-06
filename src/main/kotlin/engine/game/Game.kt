@@ -1,6 +1,5 @@
 package engine.game
 
-import engine.GameEngine
 import engine.entity.`object`.Behelit
 import engine.entity.`object`.Object
 import engine.entity.`object`.ObjectFactory
@@ -16,7 +15,6 @@ import engine.entity.weapon.weapon.Gun
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.resource.SpriteFactory
-import java.awt.Color
 import java.awt.Graphics2D
 import java.time.Instant
 import kotlin.random.Random

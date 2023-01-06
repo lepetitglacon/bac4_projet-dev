@@ -1,7 +1,6 @@
 package engine.entity.registrer
 
 import engine.entity.mob.enemy.EnemyType
-import engine.entity.sprite.Sprite
 
 class EnemyRegistrerType(
     val name: String,

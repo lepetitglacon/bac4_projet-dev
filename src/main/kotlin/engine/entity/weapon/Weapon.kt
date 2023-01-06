@@ -1,8 +1,6 @@
 package engine.entity.weapon
 
-import engine.entity.Entity
 import engine.entity.sprite.Sprite
-import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 import java.time.Instant
 

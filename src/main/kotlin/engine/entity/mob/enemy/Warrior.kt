@@ -1,10 +1,8 @@
 package engine.entity.mob.enemy
 
 import engine.GameEngine
-import engine.entity.gui.component.BarComponent
 import engine.entity.sprite.Sprite
 import engine.resource.SpriteFactory
-import java.awt.Color
 import java.awt.Graphics2D
 
 class Warrior : Enemy()

@@ -1,9 +1,5 @@
 package engine.event.movement.hero
 
-import engine.event.input.InputEvent
-import engine.event.input.InputListener
-import engine.event.input.InputListenerType
-
 class HeroMovementListenerManager {
     val listeners = mutableMapOf<HeroMovementListener, MutableList<HeroMovementListenerType>>()
 

@@ -2,7 +2,6 @@ package engine.entity.mob.component
 
 import engine.EngineState
 import engine.GameEngine
-import kotlin.math.pow
 
 interface Leveling {
     var level: Int

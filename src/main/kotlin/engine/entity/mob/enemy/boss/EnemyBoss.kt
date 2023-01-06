@@ -1,6 +1,5 @@
 package engine.entity.mob.enemy.boss
 
-import engine.entity.Entity
 import engine.entity.mob.enemy.Enemy
 import java.time.Instant
 

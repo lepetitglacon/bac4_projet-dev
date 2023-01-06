@@ -1,7 +1,6 @@
 package engine.math
 
 import java.awt.Point
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Vec2(var x: Double = 0.0, var y: Double = 0.0) {

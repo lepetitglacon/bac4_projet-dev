@@ -1,7 +1,6 @@
 package engine.entity.map.tile
 
 import engine.GameEngine
-import engine.entity.Entity
 import engine.entity.map.Tile
 import engine.entity.sprite.Sprite
 import engine.resource.SpriteFactory

@@ -6,8 +6,6 @@ import engine.entity.sprite.Sprite
 import engine.event.movement.hero.HeroMovementEvent
 import engine.event.movement.hero.HeroMovementListener
 import engine.event.movement.hero.HeroMovementListenerType
-import engine.game.Game
-import engine.game.GameState
 import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.image.BufferedImage
 

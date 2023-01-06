@@ -2,7 +2,6 @@ package engine.entity.mob
 
 import engine.GameEngine
 import engine.entity.Entity
-import engine.entity.gui.component.BarComponent
 import engine.entity.mob.component.Leveling
 import engine.entity.mob.component.Living
 import engine.entity.sprite.hero.HeroSprite
@@ -10,7 +9,6 @@ import engine.entity.sprite.Sprite
 import engine.entity.weapon.Weapon
 import engine.entity.weapon.weapon.Gun
 import engine.resource.SpriteFactory
-import java.awt.Color
 import java.awt.Graphics2D
 
 class Hero : Entity(), Living, Leveling

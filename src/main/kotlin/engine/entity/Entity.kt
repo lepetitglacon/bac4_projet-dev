@@ -6,7 +6,6 @@ import engine.math.MathUtility
 import engine.math.Vec2
 import java.awt.Graphics2D
 import java.awt.Rectangle
-import kotlin.math.roundToInt
 
 
 abstract class Entity : Rectangle()

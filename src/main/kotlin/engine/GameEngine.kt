@@ -16,7 +16,6 @@ import engine.event.input.InputListenerManager
 import engine.event.input.InputListenerType
 import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
-import engine.resource.SpriteFactory
 import engine.window.Window
 import java.awt.Font
 import java.awt.Graphics

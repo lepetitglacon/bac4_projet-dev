@@ -1,7 +1,6 @@
 package engine.entity.mob.enemy.boss
 
 import engine.GameEngine
-import engine.entity.Entity
 import engine.entity.mob.enemy.EnemyType
 import engine.entity.sprite.Sprite
 import engine.resource.SpriteFactory

@@ -1,6 +1,5 @@
 package engine.resource
 
-import engine.entity.sprite.Sprite
 import java.awt.image.BufferedImage
 import java.io.IOException
 import java.lang.IllegalArgumentException

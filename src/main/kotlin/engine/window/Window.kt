@@ -10,7 +10,6 @@ import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
-import java.util.*
 import javax.swing.JFrame
 
 class Window : JFrame() {

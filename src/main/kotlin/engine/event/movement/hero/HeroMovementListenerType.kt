@@ -2,8 +2,6 @@ package engine.event.movement.hero
 
 import engine.EngineState
 import engine.GameEngine
-import engine.entity.sprite.hero.HeroPositionState
-import engine.game.GameState
 import engine.resource.SpriteFactory
 import java.awt.Point
 

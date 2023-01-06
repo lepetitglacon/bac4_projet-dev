@@ -1,12 +1,10 @@
 package engine.entity.map
 
 import engine.GameEngine
-import engine.entity.map.tile.GrassTile
 import engine.math.Vec2
 import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
 import java.awt.Graphics2D
-import kotlin.random.Random
 
 class Map
 {

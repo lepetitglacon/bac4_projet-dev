@@ -1,7 +1,5 @@
 package engine.event.input
 
-import engine.GameEngine
-
 class InputListenerManager
 {
     val listeners = mutableMapOf<InputListener, MutableList<InputListenerType>>()
