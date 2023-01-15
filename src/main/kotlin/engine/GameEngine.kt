@@ -17,6 +17,7 @@ import engine.event.input.InputListenerType
 import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
 import engine.window.Window
+import server.ServerConnector
 import java.awt.Font
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -27,6 +28,8 @@ import javax.swing.Timer
 object GameEngine : JPanel(), InputListener {
     // debug
     var debug = true
+
+    var server = ServerConnector
 
     // vars
     var state: EngineState = EngineState.MAIN_MENU

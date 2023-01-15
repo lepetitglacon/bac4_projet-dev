@@ -1,0 +1,17 @@
+- faire des bosses qui attaquent*
+    - pouvoirs spéciaux
+        - faire grandir ou accélérer les enemies
+
+- faire d'autres armes
+    - grenades qui reste ou on était
+    - épée
+
+- faire un shop inter-partie
+
+SERVER
+- faire une messagerie
+- voir les autres joueurs
+    - position
+    - score
+        - behelit
+        - niveau

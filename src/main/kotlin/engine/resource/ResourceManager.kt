@@ -18,7 +18,8 @@ object ResourceManager {
 
     private fun getUrl(name: String, ext: String): URL? {
         val r = javaClass.classLoader.getResource("$name.$ext")
-            logger.log(System.Logger.Level.TRACE, "tried")
+            //logger.log(System.Logger.Level.TRACE, "tried")
+        Logger.log("tried")
 //        Logger.asset(name, r!!.toString())
         return r
     }
@@ -39,10 +40,10 @@ object ResourceManager {
             catch (e: IllegalArgumentException) {}
         }
         if (img != null) {
-            logger.log(System.Logger.Level.INFO, "Spritesheet loaded : $name, found in $found")
+            Logger.log("Spritesheet loaded : $name, found in $found")
             return img;
         }
-        logger.log(System.Logger.Level.ERROR, "failed to load spritesheet $name, searched in $urls")
+        Logger.error("failed to load spritesheet $name, searched in $urls")
         return BufferedImage(0, 0, 0)
     }
 
