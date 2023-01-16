@@ -1,4 +1,4 @@
-package engine.entity.weapon.component
+package engine.entity.weapon.component.projectile
 
 import engine.entity.Entity
 import java.time.Instant

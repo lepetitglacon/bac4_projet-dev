@@ -1,4 +1,4 @@
-package engine.entity.weapon.component
+package engine.entity.weapon.component.projectile
 
 import engine.GameEngine
 import engine.entity.Entity
@@ -29,20 +29,16 @@ open class Projectile : Entity(), Attacking, Living {
         return damages
     }
 
-    fun onHit(entity: Entity) {
+    open fun onHit(entity: Entity) {
         when (entity) {
+            is EnemyBoss -> println("test")
             is Enemy -> {
                 if (!allreadyHitEnemy.contains(entity)) {
-                    println(allreadyHitEnemy.hashCode())
-                    println(allreadyHitEnemy.firstOrNull().hashCode())
-                    println(entity.hashCode())
-                    println()
                     allreadyHitEnemy.add(entity)
                     entity.applyDamage(damages)
                     hp--
                 }
             }
-            is EnemyBoss -> println("test")
             else -> { println("bullet hit something unknown") }
 
         }

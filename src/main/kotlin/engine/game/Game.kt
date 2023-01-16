@@ -5,6 +5,7 @@ import engine.entity.`object`.Object
 import engine.entity.`object`.ObjectFactory
 import engine.entity.`object`.Soul
 import engine.entity.gui.Gui
+import engine.entity.gui.component.upgrade.Upgrade
 import engine.entity.map.Map
 import engine.entity.mob.enemy.Enemy
 import engine.entity.mob.Hero
@@ -26,6 +27,7 @@ class Game : InputListener {
     var bosses = mutableListOf<EnemyBoss>()
     var objects = mutableListOf<Object>()
     var gui = Gui()
+    var upgrades = mutableMapOf<Upgrade, Int>()
 
     var state: GameState = GameState.PLAY
 

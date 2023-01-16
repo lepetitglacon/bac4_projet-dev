@@ -2,7 +2,7 @@ package engine.entity.weapon
 
 import engine.GameEngine
 import engine.entity.mob.enemy.Enemy
-import engine.entity.weapon.component.Projectile
+import engine.entity.weapon.component.projectile.Projectile
 import engine.math.Vec2
 
 object WeaponFactory {

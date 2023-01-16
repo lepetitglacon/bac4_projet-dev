@@ -7,6 +7,7 @@ import engine.entity.gui.component.upgrade.DoubleProjectileUpgrade
 import engine.entity.gui.component.upgrade.ReduceGunCooldownUpgrade
 import engine.entity.gui.component.upgrade.ThrewProjectileUpgrade
 import engine.entity.gui.component.upgrade.Upgrade
+import engine.entity.gui.component.upgrade.weapon.grenadelauncher.GrenadeLauncherWeaponUpgrade
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.event.input.InputListenerType
@@ -15,10 +16,15 @@ import java.awt.Graphics2D
 
 class ShopMenu(
     var title: String = "",
+    val possibleUpgrades: MutableList<Upgrade> = mutableListOf(),
     val upgrades: MutableList<Upgrade> = mutableListOf(),
     val window: WindowComponent = WindowComponent(),
     var listeningState: MutableList<EngineState> = mutableListOf()
 ) : InputListener {
+
+    init {
+        registerUpgrades()
+    }
 
     var currentButton: Int = 0
     val btnPadding: Int = 25
@@ -67,8 +73,33 @@ class ShopMenu(
     }
 
     fun buildUpgrades() {
-        upgrades.add(DoubleProjectileUpgrade())
-        upgrades.add(ThrewProjectileUpgrade())
-        upgrades.add(ReduceGunCooldownUpgrade())
+        for (i in 0..3) {
+            var up = possibleUpgrades.random()
+
+            if (upgrades.contains(up)) {
+                up = possibleUpgrades.random()
+            }
+
+            if (GameEngine.game?.upgrades?.contains(up)!!) {
+                if (up.maxLevel < GameEngine.game?.upgrades?.get(up)!!) {
+                    upgrades.add(up)
+                } else {
+                    possibleUpgrades.remove(up)
+                }
+            } else {
+                upgrades.add(up)
+            }
+
+        }
+    }
+
+    fun registerUpgrades() {
+        // general
+        possibleUpgrades.add(DoubleProjectileUpgrade())
+        possibleUpgrades.add(ThrewProjectileUpgrade())
+        possibleUpgrades.add(ReduceGunCooldownUpgrade())
+
+        // weapons
+        possibleUpgrades.add(GrenadeLauncherWeaponUpgrade())
     }
 }
