@@ -30,6 +30,8 @@ object WeaponFactory {
         }
 
         val dir = closest?.center() ?: Vec2()
+        dir.x += closest?.width?.div(2) ?: 0
+        dir.y += closest?.height?.div(2) ?: 0
         return (dir - GameEngine.game?.hero!!.center()).normalized()
     }
 }

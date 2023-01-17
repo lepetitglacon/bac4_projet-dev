@@ -31,7 +31,6 @@ open class Projectile : Entity(), Attacking, Living {
 
     open fun onHit(entity: Entity) {
         when (entity) {
-            is EnemyBoss -> println("test")
             is Enemy -> {
                 if (!allreadyHitEnemy.contains(entity)) {
                     allreadyHitEnemy.add(entity)

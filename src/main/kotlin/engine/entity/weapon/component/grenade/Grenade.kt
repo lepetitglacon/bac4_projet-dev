@@ -7,7 +7,7 @@ import engine.entity.weapon.component.projectile.Projectile
 import engine.math.MathUtility
 
 class Grenade : Projectile() {
-    val blastRadius = 16
+    val blastRadius = 64
 
 
     override fun onHit(entity: Entity) {
@@ -19,6 +19,7 @@ class Grenade : Projectile() {
 
                     GameEngine.game?.enemies?.forEach {
                         if (blastCollides(it)) {
+                            println("grenade blast collides")
                             it.applyDamage(damages)
                         }
                     }

@@ -49,7 +49,7 @@ object GameEngine : JPanel(), InputListener {
     // objects
     var mainMenu: ButtonMenu = ButtonMenu("Menu", mutableListOf(NewGameButton(), ExitGameButton()), WindowComponent(150,150), mutableListOf(EngineState.MAIN_MENU))
     var optionMenu: ButtonMenu = ButtonMenu("Pause", mutableListOf(ResumeButton(), GoToMainMenuButton(), NewGameButton(), ExitGameButton()), WindowComponent(150,150), mutableListOf(EngineState.OPTIONS))
-    var shopMenu: ShopMenu = ShopMenu("Shop", window = WindowComponent(150,150), listeningState = mutableListOf(EngineState.SHOP))
+    var shopMenu: ShopMenu = ShopMenu("Shop", window = WindowComponent(GameEngine.window.WIDTH,GameEngine.window.HEIGHT), listeningState = mutableListOf(EngineState.SHOP))
     var gameOverMenu: ButtonMenu = ButtonMenu("Game over", mutableListOf(NewGameButton(), NewGameButton()), WindowComponent(150,150), mutableListOf(EngineState.GAME_OVER))
 
     init
@@ -83,7 +83,7 @@ object GameEngine : JPanel(), InputListener {
             EngineState.MAIN_MENU -> {}
             EngineState.PLAY -> game?.update()
             EngineState.SHOP -> {
-                if (shopMenu.upgrades.isEmpty()) {
+                if (shopMenu.upgrades.size < 3) {
                     shopMenu.buildUpgrades()
                 }
             }

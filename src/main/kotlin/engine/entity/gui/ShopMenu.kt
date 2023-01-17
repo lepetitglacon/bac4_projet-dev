@@ -76,7 +76,7 @@ class ShopMenu(
         for (i in 0..3) {
             var up = possibleUpgrades.random()
 
-            if (upgrades.contains(up)) {
+            while(upgrades.contains(up)) {
                 up = possibleUpgrades.random()
             }
 

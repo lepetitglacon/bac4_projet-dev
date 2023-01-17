@@ -12,6 +12,8 @@ import engine.entity.mob.Hero
 import engine.entity.mob.enemy.EnemyFactory
 import engine.entity.mob.enemy.EnemyType
 import engine.entity.mob.enemy.boss.EnemyBoss
+import engine.entity.weapon.component.grenade.Grenade
+import engine.entity.weapon.weapon.GrenadeLauncher
 import engine.entity.weapon.weapon.Gun
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
@@ -61,7 +63,7 @@ class Game : InputListener {
         {
             GameState.PLAY ->
             {
-                // remove dead entities to free memory
+                // remove dead entities
                 removeDeadEntities()
 
                 // move entities
@@ -125,7 +127,8 @@ class Game : InputListener {
     fun removeDeadEntities() {
         hero.weapons.forEach { weapon ->
             when (weapon) {
-                is Gun -> weapon.projectiles.removeIf { it.hp <= 0 || it.center().clone().distance(hero.center()) > 10000  }
+                is Gun -> weapon.projectiles.removeIf { it.hp <= 0 || it.center().clone().distance(hero.center()) > 1000  }
+                is GrenadeLauncher -> weapon.projectiles.removeIf { it.hp <= 0 || it.center().clone().distance(hero.center()) > 1000  }
             }
         }
         enemies.removeIf {
