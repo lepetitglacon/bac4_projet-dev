@@ -1,9 +1,12 @@
 package engine.resource
 
+import engine.GameEngine
 import engine.entity.map.Tile
 import engine.entity.map.tile.GrassTile
 import engine.entity.sprite.hero.HeroSprite
 import engine.entity.sprite.Sprite
+import engine.math.Vec2
+import kotlin.random.Random
 
 object SpriteFactory {
     const val TILE_SIZE = 64
@@ -58,5 +61,23 @@ object SpriteFactory {
         val tile = GrassTile()
         tile.sprite = rdm.entries.shuffled().first().value
         return tile
+    }
+
+    fun addTilesToMap(): HashMap<Vec2, Tile> {
+        val tiles = hashMapOf<Vec2, Tile>()
+
+        for (i in GameEngine.game?.map?.minX!!/SpriteFactory.TILE_SIZE -1  ..GameEngine.game?.map?.maxX!!/SpriteFactory.TILE_SIZE+1) {
+            for (j in GameEngine.game?.map?.minY!!/SpriteFactory.TILE_SIZE -1..GameEngine.game?.map?.maxY!!/SpriteFactory.TILE_SIZE+1) {
+                val position = Vec2((i * SpriteFactory.TILE_SIZE).toDouble(), (j * SpriteFactory.TILE_SIZE).toDouble())
+                if (!GameEngine.game?.map?.tiles?.containsKey(position)!!) {
+                    val tile = GrassTile()
+                    if (Random.nextBoolean()) tile.sprite = SpriteFactory.getRandomGrassTile().sprite
+                    tile.x = position.x.toInt()
+                    tile.y = position.y.toInt()
+                    tiles[position] = tile
+                }
+            }
+        }
+        return tiles
     }
 }

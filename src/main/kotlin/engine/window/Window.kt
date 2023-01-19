@@ -132,6 +132,7 @@ class Window : JFrame() {
         }
         keyboardMovementVector.normalize()
         GameEngine.heroMovementListenerManager.on(e)
+        GameEngine.game?.map?.onPlayerMovement()
     }
 
     fun updateTitle() {

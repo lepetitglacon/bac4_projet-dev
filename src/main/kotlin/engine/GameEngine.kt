@@ -16,6 +16,7 @@ import engine.event.input.InputListenerManager
 import engine.event.input.InputListenerType
 import engine.event.movement.hero.HeroMovementListenerManager
 import engine.game.Game
+import engine.sound.SoundManager
 import engine.window.Window
 import server.ServerConnector
 import java.awt.Font
@@ -54,6 +55,10 @@ object GameEngine : JPanel(), InputListener {
 
     init
     {
+        // sounds
+        SoundManager.loadFiles()
+        SoundManager.play("main song")
+
         // enemy registration
         enemyRegistrer.add(EnemyRegistrerType("warrior_0", EnemyType.WARRIOR, 0, 100, 100, .6, .5, 25, 48, 48))
         enemyRegistrer.add(EnemyRegistrerType("warrior_1", EnemyType.WARRIOR, 2, 150, 150, .5, .5, 50, 32, 32))
@@ -81,14 +86,22 @@ object GameEngine : JPanel(), InputListener {
         when (state)
         {
             EngineState.MAIN_MENU -> {}
-            EngineState.PLAY -> game?.update()
+            EngineState.PLAY -> {
+                SoundManager.changeVolume("main song", 1f)
+                game?.update()
+            }
             EngineState.SHOP -> {
                 if (shopMenu.upgrades.size < 3) {
                     shopMenu.buildUpgrades()
                 }
             }
-            EngineState.OPTIONS -> {}
-            EngineState.GAME_OVER -> {}
+            EngineState.OPTIONS -> {
+                SoundManager.changeVolume("main song", 0.5f)
+            }
+            EngineState.GAME_OVER -> {
+                SoundManager.stop("main song")
+                SoundManager.play("death")
+            }
         }
 
         repaint()
