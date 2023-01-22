@@ -29,8 +29,8 @@ object EnemyFactory {
         setRandomCoordinates(enemy)
 
         // HP + bar
-        enemy.hp = et.hp
-        enemy.maxHp = et.maxHp
+        enemy.hp = et.hp.toDouble()
+        enemy.maxHp = et.maxHp.toDouble()
         enemy.xpToGive = et.xp
 
         return enemy

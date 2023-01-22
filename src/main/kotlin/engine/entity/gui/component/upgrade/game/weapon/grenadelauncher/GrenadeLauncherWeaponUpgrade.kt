@@ -1,4 +1,4 @@
-package engine.entity.gui.component.upgrade.weapon.grenadelauncher
+package engine.entity.gui.component.upgrade.game.weapon.grenadelauncher
 
 import engine.EngineState
 import engine.GameEngine

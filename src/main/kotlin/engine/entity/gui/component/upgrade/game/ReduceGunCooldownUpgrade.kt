@@ -1,7 +1,8 @@
-package engine.entity.gui.component.upgrade
+package engine.entity.gui.component.upgrade.game
 
 import engine.EngineState
 import engine.GameEngine
+import engine.entity.gui.component.upgrade.Upgrade
 import engine.entity.weapon.weapon.GrenadeLauncher
 import engine.entity.weapon.weapon.Gun
 

@@ -7,9 +7,9 @@ import engine.game.GameFactory
 class NewGameButton : Button("New Game") {
     override fun onClick() {
         GameEngine.state = EngineState.PLAY
-        // Event binding
         GameEngine.game = GameFactory.createGame()
         GameEngine.game!!.init()
+        // Event binding
         GameEngine.inputListenerManager.sub(GameEngine.game!!)
     }
 }

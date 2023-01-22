@@ -20,14 +20,6 @@ class GrenadeLauncher() : Weapon() {
     var mustFireUntil: Long = 0
     var lastFire: Long = 0
 
-    // projectiles
-    var projectilesPerShot = 1
-    var projectileHP = 1
-
-//    override fun canFire(): Boolean {
-//        return true
-//    }
-
     fun fire() {
         mustFireUntil = Instant.now().toEpochMilli() + (projectilesPerShot * timeBetweenShots)
         println("fire until $mustFireUntil")

@@ -2,10 +2,11 @@ package engine.entity.mob.enemy
 
 import engine.entity.Entity
 import engine.entity.gui.component.BarComponent
+import engine.entity.mob.component.Attacking
 import engine.entity.mob.component.Living
 import java.awt.Graphics2D
 
-abstract class Enemy : Entity(), Living
+abstract class Enemy : Entity(), Living, Attacking
 {
     open var type: EnemyType = EnemyType.WARRIOR
 
@@ -28,8 +29,8 @@ abstract class Enemy : Entity(), Living
         hpBar.height = 7
         hpBar.x = xFromHero() - ((hpBar.width - width) / 2)
         hpBar.y = yFromHero() - 15
-        hpBar.maxFilled = maxHp
-        hpBar.filled = hp
+        hpBar.maxFilled = maxHp.toInt()
+        hpBar.filled = hp.toInt()
         hpBar.draw(g)
     }
 

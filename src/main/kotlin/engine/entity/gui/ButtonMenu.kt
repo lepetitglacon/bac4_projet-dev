@@ -9,16 +9,21 @@ import engine.event.input.InputListener
 import engine.event.input.InputListenerType
 import java.awt.Color
 import java.awt.Graphics2D
+import java.time.Instant
 
 class ButtonMenu(
     var title: String = "",
     val buttons: MutableList<Button> = mutableListOf(),
     val window: WindowComponent = WindowComponent(),
-    var listeningState: MutableList<EngineState> = mutableListOf()
+    var listeningState: MutableList<EngineState> = mutableListOf(),
+
 ) : InputListener {
+    var timeBeforeListening: Long = 100
+    var initTime: Long = 0
 
     var currentButton: Int = 0
     val btnPadding: Int = 25
+    var error = ""
 
     fun draw(g: Graphics2D) {
         window.draw(g)
@@ -42,13 +47,23 @@ class ButtonMenu(
                 g.drawString(">", btnX - btnPadding, btnY)
             }
         }
+
+        g.color = Color.red
+        val errorHeight = (g.fontMetrics.getStringBounds(error, g)).height
+        g.drawString(error, window.x+window.width/2, window.y + window.height/2)
+        g.color = Color.black
     }
 
     override fun onInputEvent(e: InputEvent) {
         if (listeningState.contains(GameEngine.state)) {
             super.onInputEvent(e)
             when (e.type) {
-                InputListenerType.ENTER -> buttons[currentButton].onClick()
+                InputListenerType.ENTER -> {
+                    if (Instant.now().toEpochMilli() > timeBeforeListening + initTime) {
+                        println("${Instant.now().toEpochMilli()}, ${timeBeforeListening + initTime}")
+                        buttons[currentButton].onClick()
+                    }
+                }
                 InputListenerType.ESCAPE -> {}
                 InputListenerType.SPACE -> {}
                 InputListenerType.UP -> if (currentButton <= 0) currentButton = 0 else currentButton--

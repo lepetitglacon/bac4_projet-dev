@@ -1,5 +1,6 @@
 package engine.game
 
+import engine.GameEngine
 import engine.entity.`object`.Behelit
 import engine.entity.`object`.Object
 import engine.entity.`object`.ObjectFactory
@@ -12,12 +13,10 @@ import engine.entity.mob.Hero
 import engine.entity.mob.enemy.EnemyFactory
 import engine.entity.mob.enemy.EnemyType
 import engine.entity.mob.enemy.boss.EnemyBoss
-import engine.entity.weapon.component.grenade.Grenade
 import engine.entity.weapon.weapon.GrenadeLauncher
 import engine.entity.weapon.weapon.Gun
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
-import engine.resource.SpriteFactory
 import java.awt.Graphics2D
 import java.time.Instant
 import kotlin.random.Random
@@ -28,14 +27,14 @@ class Game : InputListener {
     var enemies = mutableListOf<Enemy>()
     var bosses = mutableListOf<EnemyBoss>()
     var objects = mutableListOf<Object>()
-    var gui = Gui()
     var upgrades = mutableMapOf<Upgrade, Int>()
+    var gui = Gui()
 
     var state: GameState = GameState.PLAY
 
     val startTime: Instant = Instant.now()
     var lastBossSpawned: Instant = Instant.now()
-    var bossSpawnRateInSecond: Long = 10
+    var bossSpawnRateInSecond: Long = 15
     var bossSpawnRate: Long = bossSpawnRateInSecond * 1000 // ms
 
     var wave: Int = 1
@@ -45,12 +44,14 @@ class Game : InputListener {
     var behelits: Int = 0
 
     fun init() {
-        // resources
-        SpriteFactory.registerSprites()
-
         // entities
         hero.init()
         map.build()
+
+        // add persistent upgrades
+        GameEngine.upgrades.forEach {
+            it.bonus()
+        }
 
         enemies.addAll(EnemyFactory.createFromRegistrer(wave * enemyPerWave))
     }
@@ -65,40 +66,43 @@ class Game : InputListener {
             {
                 // remove dead entities
                 removeDeadEntities()
+                if (hero.hp <= 0) {
+                    GameEngine.gameEnd()
+                } else {
+                    // move entities
+                    // TODO changer le méthode update pour découpler le move() des entités
+                    map.update()
+                    hero.update()
 
-                // move entities
-                // TODO changer le méthode update pour découpler le move() des entités
-                map.update()
-                hero.update()
-
-                // spawn enemies
-                if (enemies.size <= enemyPerWave) {
-                    wave++
-                    enemies.addAll(EnemyFactory.createFromRegistrer(((wave * enemyPerWave) * 0.8).toInt()))
-                }
-                // spawn bosses
-                if (Instant.now().toEpochMilli() - lastBossSpawned.toEpochMilli() >= bossSpawnRate) {
-                    enemies.add(EnemyFactory.createBoss())
-                    lastBossSpawned = Instant.now()
-                }
-
-                // objects handling
-                objects.removeIf {
-                    if (hero.collides(it)) {
-                        when (it) {
-                            is Soul -> {
-                                souls++
-                                hero.xp += it.xp
-                            }
-                            is Behelit -> behelits++
-                        }
+                    // spawn enemies
+                    if (enemies.size <= enemyPerWave) {
+                        wave++
+                        enemies.addAll(EnemyFactory.createFromRegistrer(((wave * enemyPerWave) * 0.8).toInt()))
                     }
-                    hero.collides(it)
-                }
+                    // spawn bosses
+                    if (Instant.now().toEpochMilli() - lastBossSpawned.toEpochMilli() >= bossSpawnRate) {
+                        enemies.add(EnemyFactory.createBoss())
+                        lastBossSpawned = Instant.now()
+                    }
 
-                enemies.forEach { it.update() }
+                    // objects handling
+                    objects.removeIf {
+                        if (hero.collides(it)) {
+                            when (it) {
+                                is Soul -> {
+                                    souls++
+                                    hero.xp += it.xp
+                                }
+                                is Behelit -> behelits++
+                            }
+                        }
+                        hero.collides(it)
+                    }
+
+                    enemies.forEach { it.update() }
+                }
             }
-            GameState.SHOP -> TODO()
+            GameState.SHOP -> {}
         }
 
     }
@@ -125,6 +129,7 @@ class Game : InputListener {
     }
 
     fun removeDeadEntities() {
+
         hero.weapons.forEach { weapon ->
             when (weapon) {
                 is Gun -> weapon.projectiles.removeIf { it.hp <= 0 || it.center().clone().distance(hero.center()) > 1000  }

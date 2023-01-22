@@ -10,18 +10,22 @@ import engine.entity.weapon.Weapon
 import engine.entity.weapon.weapon.Gun
 import engine.resource.SpriteFactory
 import java.awt.Graphics2D
+import java.time.Instant
 
 class Hero : Entity(), Living, Leveling
 {
     override var speed: kotlin.Double = 5.0
     override var sprite: Sprite = SpriteFactory.get("hero")
 
-    override var hp: Int = 100
-    override var maxHp: Int = 100
+    override var hp: kotlin.Double = 100.0
+    override var maxHp: kotlin.Double = 100.0
 
     override var level: Int = 1
     override var xp: kotlin.Double = 0.0
     override var maxXp: kotlin.Double = 100.0
+
+    var timeBeforeHit = 500
+    var lastTimeBeforeHit = Instant.now().toEpochMilli()
 
     val weapons = mutableListOf<Weapon>()
 
@@ -34,6 +38,7 @@ class Hero : Entity(), Living, Leveling
         y = 0
         width = 64
         height = 64
+
     }
 
     override fun xFromHero(): Int {
@@ -58,6 +63,14 @@ class Hero : Entity(), Living, Leveling
 
         // check for levelup
         if (xp >= maxXp) levelUp(1.2)
+
+        // check collision with enemies
+        GameEngine.game?.enemies?.forEach {
+            if (collides(it) && Instant.now().toEpochMilli() > lastTimeBeforeHit+timeBeforeHit) {
+                lastTimeBeforeHit = Instant.now().toEpochMilli()
+                hp -= it.attack()
+            }
+        }
     }
 
     override fun draw(g: Graphics2D) {

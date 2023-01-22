@@ -13,7 +13,7 @@ object WeaponFactory {
         p.pos = GameEngine.game?.hero?.pos?.clone() ?: Vec2()
         p.width = 10
         p.height = 10
-        p.hp = hp
+        p.hp = hp.toDouble()
         p.direction = direction ?: findClosestEnemyDirection()
         return p
     }

@@ -8,13 +8,14 @@ import java.awt.Color
 import java.awt.Graphics2D
 
 class Corkus : EnemyBoss() {
-    override var hp: Int = 1000
-    override var maxHp: Int = 1000
+    override var hp: kotlin.Double = 1000.0
+    override var maxHp: kotlin.Double = 1000.0
+    override val damages: Int = 20
 
     override var type: EnemyType = EnemyType.APOSTLE
 
-    override fun attack() {
-        TODO("Not yet implemented")
+    override fun attack(): Int {
+        return damages
     }
 
     override var speed: kotlin.Double = 0.4

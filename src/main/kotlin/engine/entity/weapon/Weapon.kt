@@ -9,6 +9,10 @@ abstract class Weapon
     abstract var sprite: Sprite
     abstract var cooldown: Long // ms
 
+    // projectiles
+    var projectilesPerShot = 1
+    var projectileHP = 1
+
     var lastCooldown = Instant.now().toEpochMilli()
 
     open fun canFire(): Boolean

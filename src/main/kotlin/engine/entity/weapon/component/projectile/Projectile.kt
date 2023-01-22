@@ -20,8 +20,8 @@ open class Projectile : Entity(), Attacking, Living {
     override var sprite: Sprite = SpriteFactory.get("pokemons")
 
     override val damages: Int = 100
-    override var hp: Int = 1
-    override var maxHp: Int = 1
+    override var hp: kotlin.Double = 1.0
+    override var maxHp: kotlin.Double = 1.0
 
     val allreadyHitEnemy: MutableList<Enemy> = mutableListOf()
 

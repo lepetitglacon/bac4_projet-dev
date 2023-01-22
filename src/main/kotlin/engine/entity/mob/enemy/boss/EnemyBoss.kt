@@ -7,5 +7,4 @@ abstract class EnemyBoss : Enemy() {
     val cooldown = 5000 // ms
     val lastCooldown: Instant = Instant.now()
 
-    abstract fun attack()
 }

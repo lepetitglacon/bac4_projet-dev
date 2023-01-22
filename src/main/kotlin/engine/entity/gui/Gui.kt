@@ -18,8 +18,8 @@ class Gui {
         hpBar.height = 25
         hpBar.x = GameEngine.window.WIDTH / 4
         hpBar.y = GameEngine.window.HEIGHT - 150
-        hpBar.maxFilled = GameEngine.game?.hero?.maxHp!!
-        hpBar.filled = GameEngine.game?.hero?.hp!!
+        hpBar.maxFilled = GameEngine.game?.hero?.maxHp!!.toInt()
+        hpBar.filled = GameEngine.game?.hero?.hp!!.toInt()
         hpBar.draw(g)
 
         // XP

@@ -3,11 +3,11 @@ package engine.entity.gui
 import engine.EngineState
 import engine.GameEngine
 import engine.entity.gui.component.WindowComponent
-import engine.entity.gui.component.upgrade.DoubleProjectileUpgrade
-import engine.entity.gui.component.upgrade.ReduceGunCooldownUpgrade
-import engine.entity.gui.component.upgrade.ThrewProjectileUpgrade
+import engine.entity.gui.component.upgrade.game.DoubleProjectileUpgrade
+import engine.entity.gui.component.upgrade.game.ReduceGunCooldownUpgrade
+import engine.entity.gui.component.upgrade.game.ThrewProjectileUpgrade
 import engine.entity.gui.component.upgrade.Upgrade
-import engine.entity.gui.component.upgrade.weapon.grenadelauncher.GrenadeLauncherWeaponUpgrade
+import engine.entity.gui.component.upgrade.game.weapon.grenadelauncher.GrenadeLauncherWeaponUpgrade
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
 import engine.event.input.InputListenerType
@@ -59,7 +59,10 @@ class ShopMenu(
             println(e)
             super.onInputEvent(e)
             when (e.type) {
-                InputListenerType.ENTER -> upgrades[currentButton].onClick()
+                InputListenerType.ENTER -> {
+                    upgrades[currentButton].onClick()
+                    upgrades.clear()
+                }
                 InputListenerType.ESCAPE -> {}
                 InputListenerType.SPACE -> {}
                 InputListenerType.UP -> if (currentButton == 0) currentButton = upgrades.size - 1 else currentButton--

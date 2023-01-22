@@ -7,8 +7,13 @@ import java.awt.Graphics2D
 
 class Warrior : Enemy()
 {
-    override var hp: Int = 0
-    override var maxHp: Int = 0
+    override var hp: kotlin.Double = 0.0
+    override var maxHp: kotlin.Double = 0.0
+    override val damages: Int = 10
+
+    override fun attack(): Int {
+        return damages
+    }
 
     override var speed: kotlin.Double = 2.0
     override var sprite: Sprite = SpriteFactory.get("warrior_0")
