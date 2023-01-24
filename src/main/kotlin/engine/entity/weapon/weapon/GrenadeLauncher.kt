@@ -6,11 +6,12 @@ import engine.entity.weapon.WeaponFactory
 import engine.entity.weapon.component.projectile.Projectile
 import engine.math.Vec2
 import engine.resource.SpriteFactory
+import engine.sound.SoundManager
 import java.awt.Graphics2D
 import java.time.Instant
 
 class GrenadeLauncher() : Weapon() {
-    override var sprite: Sprite = SpriteFactory.getEmptySprite()
+    override var sprite: Sprite = SpriteFactory.get("grenade")
     override var cooldown: Long = 3000 // ms
 
     val projectiles: MutableList<Projectile> = mutableListOf()
@@ -30,7 +31,7 @@ class GrenadeLauncher() : Weapon() {
     fun fireSubShots() {
         if (mustFireUntil >= Instant.now().toEpochMilli() && lastFire + timeBetweenShots <= Instant.now().toEpochMilli()) {
             println("fire at $lastFire")
-            projectiles.add(WeaponFactory.createProjectile(Vec2(), projectileHP))
+            projectiles.add(WeaponFactory.createGrenade(Vec2(), projectileHP))
             lastFire = Instant.now().toEpochMilli()
         }
     }

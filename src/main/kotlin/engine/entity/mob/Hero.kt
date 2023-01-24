@@ -9,6 +9,7 @@ import engine.entity.sprite.Sprite
 import engine.entity.weapon.Weapon
 import engine.entity.weapon.weapon.Gun
 import engine.resource.SpriteFactory
+import engine.sound.SoundManager
 import java.awt.Graphics2D
 import java.time.Instant
 
@@ -62,7 +63,10 @@ class Hero : Entity(), Living, Leveling
         weapons.forEach { it.update() }
 
         // check for levelup
-        if (xp >= maxXp) levelUp(1.2)
+        if (xp >= maxXp) {
+            SoundManager.play("level up")
+            levelUp(1.2)
+        }
 
         // check collision with enemies
         GameEngine.game?.enemies?.forEach {

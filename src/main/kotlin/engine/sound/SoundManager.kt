@@ -15,16 +15,22 @@ object SoundManager {
         registerAudioFile("death", "assets/sound/death")
         registerAudioFile("xp", "assets/sound/xp/xp")
         registerAudioFile("level up", "assets/sound/xp/levelup")
+        registerAudioFile("fire", "assets/sound/fire")
+        registerAudioFile("explosion", "assets/sound/explosion")
+        registerAudioFile("hit", "assets/sound/hit")
     }
 
     fun play(name: String) {
-        if (clips.containsKey(name)) {
-            val ap = clips[name]!!
-            ap.clip.microsecondPosition = 0
-            ap.clip.start()
-        } else {
-            Logger.warning("\"$name\" does not exist in audio files (not loaded)")
-        }
+        Thread {
+            if (clips.containsKey(name)) {
+                val ap = clips[name]!!
+                ap.clip.microsecondPosition = 0
+                ap.clip.start()
+            } else {
+                Logger.warning("\"$name\" does not exist in audio files (not loaded)")
+            }
+
+        }.start()
     }
 
     fun stop(name: String) {

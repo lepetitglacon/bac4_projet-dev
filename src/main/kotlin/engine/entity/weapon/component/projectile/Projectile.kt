@@ -10,6 +10,7 @@ import engine.entity.sprite.Sprite
 import engine.math.Vec2
 import engine.resource.SpriteFactory
 import engine.resource.SpriteFactory.TILE_SIZE
+import engine.sound.SoundManager
 import java.awt.Graphics2D
 import java.time.Instant
 
@@ -33,6 +34,7 @@ open class Projectile : Entity(), Attacking, Living {
         when (entity) {
             is Enemy -> {
                 if (!allreadyHitEnemy.contains(entity)) {
+                    SoundManager.clips["hit"]
                     allreadyHitEnemy.add(entity)
                     entity.applyDamage(damages)
                     hp--
@@ -50,14 +52,16 @@ open class Projectile : Entity(), Attacking, Living {
     override fun update() {
         move()
         GameEngine.game?.enemies?.forEach {
-            if (it.collides(this)) onHit(it)
+            if (it.collides(this)) {
+                onHit(it)
+            }
         }
         super.update()
     }
 
     override fun draw(g: Graphics2D) {
         g.fillOval(xFromHero() - width/2, yFromHero() - height/2, width, height)
-        g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE, TILE_SIZE), null, xFromHero(), yFromHero())
+        g.drawImage(sprite.image?.getSubimage(0,0,TILE_SIZE, TILE_SIZE), null, xFromHero() - 32, yFromHero() - 32)
         super.draw(g)
         if (GameEngine.debug) {
             g.drawLine(GameEngine.window.WIDTH/2, GameEngine.window.HEIGHT/2, (xFromHero() + direction.clone().x * 100).toInt(), (yFromHero() + direction.clone().y * 100).toInt())

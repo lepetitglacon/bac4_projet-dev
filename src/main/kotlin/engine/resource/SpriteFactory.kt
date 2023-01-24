@@ -42,6 +42,7 @@ object SpriteFactory {
         // val weaponItems = ResourceManager.getSpriteSheet("weapons_item")
         val weaponItems = ResourceManager.getSpriteSheet("Stink")
         sprites["weapon_item_sword"] = Sprite(weaponItems.getSubimage(0,0,TILE_SIZE,TILE_SIZE))
+        sprites["grenade"] = Sprite(ResourceManager.getSpriteSheet("grenade"))
 
         // objects / items
         //sprites["object_soul"] = Sprite(ResourceManager.getSpriteSheet("mark"))

@@ -5,6 +5,7 @@ import engine.entity.weapon.Weapon
 import engine.entity.weapon.WeaponFactory
 import engine.entity.weapon.component.projectile.Projectile
 import engine.resource.SpriteFactory
+import engine.sound.SoundManager
 import java.awt.Graphics2D
 import java.time.Instant
 
@@ -35,6 +36,7 @@ class Gun : Weapon() {
             println("fire at $lastFire")
             projectiles.add(WeaponFactory.createProjectile(null, projectileHP))
             lastFire = Instant.now().toEpochMilli()
+            SoundManager.play("fire")
         }
     }
 

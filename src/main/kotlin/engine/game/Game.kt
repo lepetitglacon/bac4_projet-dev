@@ -17,6 +17,7 @@ import engine.entity.weapon.weapon.GrenadeLauncher
 import engine.entity.weapon.weapon.Gun
 import engine.event.input.InputEvent
 import engine.event.input.InputListener
+import engine.sound.SoundManager
 import java.awt.Graphics2D
 import java.time.Instant
 import kotlin.random.Random
@@ -93,7 +94,10 @@ class Game : InputListener {
                                     souls++
                                     hero.xp += it.xp
                                 }
-                                is Behelit -> behelits++
+                                is Behelit -> {
+                                    SoundManager.play("xp")
+                                    behelits++
+                                }
                             }
                         }
                         hero.collides(it)

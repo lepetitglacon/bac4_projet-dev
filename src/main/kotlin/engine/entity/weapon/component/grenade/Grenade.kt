@@ -5,6 +5,7 @@ import engine.entity.Entity
 import engine.entity.mob.enemy.Enemy
 import engine.entity.weapon.component.projectile.Projectile
 import engine.math.MathUtility
+import engine.sound.SoundManager
 
 class Grenade : Projectile() {
     val blastRadius = 64
@@ -23,7 +24,7 @@ class Grenade : Projectile() {
                             it.applyDamage(damages)
                         }
                     }
-
+                    SoundManager.play("explosion")
                     hp--
                 }
             }
