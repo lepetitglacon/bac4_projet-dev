@@ -2,13 +2,12 @@ package engine.resource
 
 import Logger
 import engine.GameEngine
-import engine.game.Game
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
-import java.io.StringReader
-import java.io.StringWriter
 import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
 import javax.imageio.ImageIO
 
@@ -106,13 +105,16 @@ object ResourceManager {
         val props = Properties()
         props.setProperty("engine_behelits", GameEngine.behelits.toString())
         props.setProperty("engine_upgrades", GameEngine.upgrades.joinToString())
-        val file = File("properties/engine.properties")
+        val path = javaClass.classLoader.getResource("properties/engine.properties").path
+        val file = File(path)
         props.store(file.outputStream(), "properties of engine")
+        println("data saved")
     }
 
     fun getProperties(): Properties {
         val properties = Properties()
-        val file = File("properties/engine.properties")
+        val path = javaClass.classLoader.getResource("properties/engine.properties").path
+        val file = File(path)
         properties.load(file.inputStream())
         return properties
     }

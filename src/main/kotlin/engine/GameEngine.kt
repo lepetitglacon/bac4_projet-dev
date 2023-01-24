@@ -137,7 +137,6 @@ object GameEngine : JPanel(), InputListener {
                 SoundManager.play("death")
             }
 
-
         }
 
         repaint()
@@ -152,6 +151,7 @@ object GameEngine : JPanel(), InputListener {
     }
 
     fun engineExit() {
+        println("Game fully closed")
         ResourceManager.saveProperties()
     }
 
